@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/dig"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dig"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <ImageView
+                android:id="@+id/smileface"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="15dp"
+                android:elevation="4dp"
+                android:layout_marginRight="20dp"
+
+                app:srcCompat="@drawable/ic_black_user_shape"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/dot1"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/round_animation"
+                />
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="17dp"
+                android:id="@+id/dot2"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/round_animation"/>
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:id="@+id/dot3"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/round_animation"/>
+
+            <ImageView
+                android:id="@+id/smileface1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="40dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="15dp"
+                android:elevation="4dp"
+
+                app:srcCompat="@drawable/ic_black_user_shape"
+                tools:ignore="VectorDrawableCompat" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:textColor="#ffffff"
+
+            android:textAlignment="center"
+            android:id="@+id/hj"
+            android:text=""
+            android:layout_marginTop="18.5dp"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

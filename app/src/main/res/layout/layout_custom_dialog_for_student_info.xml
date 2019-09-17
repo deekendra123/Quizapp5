@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/bgstudentinfo"
+
+
+        android:orientation="vertical"
+        >
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout"
+            android:layout_width="match_parent"
+
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:textColor="#000000"
+            android:id="@+id/etname"
+
+            android:hint="Enter Student Name"
+
+            android:backgroundTint="#ffffff"
+
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginBottom="10dp"
+
+
+            android:background="@drawable/spinner_border"
+
+
+            />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:id="@+id/btlogin"
+            android:layout_gravity="center"
+            android:text="Submit"
+            android:layout_marginTop="25dp"
+            android:textSize="20dp"
+            android:background="@drawable/bgback5"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+
+
+
+   </LinearLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "235158064793",
+    "firebase_url": "https://e2buddy.firebaseio.com",
+    "project_id": "e2buddy",
+    "storage_bucket": "e2buddy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235158064793:android:eb7866bdc29a74c2",
+        "android_client_info": {
+          "package_name": "com.aptitude.education.e2buddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235158064793-0n8ivgrq85cphder9fdj6ce6oaoptebh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aptitude.education.e2buddy",
+            "certificate_hash": "4679c606483d3e4b6fc7fd3bbb570b1d9271214a"
+          }
+        },
+        {
+          "client_id": "235158064793-lhmhjo3banmmve9rf9s0k45ob97fl1pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEUvwZN-mqVw-erITP7R1lUYFddUKSU88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235158064793-lhmhjo3banmmve9rf9s0k45ob97fl1pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

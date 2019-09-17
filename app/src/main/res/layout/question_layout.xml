@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#000"
+
+
+        android:id="@+id/countdown1"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:id="@+id/queids"
+        android:layout_marginTop="50dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+
+        android:textSize="20dp"
+
+        android:textColor="#000"
+        android:id="@+id/tvquestion"
+        android:layout_marginTop="80dp"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radiogroupforquestion"
+
+        android:layout_marginTop="135dp"
+        android:layout_marginLeft="8dp"
+        >
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiobuttonoption1"
+
+            android:buttonTint="@color/colorPrimary"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
+            android:id="@+id/radiobuttonoption2"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:buttonTint="@color/colorPrimary"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiobuttonoption3"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
+            android:id="@+id/radiobuttonoption4"/>
+
+
+
+    </RadioGroup>
+
+</RelativeLayout>

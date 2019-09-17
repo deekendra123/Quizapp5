@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    style="@style/CustomBottomSheetDialogTheme"
+    android:background="@android:color/transparent"
+    >
+
+    <ImageView
+        android:id="@+id/userimg"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+
+        android:elevation="4dp"
+        app:srcCompat="@drawable/ic_face_black_24dp"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/dialogbackground"
+        android:backgroundTint="#FFFFFF"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="username"
+            android:textColor="#000000"
+            android:layout_marginTop="70dp"
+            android:textSize="16dp"
+
+            />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#000000"
+            android:textSize="16dp"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:layout_marginTop="15dp"
+            android:paddingBottom="8dp">
+
+
+            <TextView
+                android:id="@+id/earn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Share and Earn"
+                android:layout_marginLeft="30dp"
+                android:textColor="#535151"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_share_outlined_sign"
+                android:drawablePadding="15dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+           android:layout_marginTop="10dp"
+            android:paddingBottom="8dp"
+            >
+
+            <TextView
+                android:id="@+id/rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center_vertical"
+                android:text="Rate Us"
+                android:drawableLeft="@drawable/ic_markas"
+                android:layout_marginLeft="30dp"
+                android:drawablePadding="15dp"
+                android:textColor="#535151"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="8dp"
+
+>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/feed"
+                android:layout_gravity="center_vertical"
+                android:text="Send Feedback"
+                android:layout_marginLeft="30dp"
+                android:textColor="#535151"
+                android:drawableLeft="@drawable/ic_feedback"
+                android:drawablePadding="15dp"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="8dp"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/faq"
+                android:layout_gravity="center_vertical"
+                android:text="FAQ's"
+                android:layout_marginLeft="30dp"
+                android:textColor="#535151"
+                android:drawableLeft="@drawable/ic_infor"
+                android:drawablePadding="15dp"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+
+            android:layout_marginTop="10dp"
+
+            android:paddingBottom="8dp">
+
+
+            <TextView
+                android:id="@+id/privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:clickable="true"
+                android:text="Privacy Policy"
+                android:textColor="#525050"
+                android:layout_marginLeft="30dp"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_privacy_policy"
+                android:drawablePadding="15dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+  </RelativeLayout>

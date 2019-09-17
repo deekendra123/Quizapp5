@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="7dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/relativelayout"
+            android:layout_marginTop="5dp"
+
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:id="@+id/l1">
+
+
+                <Button
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:background="@drawable/btcircle"
+
+                    android:id="@+id/cbtquiz"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="60dp"
+                android:layout_toEndOf="@+id/l1">
+
+
+                <Button
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:background="@drawable/btcircle"
+                   android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+
+                    android:id="@+id/cbtscore"
+                    android:textColor="#ffffff"
+
+
+                    />
+
+
+            </LinearLayout>
+
+
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:background="@drawable/tryagain"
+                        android:textColor="#ffffff"
+                        android:id="@+id/qtry"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentRight="true"/>
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

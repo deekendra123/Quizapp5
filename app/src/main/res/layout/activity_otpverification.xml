@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Intro.OTPVerificationActivity">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="80dp"
+
+        android:background="@drawable/bgrelative"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:id="@+id/relativeLayout">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="30dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OTP has been sent on your mobile number"
+                android:textSize="15dp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/tv1"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/tvno"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#F3F1F1"
+                android:layout_marginTop="12dp"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter OTP"
+                android:gravity="center"
+                android:textSize="21dp"
+                android:id="@+id/tv2"
+                android:textColor="#ffffff"
+                android:layout_marginTop="20dp"/>
+
+         <com.alimuzaffar.lib.pin.PinEntryEditText
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+             android:cursorVisible="false"
+             android:inputType="number"
+             android:maxLength="6"
+             android:textColor="#ffffff"
+             android:id="@+id/txt_pin_entry"
+             android:textSize="20dp"
+             android:textIsSelectable="false"
+             app:pinLineStroke="1dp"
+             app:pinLineStrokeSelected="1dp"
+
+            app:pinLineColors="#ffffff"
+             android:layout_marginTop="15dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvtimers"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:text=""
+                android:layout_marginBottom="4dp"
+                android:textColor="#ffffff"
+                android:textSize="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Didn't get the OTP?"
+                    android:id="@+id/tv3"
+
+                    android:textColor="#FFC700"
+                    android:textSize="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Resend"
+
+                    android:layout_marginLeft="6dp"
+                    android:id="@+id/otpresend"
+
+                    android:textStyle="bold"
+                    android:background="@drawable/ripple_effect"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"/>
+
+            </LinearLayout>
+
+
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:theme="@style/AppTheme.WhiteAccent"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+
+                android:layout_below="@+id/pinView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-130dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/user_profile_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/background_profile"
+        android:elevation="4dp"
+        app:srcCompat="@drawable/ic_password" />
+
+
+</RelativeLayout>

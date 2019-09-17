@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10.8dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bgtv"
+            android:textColor="#000000"
+            android:layout_marginBottom="10dp"
+
+            android:gravity="center"
+            />
+
+        <Button
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:id="@+id/btgreen"
+            android:background="@drawable/bgback4"
+            android:layout_marginTop="50dp"
+            android:clickable="false"
+            android:layout_marginLeft="50dp"/>
+
+        <TextView
+            android:id="@+id/tvusername"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+
+            android:layout_toEndOf="@+id/btgreen"
+            android:text=""
+            android:layout_marginTop="27dp"
+
+            android:layout_marginLeft="20dp"
+
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:id="@+id/btrequest"
+
+            android:gravity="center"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="3dp"
+            android:text="Challenge"
+            android:textSize="9dp"
+
+            android:background="@drawable/bgscore"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+</LinearLayout>

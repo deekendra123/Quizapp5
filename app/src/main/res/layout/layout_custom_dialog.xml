@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/dig"
+
+
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+
+            android:textAlignment="center"
+            android:id="@+id/hj"
+            android:text="RANK"
+            android:layout_marginTop="6dp"
+
+            />
+
+
+        <TextView
+
+
+            android:id="@+id/userrank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+
+            android:layout_marginTop="8dp"
+
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_below="@+id/hj"
+            android:textColor="#4e4d4d"
+            android:textStyle="bold"
+
+            />
+
+
+        <TextView
+
+
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/userrank"
+
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:id="@+id/goodjob"
+
+            android:text=""
+
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+
+            android:textAlignment="center"
+            android:textColor="#000000"
+
+            android:id="@+id/totalquiz"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+
+            android:id="@+id/scores"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+           />
+
+
+    </LinearLayout>
+
+
+   </LinearLayout>

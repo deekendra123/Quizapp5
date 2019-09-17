@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_leaderboard"
+        android:icon="@drawable/ic_leaderboard"
+        android:title="Leader Board"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_play_arrow_black_24dp"
+        android:title="More Quiz"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_mind_map"
+        android:title="@string/title_home"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/navigation_rewards"
+        android:icon="@drawable/ic_med"
+        android:title="Rewards"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+<!--
+
+ <item
+          android:id="@+id/challenge"
+          android:icon="@drawable/ic_people"
+          android:title="Challenge"
+          android:enabled="true"
+          app:showAsAction="ifRoom"/>
+-->
+
+</menu>

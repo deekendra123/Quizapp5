@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#c7c7c7"
+    android:layout_height="match_parent"
+    tools:context=".Quiz_for_Group.QuizQuestionsForAdminActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@drawable/bglayout">
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/timer"
+        android:gravity="center"
+
+        android:textAlignment="center"
+
+        android:textSize="25dp"
+        android:textStyle="bold"
+
+        android:textColor="#ffffff"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/slidequestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/linear"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+
+        >
+
+    </android.support.v4.view.ViewPager>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/linear"
+
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        >
+
+        <Button
+        android:id="@+id/bnext"
+        android:layout_width="110dp"
+
+        android:layout_height="40dp"
+
+
+        android:textColor="#ffffff"
+        android:layout_gravity="center"
+
+        android:gravity="center"
+        android:textSize="18dp"
+        android:background="@drawable/bgbutton"
+
+
+        android:text="next" />
+
+    </LinearLayout>
+</RelativeLayout>
+

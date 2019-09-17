@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aptitude.education.e2buddy">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name=".Intro.Quizapp"
+        android:allowBackup="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".School_Quiz.Student_Details_Activity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".School_Quiz.School_Code_Activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <receiver
+            android:name=".Intro.NotificationReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.OneonOneStartQuiz"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.example.matrix.e2buddy.Question.StartQuizActivity.TARGETNOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.LoaderForReceiverActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.LoaderForOneonOneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Intro.InsertImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Intro.UpdateUserImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Intro.InsertUserImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DisplayAnswer.ViewAnswerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DisplayAnswer.ResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.SendQuizRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Quiz_for_Group.ViewAnswerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Quiz_for_Group.ResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Quiz_for_Group.QuizQuestionsForAdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Quiz_for_Group.RequestAcceptedUsersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Quiz_for_Group.StartQuizForGroupActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.example.matrix.e2buddy.Quiz_for_Group.StartQuizForGroupActivity.TARGETNOTIFICATIONS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Intro.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Intro.OTPVerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.ViewAnswerForReceiverActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.ViewAnswerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.ResultForReceiverActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.One_On_One_ResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Intro.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- <activity android:name=".QuizCategoryActivity"></activity> -->
+        <activity
+            android:name=".Intro.IntroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Question.HomeNevActivity"
+            android:label="@string/title_activity_home_nev"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="e2buddy.page.link"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Intro.PhoneVerificationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Question.StartQuizActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Pushdatatofirebase.CopyDbActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DisplayAnswer.LeaderBoardForQuizActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Question.QuizQuestionTimeBasedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.SendNotificationActivity"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".One_on_One_Quiz_Challenge.FirebaseMessagingSerivce">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Quiz_for_Group.FirebaseMessagingSerivceForGroup">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".Intro.LeakLoggerService" />
+
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.QuestionForQuizChallengeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".One_on_One_Quiz_Challenge.QuestionForUser2Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".DisplayAnswer.ViewAnswerActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+
+    android:background="@color/colorPrimary"
+  >
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/userimage"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/ic_usersd" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="13dp"
+        android:id="@+id/user"
+        android:text="" />
+
+
+</LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/answerrecy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/answerrecy"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bttryagain"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/buttonback"
+
+            android:layout_gravity="center"
+            android:text="Try Again"
+            android:textAllCaps="false"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/la"
+        ads:adSize="BANNER"
+        android:layout_marginTop="20dp"
+        ads:adUnitId="@string/banner_ad"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bgback9"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:id="@+id/la"
+          >
+
+            <TextView
+                android:id="@+id/tvans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="Correct Answers"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/tvcorrectans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text=""
+                android:textAlignment="center"
+
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

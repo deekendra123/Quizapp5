@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".One_on_One_Quiz_Challenge.ChallengeQuizRequestFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:orientation="vertical"
+        android:id="@+id/layout1"
+
+        android:background="@drawable/bglayout2"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+
+        android:orientation="horizontal"
+
+        >
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/userimage"
+            android:layout_marginTop="8dp"
+            app:srcCompat="@drawable/ic_users" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="13dp"
+
+
+            android:id="@+id/e2"
+            android:text="" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+
+        >
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+
+            android:layout_marginTop="8dp"
+            android:id="@+id/tv1"
+            android:text="Total Challenge"
+            android:gravity="center"
+            android:layout_gravity="center"
+          />
+
+        <TextView
+
+
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+
+            android:layout_marginTop="8dp"
+
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_below="@+id/hj"
+            android:textColor="#4e4d4d"
+            android:textStyle="bold"
+
+            android:text="17"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+
+        >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="49dp"
+
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+
+
+            android:id="@+id/tv3"
+            android:text="You Won"
+
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            android:id="@+id/tv4"
+            android:text="13"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="55dp"
+
+
+            >
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="55dp"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="#ffffff"
+
+
+                android:id="@+id/tv6"
+                android:text="Corr. Ans"
+
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="#ffffff"
+
+                android:layout_marginTop="3dp"
+
+                android:id="@+id/tv5"
+                android:text="123"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:layout_marginTop="300dp"
+        >
+
+
+
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
+            android:layout_width="158dp"
+            android:layout_height="220dp"
+            card_view:cardElevation="4dp"
+            card_view:cardMaxElevation="6dp"
+
+            card_view:cardBackgroundColor="@color/colorPrimary"
+            card_view:cardCornerRadius="17dp">
+
+        <ImageView
+            android:id="@+id/imgTourismHr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:background="@drawable/img24"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <ImageView
+                android:id="@+id/imgTourismHr1sd"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/ic_organization"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+
+                android:text="Play with Single Player"
+                android:textSize="19dp"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:id="@+id/bt4"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                />
+
+        </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view1"
+            android:layout_width="158dp"
+            android:layout_height="220dp"
+
+            android:layout_marginLeft="20dp"
+            card_view:cardBackgroundColor="@color/colorPrimary"
+            card_view:cardElevation="4dp"
+            card_view:cardMaxElevation="6dp"
+            card_view:cardCornerRadius="14dp">
+
+            <ImageView
+                android:id="@+id/imgTourismHr1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:background="@drawable/img24"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:id="@+id/imgTourismHr12"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_connecting"/>
+
+                <TextView
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:text="Play with Group Player"
+                    android:textSize="19dp"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="5dp"
+
+                    android:textAlignment="center"
+                    android:id="@+id/bt3"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
+                    />
+
+            </LinearLayout>
+   </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</FrameLayout>

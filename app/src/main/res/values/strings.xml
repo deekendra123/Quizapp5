@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">E2Buddy</string>
+
+
+    <string name="title_activity_home_nev">HomeNevActivity</string>
+    <string name="title_home">Daily Quiz</string>
+    <string name="asteriskred"><font color='#cc0029'>*</font></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="banner_ad">ca-app-pub-2855129539347004/3004437711</string>
+    <string name="Interstitial_ad">ca-app-pub-2855129539347004/4259084720</string>
+    <string name="native_Advanced_Video_ad">ca-app-pub-3940256099942544/1044960115</string>
+
+
+    <string name="notification_channel_id">E2 Buddy</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="my_text"><u>Resend</u>.</string>
+
+</resources>

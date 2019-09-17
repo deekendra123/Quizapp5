@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.aptitude.education.e2buddy.DisplayAnswer.LeaderBoardForQuizActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bglayout"
+        >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/coinsds"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:text="Score"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+                />
+
+            <ImageView
+                android:id="@+id/money"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+
+                app:srcCompat="@drawable/ic_moneys"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView13"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:text=""
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+                android:layout_marginTop="2dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvdata"
+
+
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="deekedra kumar"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#ffffff"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:textColor="#ffffff"
+
+                android:layout_gravity="center"
+
+                android:id="@+id/r"
+                android:text="Rank" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+
+                android:id="@+id/imgrank"
+                app:srcCompat="@drawable/ic_top_rated" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center"
+                android:id="@+id/img"
+                android:text="" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="110dp"
+        android:gravity="center"
+
+        >
+                  <ImageView
+                android:id="@+id/e2buddy"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:elevation="4dp"
+
+                app:srcCompat="@drawable/ic_profile"
+
+                />
+
+    </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+
+            <TextView
+                android:id="@+id/qscore"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="165dp"
+
+                android:gravity="center"
+                android:text="Top 10 Players"
+                android:textColor="#000000"
+
+                android:textSize="20dp"
+
+                />
+
+            <android.support.v7.widget.RecyclerView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:id="@+id/leaderboard"
+                />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="20dp"
+                ads:adSize="BANNER"
+                android:layout_marginTop="20dp"
+                ads:adUnitId="@string/banner_ad"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+</FrameLayout>
