@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.Question.StartQuizActivity;
 import com.aptitude.education.e2buddy.R;
@@ -55,7 +56,7 @@ public class View_Answer_Dialog extends DialogFragment {
     AnswerAdapter answerAdapter;
     List<AnswerView> answerViewList;
     String q_id,value;
-    DatabaseReference databaseReference6;
+    ValueEventListener valueEventListener;
     ProgressDialog progressDialog;
 
     public static View_Answer_Dialog newInstance() {
@@ -86,6 +87,8 @@ public class View_Answer_Dialog extends DialogFragment {
 
         tvCorrectAnswer = view.findViewById(R.id.tvcorrectans);
         tvanswer = view.findViewById(R.id.tvans);
+
+        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
@@ -120,7 +123,6 @@ public class View_Answer_Dialog extends DialogFragment {
         recyclerView.setLayoutManager(layoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference6 = FirebaseDatabase.getInstance().getReference();
 
 
 
@@ -136,7 +138,7 @@ public class View_Answer_Dialog extends DialogFragment {
         answerAdapter = new AnswerAdapter(getActivity(), answerViewList);
         recyclerView.setAdapter(answerAdapter);
 
-        databaseReference6.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -161,7 +163,6 @@ public class View_Answer_Dialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
                 databaseReference.child("daily_user_credit").child(userid).child(quizdate).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -219,7 +220,7 @@ public class View_Answer_Dialog extends DialogFragment {
 
     private void getUserAnswer(final String q_id) {
 
-        databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).child(q_id).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).child(q_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -253,7 +254,7 @@ public class View_Answer_Dialog extends DialogFragment {
     }
 
     private void getTodayQuizScore(){
-        databaseReference6.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -283,7 +284,7 @@ public class View_Answer_Dialog extends DialogFragment {
 
     private void getQuestion(final String questionId, final String useranswer){
 
-        databaseReference.child("questions").child(questionId).addValueEventListener(new ValueEventListener() {
+      valueEventListener =  databaseReference.child("questions").child(questionId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
@@ -327,11 +328,9 @@ public class View_Answer_Dialog extends DialogFragment {
 
     }
 
-
     @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        System.gc();
-        //  Toast.makeText(getActivity(), "heello deeke ",Toast.LENGTH_SHORT).show();
+    public void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(valueEventListener);
     }
 }

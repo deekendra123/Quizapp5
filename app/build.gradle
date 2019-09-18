@@ -75,6 +75,8 @@ dependencies {
     implementation 'io.github.inflationx:viewpump:1.0.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
 
+
+
     implementation 'com.github.joielechong:countrycodepicker:2.3.3'
 
     implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
@@ -97,8 +99,8 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-ads:11.6.0'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.4'
-
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
 

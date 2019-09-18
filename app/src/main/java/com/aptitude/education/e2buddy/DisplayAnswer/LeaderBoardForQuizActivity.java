@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.LoaderForReceiverActivity;
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.R;
@@ -57,31 +58,19 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
 
     RecyclerView recyclerView;
-    DatabaseReference reference2;
     LeaderBoardAdapter leaderBoardAdapter;
     List<LeaderBoardData> list;
-    DatabaseReference reference1;
-    DatabaseReference reference3;
-    DatabaseReference reference4;
-    DatabaseReference reference5;
-    DatabaseReference reference6;
-    DatabaseReference reference7;
-    String  userid,quizdate, username, yourscore ,playername;
+    String  userid,quizdate,userids,quizids, username, yourscore ,playername,value;
     int scores;
-    String userids;
-    String quizids;
-    TextView score;
-    TextView tvscore;
+    TextView score,tvscore,textViewRank,leaderdata,coin, tvrank;
     Transformation transformation;
     List<String> stringList;
     ImageView userIcon;
-    TextView textViewRank;
-    String value;
-    TextView leaderdata,coin, tvrank;
     ProgressDialog progressDialog;
+    DatabaseReference databaseReference;
+    ValueEventListener valueEventListener;
 
 
-    AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,18 +85,14 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         score = findViewById(R.id.textView13);
         userIcon = findViewById(R.id.e2buddy);
 
+        Quizapp.getRefWatcher(LeaderBoardForQuizActivity.this).watch(this);
+
+
         quizdate = getIntent().getStringExtra("quiz_date");
         value  = getIntent().getStringExtra("curent_date");
         userid = getIntent().getStringExtra("userid");
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        leaderdata.setTypeface(type);
-        coin.setTypeface(type);
-        tvrank.setTypeface(type);
-
-        Typeface type1 = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
-        tvscore.setTypeface(type1);
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         progressDialog = new ProgressDialog(LeaderBoardForQuizActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Data Loading...");
@@ -131,10 +116,6 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         pdCanceller.postDelayed(progressRunnable,
                 3400);
 
-
-        CheckInternet checkInternet = new CheckInternet(getApplicationContext());
-        checkInternet.checkConnection();
-
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
                 .borderWidthDp(0)
@@ -148,13 +129,6 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
 
         leaderdata.setText(""+playername);
-        reference1 = FirebaseDatabase.getInstance().getReference();
-        reference2 = FirebaseDatabase.getInstance().getReference();
-        reference3 = FirebaseDatabase.getInstance().getReference();
-        reference4 = FirebaseDatabase.getInstance().getReference();
-        reference5 = FirebaseDatabase.getInstance().getReference();
-        reference6 = FirebaseDatabase.getInstance().getReference("daily_user_total_score");
-        reference7 = FirebaseDatabase.getInstance().getReference();
 
         getPlayerImage();
         getPlayerName();
@@ -163,8 +137,7 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         stringList = new ArrayList<>();
         leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(), list, userid,textViewRank);
 
-
-        reference1.child("daily_user_credit").addListenerForSingleValueEvent(new ValueEventListener() {
+          databaseReference.child("daily_user_credit").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -184,7 +157,7 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
 
 
-        reference4.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
+        valueEventListener = databaseReference.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -217,7 +190,7 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
 
     private void getQuiz(final String id){
-        Query lastQuery = reference2.child("daily_user_credit").child(id).child(quizdate).orderByKey().limitToLast(1);
+        Query lastQuery = databaseReference.child("daily_user_credit").child(id).child(quizdate).orderByKey().limitToLast(1);
 
         lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -251,7 +224,7 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
     private void getUserName(final String ids, final String qids , final int scr, final String date){
 
-        reference3.child("user_info").child(ids).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("user_info").child(ids).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -297,10 +270,8 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
 
     private void getPlayerImage(){
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
+        valueEventListener = databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -325,10 +296,8 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
     }
 
     private void getPlayerName(){
-        DatabaseReference reference4;
 
-        reference4 = FirebaseDatabase.getInstance().getReference();
-        reference4.child("user_info").addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("user_info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -352,7 +321,11 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(valueEventListener);
+    }
 }
 
 

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.aptitude.education.e2buddy.AdMob.Banner_Ad;
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.Question.MenuSheetDialog;
 import com.aptitude.education.e2buddy.R;
 import com.google.android.gms.ads.AdRequest;
@@ -53,32 +54,20 @@ public class LeaderBoardForQuizFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     RecyclerView recyclerView;
-    DatabaseReference reference2;
-
     LeaderAdapter leaderBoardAdapter;
     List<LeaderBoardData> list;
-    DatabaseReference reference1;
-    DatabaseReference reference3;
-    DatabaseReference reference4;
-    DatabaseReference reference5;
-    DatabaseReference reference6;
-    DatabaseReference reference7;
-
-    String userid, username, yourscore;
-    String userids,totalscore,student_name;
+    String userid, username, yourscore,userids,totalscore,student_name;
     int userscore;
-    TextView tvscore, yourrank;
+    TextView tvscore, leaderdata,coin, score,tvrank,imageView;
     ProgressDialog progressDialog;
     Transformation transformation;
     ArrayList<String> uids;
     long totalquiz;
-    ImageView userIcon;
-
+    ImageView userIcon,img_info;
     List<String> rank;
-    TextView leaderdata,coin, score,tvrank;
-    TextView imageView;
-    ImageView img_info;
     FirebaseAuth auth;
+    DatabaseReference databaseReference;
+    ValueEventListener valueEventListener;
 
     public LeaderBoardForQuizFragment() {
         // Required empty public constructor
@@ -119,15 +108,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
         img_info = view.findViewById(R.id.img_info);
         userIcon = view.findViewById(R.id.e2buddy);
 
-        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
-        leaderdata.setTypeface(type);
-        coin.setTypeface(type);
-        tvrank.setTypeface(type);
-
-        Typeface type1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Black.ttf");
-        tvscore.setTypeface(type1);
-
-
+        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
@@ -157,14 +138,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
 
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        reference1 = FirebaseDatabase.getInstance().getReference();
-        reference2 = FirebaseDatabase.getInstance().getReference("daily_user_total_score");
-        reference3 = FirebaseDatabase.getInstance().getReference();
-        reference4 = FirebaseDatabase.getInstance().getReference();
-        reference5 = FirebaseDatabase.getInstance().getReference();
-        reference6 = FirebaseDatabase.getInstance().getReference();
-        reference7 = FirebaseDatabase.getInstance().getReference();
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         getPlayerName();
         getPlayerImage();
@@ -173,7 +147,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
         uids = new ArrayList<>();
         leaderBoardAdapter = new LeaderAdapter(getActivity(), list,userid, imageView);
 
-        reference3.child("daily_user_total_score").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("daily_user_total_score").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -201,7 +175,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
             }
         });
 
-        reference5.child("daily_user_total_score").child(userid).addValueEventListener(new ValueEventListener() {
+        valueEventListener = databaseReference.child("daily_user_total_score").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -248,7 +222,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
     }
     private void getUserName(final String id, final int score){
 
-        reference4.child("user_info").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("user_info").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -339,7 +313,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
 
         alert.setView(alertLayout);
 
-        reference5.child("daily_user_total_score").child(uid).addValueEventListener(new ValueEventListener() {
+        valueEventListener = databaseReference.child("daily_user_total_score").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -358,7 +332,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
             }
         });
 
-        reference5.child("daily_user_credit").child(uid).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_user_credit").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -440,7 +414,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
 
     public void showAlertDialogForUser() {
 
-        reference6.child("daily_user_total_score").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("daily_user_total_score").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -465,7 +439,7 @@ public class LeaderBoardForQuizFragment extends Fragment {
     }
 
     private void getPlayerName(){
-        reference7.child("user_info").addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("user_info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -491,10 +465,8 @@ public class LeaderBoardForQuizFragment extends Fragment {
 
 
     private void getPlayerImage(){
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -515,4 +487,9 @@ public class LeaderBoardForQuizFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(valueEventListener);
+    }
 }

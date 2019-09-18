@@ -58,10 +58,6 @@ public class StartQuizActivity extends AppCompatActivity {
 
     TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7;
     Button start;
-    SharedPreferences sharedPreferences;
-    DatabaseReference databaseReference;
-    DatabaseReference databaseRef, databaseRef1;
-    DatabaseReference databaseReference1;
     String value,quiz_date;
 
 
@@ -69,7 +65,6 @@ public class StartQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_quiz2);
-
 
         tv1 = findViewById(R.id.textView6);
         tv2 = findViewById(R.id.textView5);
@@ -84,9 +79,6 @@ public class StartQuizActivity extends AppCompatActivity {
 
         quiz_date = getIntent().getStringExtra("quiz_date");
 
-        // Toast.makeText(StartQuizActivity.this, "deeke "+ quiz_date,Toast.LENGTH_SHORT).show();
-
-
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
         Date currentLocalTime = cal.getTime();
         DateFormat date1 = new SimpleDateFormat("dd-MM::HH:mm", Locale.UK);
@@ -94,15 +86,6 @@ public class StartQuizActivity extends AppCompatActivity {
         date1.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
 
         value = date1.format(currentLocalTime);
-
-        databaseReference1 = FirebaseDatabase.getInstance().getReference("user_notifications");
-        databaseRef = FirebaseDatabase.getInstance().getReference();
-        databaseRef1 = FirebaseDatabase.getInstance().getReference();
-
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
         tv2.setText("1) Number of Questions : 10");
 
         tv3.setText("2) Attempt all the Questions");
@@ -133,8 +116,6 @@ public class StartQuizActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        System.gc();
 
         Intent intent = new Intent(getApplicationContext(), HomeNevActivity.class);
         startActivity(intent);

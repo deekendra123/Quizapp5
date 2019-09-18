@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aptitude.education.e2buddy.DisplayAnswer.ResultActivity;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.R;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -82,39 +84,7 @@ public class RewardFragment extends Fragment {
         tv9 = view.findViewById(R.id.tv9);
         tv10 = view.findViewById(R.id.tv10);
 
-        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
-        tv1.setTypeface(type);
-        tv2.setTypeface(type);
-        tv3.setTypeface(type);
-        tv4.setTypeface(type);
-        tv5.setTypeface(type);
-        tv6.setTypeface(type);
-        tv7.setTypeface(type);
-        tv8.setTypeface(type);
-        tv9 .setTypeface(type);
-
-        Typeface type1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Black.ttf");
-        tv10.setTypeface(type1);
-
-        mAdView = (AdView) view.findViewById(R.id.adView);
-        adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-      /*  mInterstitialAd = new InterstitialAd(getActivity());
-
-        mInterstitialAd.setAdUnitId(getString(R.string.Interstitial_ad));
-
-        mInterstitialAd.loadAd(adRequest);
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-            }
-        });*/
-
-
+        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         return view;
     }

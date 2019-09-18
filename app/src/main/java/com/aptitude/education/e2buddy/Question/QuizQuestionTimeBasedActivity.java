@@ -3,8 +3,6 @@ package com.aptitude.education.e2buddy.Question;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -22,11 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.aptitude.education.e2buddy.DisplayAnswer.LeaderAdapter;
 import com.aptitude.education.e2buddy.DisplayAnswer.LeaderBoardAdapter;
 import com.aptitude.education.e2buddy.DisplayAnswer.LeaderBoardData;
 import com.aptitude.education.e2buddy.DisplayAnswer.ResultActivity;
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.CreditView;
 import com.aptitude.education.e2buddy.ViewData.InsertAnswer;
@@ -38,68 +36,37 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences,sharedPreferences1;
-    String quizid, quizname;
     AdapterForTimeBasedQuiz questionAdapter;
     ViewPager viewPager;
     private TextView[] mdots;
     LinearLayout linearLayout;
-    private int mCurrentPage;
-    String questionid, question, option1, option2,option3,option4, answer,userid,quizdate,description,userids,userids1,quizids,username;
-    TextView tiemr;
-    int onlineplayecount = 1534;
+    String questionid, question,date,q_id,value, option1, option2,option3,option4, answer,userid,quizdate,description;
+    int onlineplayecount = 1534,mCurrentPage;
     int[] layout;
-    TextView onlinuser;
-    TextView tvcancelquiz;
-    DatabaseReference databaseReference;
-    DatabaseReference databaseReference1;
-    FirebaseDatabase database;
-    DatabaseReference dataref;
-    DatabaseReference reference;
-    DatabaseReference totalchild;
-    DatabaseReference totalque;
-    DatabaseReference databaseReference2;
-    DatabaseReference databaseReference3;
-    DatabaseReference databaseReference4;
-    DatabaseReference databaseReference5;
-    DatabaseReference databaseReference6;
-    DatabaseReference reference7,reference3,reference2,reference4;
-    DatabaseReference reference8;
-    List<LeaderBoardData> leaderBoardDataList;
-    List<LeaderBoardData> dataList;
+    TextView onlinuser,tvcancelquiz;
+    List<LeaderBoardData> leaderBoardDataList,dataList;
     CountDownTimer countDownTimer;
     Button next;
+    DatabaseReference databaseReference;
     private List<QuestionView> questionViewList;
-    DatabaseReference reference5;
     AlertDialog alertDialog;
     long timeleft;
     List<TimeData> timeleftlist;
     ProgressDialog progressDialog;
-    String date,q_id,corr_ans;
-    int scores = 0;
     List<LeaderBoardData> list;
     LeaderBoardAdapter leaderBoardAdapter;
-    int scoreCount = 0;
-    String value;
-    int count = 0;
-    int count1 = 0;
-    DatabaseReference databaseRef,databaseRef1;
+    ValueEventListener valueEventListener;
+
     MediaPlayer player,player1;
     FirebaseAuth auth;
     private long timeCountInMilliSeconds = 1 * 60000;
@@ -124,6 +91,11 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
         next = findViewById(R.id.bnext);
         tvcancelquiz = findViewById(R.id.tvcancel);
         onlinuser = findViewById(R.id.onlineuser);
+        Quizapp.getRefWatcher(QuizQuestionTimeBasedActivity.this).watch(this);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
@@ -155,29 +127,6 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
             }
         });
 
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();
-
-        databaseReference1 = FirebaseDatabase.getInstance().getReference();
-        databaseReference2 = FirebaseDatabase.getInstance().getReference();
-        databaseReference3 = FirebaseDatabase.getInstance().getReference("daily_user_answer");
-        databaseReference4 = FirebaseDatabase.getInstance().getReference();
-        databaseReference5 = FirebaseDatabase.getInstance().getReference();
-        databaseReference6 = FirebaseDatabase.getInstance().getReference();
-        reference5 = FirebaseDatabase.getInstance().getReference();
-        reference7 = FirebaseDatabase.getInstance().getReference();
-        reference8 = FirebaseDatabase.getInstance().getReference();
-        reference3 = FirebaseDatabase.getInstance().getReference();
-        reference2 = FirebaseDatabase.getInstance().getReference("daily_user_quiz_rank");
-        reference4 = FirebaseDatabase.getInstance().getReference();
-        databaseRef = FirebaseDatabase.getInstance().getReference();
-        databaseRef1 = FirebaseDatabase.getInstance().getReference();
-
-        totalchild = FirebaseDatabase.getInstance().getReference();
-        totalque = FirebaseDatabase.getInstance().getReference();
-        dataref = FirebaseDatabase.getInstance().getReference();
-        reference = FirebaseDatabase.getInstance().getReference();
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
         date = sdf.format(new Date());
 
@@ -193,7 +142,7 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
         questionAdapter = new AdapterForTimeBasedQuiz(questionViewList, getApplicationContext(), value, userid,quizdate);
 
-        databaseReference6.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
+      valueEventListener =  databaseReference.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -233,7 +182,7 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                System.gc();
+           //     System.gc();
                 if(countDownTimer!=null){
                     countDownTimer.cancel();
                 }
@@ -252,15 +201,11 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
                 }
 
                 startStop();
-                //  Toast.makeText(getApplicationContext(), "time left "+ timeleft/1000, Toast.LENGTH_SHORT).show();
-
                 timeleftlist.add(new TimeData(timeleft/1000));
 
                 for (int i =0;i<timeleftlist.size();i++){
 
                     TimeData timeData = timeleftlist.get(i);
-                    //    Toast.makeText(getApplicationContext(), "all time : "+timeData.getTimelefts(), Toast.LENGTH_SHORT).show();
-
                     try {
                         QuestionView questionView = questionViewList.get(i);
 
@@ -268,7 +213,7 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
                         try {
 
-                            databaseReference2.child("daily_user_answer").child(userid).child(quizdate).child(value).child(questionView.getQuestionid()).child("timeleft").setValue(insertAnswer.getTimeleft());
+                            databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).child(questionView.getQuestionid()).child("timeleft").setValue(insertAnswer.getTimeleft());
 
 
                         }
@@ -283,16 +228,12 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
 
                     }
-                    //  Toast.makeText(getApplicationContext(), "question id : "+ questionView.getQuestionid(), Toast.LENGTH_SHORT).show();
-
                 }
-
                 if (mCurrentPage<layout.length) {
                     viewPager.setCurrentItem(mCurrentPage + 1);
                 }
                 else
                 {
-                    //  tiemr.setText(""+timeleft/100);
                     countDownTimer.cancel();
                     if(player.isPlaying() || player1.isPlaying()) {
                         player.stop();
@@ -316,31 +257,14 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
                                 public void onClick(DialogInterface arg0, int arg1) {
 
+                                    Intent intent = new Intent(QuizQuestionTimeBasedActivity.this, ResultActivity.class);
+                                    intent.putExtra("quiz_date",quizdate);
+                                    intent.putExtra("curent_date", value);
+                                    intent.putExtra("userid", userid);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    QuizQuestionTimeBasedActivity.this.finish();
 
-                                    System.gc();
-
-                                    databaseReference6.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-
-                                                q_id = dataSnapshot1.getKey();
-
-                                                //Toast.makeText(getApplicationContext(), ""+q_id,Toast.LENGTH_SHORT).show();
-
-                                                getUserAnswer(q_id);
-
-                                            }
-                                        }
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
-
-
-                                    showLoader();
 
                                 }
                             }).create().show();
@@ -366,14 +290,13 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
                                     player.stop();
                                     player1.stop();
 
-                                    reference5.child("daily_user_answer").child(userid).child(quizdate).child(value).removeValue();
+                                    databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).removeValue();
                                     Intent i = new Intent(getApplicationContext(), HomeNevActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(i);
-                                    QuizQuestionTimeBasedActivity.this.finish();                        }
+                                     QuizQuestionTimeBasedActivity.this.finish();                        }
                             })
 
-                            // A null listener allows the button to dismiss the dialog and take no further action.
                             .setNegativeButton("NO", null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
@@ -387,13 +310,12 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
     }
 
     private void getOnlinePlayers(){
-        reference4.child("online_users").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("online_users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int count = (int) dataSnapshot.getChildrenCount();
                 onlineplayecount = onlineplayecount +count;
-                // Toast.makeText(getApplicationContext(),""+onlineplayecount,Toast.LENGTH_SHORT).show();
                 onlinuser.setText(""+onlineplayecount);
             }
 
@@ -405,8 +327,6 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
     }
 
     private void startStop() {
-
-        int time = 1;
 
         timeCountInMilliSeconds = 16000;
 
@@ -447,8 +367,6 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
                     public void onClick(DialogInterface dialog, int which) {
 
-
-                        System.gc();
                         if (countDownTimer != null) {
                             countDownTimer.cancel();
                         }
@@ -470,7 +388,6 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
                             viewPager.setCurrentItem(mCurrentPage + 1);
                         } else {
-                            //  tiemr.setText(""+timeleft/100);
 
                             countDownTimer.cancel();
                             countDownTimer = null;
@@ -493,26 +410,13 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
                                         public void onClick(DialogInterface arg0, int arg1) {
 
-                                            databaseReference6.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                                                        q_id = dataSnapshot1.getKey();
-
-                                                        getUserAnswer(q_id);
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-                                            });
-
-                                            countDownTimer.cancel();
-                                            showLoader();
+                                            Intent intent = new Intent(QuizQuestionTimeBasedActivity.this, ResultActivity.class);
+                                            intent.putExtra("quiz_date",quizdate);
+                                            intent.putExtra("curent_date", value);
+                                            intent.putExtra("userid", userid);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                            QuizQuestionTimeBasedActivity.this.finish();
 
                                         }
                                     }).create().show();
@@ -539,7 +443,7 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
     private void getQuizQuestions(String q_id) {
 
 
-        databaseReference.child("questions").child(q_id).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("questions").child(q_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -569,103 +473,9 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
     }
 
 
-    private void getUserAnswer(final String q_id) {
-        databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).child(q_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                //  Toast.makeText(getApplicationContext(),""+useranswer +"\n"+ timeleft,Toast.LENGTH_SHORT).show();
-                try {
-                    String useranswer = dataSnapshot.child("useranswer").getValue(String.class);
-                    int timeleft = Integer.parseInt(dataSnapshot.child("timeleft").getValue().toString());
-                    Log.d("AnswerActivity", "questionid :" + q_id);
-
-
-                    if (useranswer == null) {
-                        String.valueOf(useranswer.replace(null, "question was not given"));
-
-                    }
-
-                    getQuestion(q_id, useranswer, timeleft);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-
-        });
-
-    }
-
-    private void getQuestion(final String questionId, final String useranswer, final int timeleft){
-        final String TAG = getClass().getSimpleName();
-
-        databaseReference.child("questions").child(questionId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    Log.d(TAG, "children are: "+dataSnapshot.getKey());
-
-//                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "childs: "+dataSnapshot.getKey());
-                    question = dataSnapshot.child("Question").getValue(String.class);
-                    corr_ans = dataSnapshot.child("Answer").getValue(String.class);
-
-
-                    if (corr_ans.equals(useranswer)) {
-                        count = count+2;
-
-                        scores = scores+timeleft*2;
-                        count1 = count1+1;
-
-                    }
 
 
 
-                    insertCredit();
-
-
-                    progressDialog.dismiss();
-
-
-                    //  }
-                }catch (NullPointerException | DatabaseException e){
-                    e.printStackTrace();
-                }
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
-
-    private void insertCredit(){
-
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("daily_user_credit");
-
-        final int num =1;
-
-        CreditView creditView = new CreditView(scores,quizdate,quizid,count1);
-
-        reference1.child(userid).child(quizdate).child(value).setValue(creditView);
-
-    }
 
     private void addDotsIndicator(int position){
         mdots = new TextView[10];
@@ -726,107 +536,15 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
         return false;
     }
 
-    private void showLoader() {
-        if (!isFinishing()){
-            final ProgressDialog dialog = new ProgressDialog(QuizQuestionTimeBasedActivity.this);
-            dialog.setTitle("Please wait...");
-            dialog.setMessage("Generating Your Result");
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
 
-            long delayInMillis = 3500;
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-
-                    insertTotalQuizScore();
-
-                    Intent intent = new Intent(QuizQuestionTimeBasedActivity.this, ResultActivity.class);
-                    intent.putExtra("quiz_date",quizdate);
-                    intent.putExtra("curent_date", value);
-                    intent.putExtra("userid", userid);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    QuizQuestionTimeBasedActivity.this.finish();
-
-
-                }
-            }, delayInMillis);
-
-        }
-    }
-
-
-
-
-    private void insertTotalQuizScore(){
-
-        reference5.child("daily_user_credit").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                    String id = dataSnapshot1.getKey();
-
-                    getCreditScore(id);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseReference.removeEventListener(valueEventListener);
 
     }
-
-    private void getCreditScore(String date){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference reference6;
-        reference6 = FirebaseDatabase.getInstance().getReference("daily_user_total_score");
-
-        final Query lastQuery = reference.child("daily_user_credit").child(userid).child(date).orderByKey().limitToLast(1);
-
-
-        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                quizids = dataSnapshot.getKey();
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                    try {
-                        String id = dataSnapshot1.getKey();
-
-                        int quiz = (Integer.parseInt(dataSnapshot1.child("credit_points").getValue().toString()));
-
-                        scoreCount = scoreCount + quiz;
-
-                        InsertTotalScoreData insertTotalScoreData = new InsertTotalScoreData(String.valueOf(scoreCount));
-                        reference6.child(userid).setValue(insertTotalScoreData);
-
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 }
+
 
 
 

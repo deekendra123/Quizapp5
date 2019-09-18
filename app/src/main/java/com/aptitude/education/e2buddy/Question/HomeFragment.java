@@ -40,6 +40,7 @@ import com.aptitude.education.e2buddy.DisplayAnswer.ResultActivity;
 import com.aptitude.education.e2buddy.DisplayAnswer.ViewAnswerActivity;
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
 import com.aptitude.education.e2buddy.Intro.IntroActivity;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.Intro.UpdateUserImageActivity;
 import com.aptitude.education.e2buddy.Pushdatatofirebase.CopyDbActivity;
 import com.aptitude.education.e2buddy.R;
@@ -88,14 +89,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ProgressDialog dialog;
     Firebase firebase;
     List<HistoryView> historyViewList;
-    DatabaseReference reference2;
-    DatabaseReference reference3;
     List<LeaderBoardData> list;
-    DatabaseReference ref;
-    DatabaseReference reference4;
     String quizid,student_name,userids1,username1,eid,date;
     int userscore;
     Transformation transformation;
+    DatabaseReference databaseReference;
     UserQuizHistoryAdapter userQuizHistoryAdapter;
     LeaderAdapter leaderAdapter;
     List<LeaderBoardData> leaderBoardDataList;
@@ -108,7 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     StorageReference storageReference;
     AdView mAdView;
 
-
+    ValueEventListener valueEventListener;
     String inputPattern = "yyyy-MM-dd";
     String outputPattern = "dd-MM-yyyy";
     SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
@@ -168,6 +166,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        Quizapp.getRefWatcher(getActivity()).watch(this);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         Animation myFadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.play_anim);
         todayque.startAnimation(myFadeInAnimation);
 
@@ -225,14 +227,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         getQuizHistory();
         getTotalQuizCount();
 
-        reference2 = FirebaseDatabase.getInstance().getReference();
-        reference4 = FirebaseDatabase.getInstance().getReference();
-
-        ///getRank();
-
         getAllTimeLeaderBoard();
 
-        reference4.child("user_info").addValueEventListener(new ValueEventListener() {
+      valueEventListener = databaseReference.child("user_info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -253,16 +250,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        ref = FirebaseDatabase.getInstance().getReference();
-
 
         todayque.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-                databaseReference.child("daily_user_credit").child(eid).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+           databaseReference.child("daily_user_credit").child(eid).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try {
@@ -296,7 +289,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        listener = new FirebaseAuth.AuthStateListener() {
+               listener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
@@ -351,8 +344,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void getTotalQuizAndScore() {
 
-        DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference();
-        reference3.child("daily_user_total_score").child(eid).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_user_total_score").child(eid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -377,11 +369,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getTotalQuizCount(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        //  Query lastQuery = databaseReference.child("daily_user_credit").child(eid).orderByKey().limitToLast(1);
-
-        databaseReference.child("daily_user_credit").child(eid).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_user_credit").child(eid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -455,9 +444,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void getQuizHistory() {
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        reference.child("daily_user_credit").child(eid).addValueEventListener(new ValueEventListener() {
+        valueEventListener = databaseReference.child("daily_user_credit").child(eid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
@@ -481,8 +469,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getLastQuiz(final String q_id){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query lastQuery = reference.child("daily_user_credit").child(eid).child(q_id).orderByKey().limitToLast(1);
+
+        Query lastQuery = databaseReference.child("daily_user_credit").child(eid).child(q_id).orderByKey().limitToLast(1);
 
 
         historyViewList = new ArrayList<>();
@@ -531,42 +519,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void fullConnectionExample(final String student_name) {
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myConnectionsRef = database.getReference("online_users");
-
-        // final DatabaseReference lastOnlineRef = database.getReference("users/lastOnline");
-        final DatabaseReference connectedRef = database.getReference(".info/connected");
-
-
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-
-                ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                final boolean isconnected = networkInfo!=null && networkInfo.isConnectedOrConnecting();
-
-
-                if (connected) {
-
-                    myConnectionsRef.child(eid).setValue(new OnlineStatusData(student_name, Boolean.TRUE));
-
-                    myConnectionsRef.child(eid).onDisconnect().removeValue();
-
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("deeke", "Listener was cancelled at .info/connected");
-            }
-        });
-    }
 
     private void presentShowcaseSequence() {
 
@@ -636,8 +588,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getPlayerImage(){
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         databaseReference.child("user_info").child(eid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -679,8 +629,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private void getAllTimeLeaderBoard(){
-        DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference();
-        reference3.child("daily_user_total_score").addValueEventListener(new ValueEventListener() {
+
+        valueEventListener =databaseReference.child("daily_user_total_score").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -708,10 +658,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private void getScoreForAllTimeLeaderBoard(final String userid){
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("daily_user_total_score").child(userid).addValueEventListener(new ValueEventListener() {
+
+       valueEventListener = databaseReference.child("daily_user_total_score").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -737,10 +686,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getUserNameForAllTimeLeaderBoard(final String userids1, final int userscore) {
-        DatabaseReference reference4 = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference reference6 = FirebaseDatabase.getInstance().getReference("daily_user_rank");
 
-        reference4.child("user_info").child(userids1).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("user_info").child(userids1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -793,6 +740,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     };
 
-
-
+   /* @Override
+    public void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(valueEventListener);
+    }*/
 }

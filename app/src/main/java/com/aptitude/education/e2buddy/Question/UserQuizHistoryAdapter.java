@@ -36,9 +36,6 @@ public class UserQuizHistoryAdapter extends RecyclerView.Adapter<UserQuizHistory
     String newdate;
     List<HistoryView> historyViewList;
     OnItemClickListener listener;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    ArrayList<AnswerView> answerViewList;
     String userId;
 
     public UserQuizHistoryAdapter(Context mCtx, List<HistoryView> historyViewList, String userId) {
@@ -55,7 +52,7 @@ public class UserQuizHistoryAdapter extends RecyclerView.Adapter<UserQuizHistory
 
     }
 
-    public void setOnItemClickListener(QuizAdapter1.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = (OnItemClickListener) listener;
     }
 
@@ -89,15 +86,6 @@ public class UserQuizHistoryAdapter extends RecyclerView.Adapter<UserQuizHistory
 
         holder.textView.setText(newdate+"-2019");
         holder.tvcoins.setText(""+historyView.getCoins());
-
-
-        sharedPreferences = mCtx.getSharedPreferences("quizpref", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-        final String id1 = historyViewList.get(position).getQuizname();
-        final String score1 = historyViewList.get(position).getDate();
-
-        // Toast.makeText(mCtx, "deeke "+ historyView.getId() + "\n" + historyView.getQuizname(),Toast.LENGTH_SHORT).show();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

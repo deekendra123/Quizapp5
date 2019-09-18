@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.PreQuizIdData;
 import com.aptitude.education.e2buddy.ViewData.PreviousQuizView;
@@ -56,33 +57,18 @@ public class PreviousQuizFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     ProgressDialog progressDialog;
-
-    TextView textView;
     RecyclerView recyclerView ;
-    DatabaseReference databaseReference;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    String quizid, quizname, userid,quizdate;
-
-    DatabaseReference reference;
     AdView mAdView;
-    String uname;
-
     List<PreviousQuizView> previousQuizViewList;
-    List<PreQuizIdData> list;
     PreviousQuizAdapter previousQuizAdapter;
     String  qdate;
     ImageView userIcon;
-
-    String  user, student_name;
-    DatabaseReference reference4;
     Transformation transformation;
     FirebaseAuth auth;
-
-    String p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11, systemdate;
-
-    Date pd1,pd2,pd3,pd4,pd5,pd6,pd7,pd8,pd9,pd10,pd11;
+    String p1,p2,p3,p4,p5,p6,p7,p8,p9,p10, systemdate,userid,student_name;
+    Date pd1,pd2,pd3,pd4,pd5,pd6,pd7,pd8,pd9,pd10;
     TextView e2;
+    DatabaseReference databaseReference;
     ImageView img_info;
 
 
@@ -111,30 +97,25 @@ public class PreviousQuizFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_previous_quiz, container, false);
-
         recyclerView = view.findViewById(R.id.prerecycler);
         userIcon = view.findViewById(R.id.userimage);
         img_info = view.findViewById(R.id.img_info);
+        e2 = view.findViewById(R.id.e2);
 
         mAdView = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         getActivity().getFragmentManager().popBackStack();
-
-
-        e2 = view.findViewById(R.id.e2);
-
-        CheckInternet checkInternet = new CheckInternet(getActivity());
-        checkInternet.checkConnection();
-
 
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
         userid = user.getUid();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
@@ -142,9 +123,6 @@ public class PreviousQuizFragment extends Fragment {
                 .cornerRadiusDp(50)
                 .oval(false)
                 .build();
-
-
-        //e2.setText(""+uname);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(true);
@@ -161,9 +139,6 @@ public class PreviousQuizFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-
-        reference = FirebaseDatabase.getInstance().getReference();
-        reference4 = FirebaseDatabase.getInstance().getReference();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
         systemdate = sdf.format(new Date());
@@ -243,10 +218,6 @@ public class PreviousQuizFragment extends Fragment {
         pd10 = c10.getTime();
         p10 = dateFormat.format(pd10);
 
-        sharedPreferences = getActivity().getSharedPreferences("quizpref", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         previousQuizViewList = new ArrayList<>();
 
@@ -314,7 +285,7 @@ public class PreviousQuizFragment extends Fragment {
 
     private void getPlayerName(){
 
-        reference4.child("user_info").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("user_info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

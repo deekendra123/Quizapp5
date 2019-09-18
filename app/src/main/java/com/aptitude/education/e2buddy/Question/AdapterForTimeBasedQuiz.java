@@ -41,14 +41,9 @@ public class AdapterForTimeBasedQuiz extends PagerAdapter {
     private List<QuestionView> questionViewList;
     Context context;
     LayoutInflater layoutInflater;
-    String value;
-    SharedPreferences sharedPreferences,sharedPreferences1;
-    String quizid, quizname, finalanswer, userid,quizdate,localTime;
+    String userid,quizdate,value;
     DatabaseReference databaseReference;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference dataref;
-    DatabaseReference reference;
-    DatabaseReference databaseReference1;
+
 
 
     Button btn_unfocus;
@@ -112,18 +107,7 @@ public class AdapterForTimeBasedQuiz extends PagerAdapter {
         opt4.setTypeface(type);
 
 
-//        final Button next = view.findViewById(R.id.bnext);
-
-
-
-        //    Toast.makeText(getApplicationContext(), ""+localTime,Toast.LENGTH_SHORT).show();
         databaseReference = FirebaseDatabase.getInstance().getReference("daily_user_answer");
-
-        databaseReference1 = FirebaseDatabase.getInstance().getReference("daily_user_answer");
-
-        dataref = FirebaseDatabase.getInstance().getReference();
-        reference = FirebaseDatabase.getInstance().getReference();
-
 
         final QuestionView questionView = questionViewList.get(position);
 
@@ -156,42 +140,25 @@ public class AdapterForTimeBasedQuiz extends PagerAdapter {
                         case R.id.rdops1 :
                             setFocus(btn_unfocus, btn[0]);
                             ans = btn[0].getText().toString();
-                            //         Toast.makeText(context, "answ " + ans, Toast.LENGTH_SHORT ).show();
-
                             insertAnswer(questionView.getQuestionid(),ans);
-
-                            //   selectedans.setText("Your Selected Answer : "+ ans);
-
                             break;
 
                         case R.id.rdops2 :
                             setFocus(btn_unfocus, btn[1]);
                             ans = btn[1].getText().toString();
-//                            Toast.makeText(context, "answ " + ans, Toast.LENGTH_SHORT ).show();
                             insertAnswer(questionView.getQuestionid(),ans);
-
-                            // selectedans.setText("Your Selected Answer : "+ ans);
-
                             break;
 
                         case R.id.rdops3 :
                             setFocus(btn_unfocus, btn[2]);
                             ans = btn[2].getText().toString();
-                            //                          Toast.makeText(context, "answ " + ans, Toast.LENGTH_SHORT ).show();
                             insertAnswer(questionView.getQuestionid(),ans);
-
-                            //selectedans.setText("Your Selected Answer : "+ ans);
-
                             break;
 
                         case R.id.rdops4 :
                             setFocus(btn_unfocus, btn[3]);
                             ans = btn[3].getText().toString();
-                            //                        Toast.makeText(context, "answ " + ans, Toast.LENGTH_SHORT ).show();
                             insertAnswer(questionView.getQuestionid(),ans);
-
-                            //     selectedans.setText("Your Selected Answer : "+ ans);
-
                             break;
                     }
                 }
@@ -218,17 +185,12 @@ public class AdapterForTimeBasedQuiz extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
-//        container.removeView((RelativeLayout) object);
     }
 
     private void insertAnswer(String questionid, String answer){
-
-
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy::HH:mm:ss");
         final String date = sdf.format(new Date());
 
-        String id = databaseReference.push().getKey();
         InsertAnswer answers = new InsertAnswer(answer, date);
         databaseReference.child(userid).child(quizdate).child(value).child(questionid).setValue(answers);
 

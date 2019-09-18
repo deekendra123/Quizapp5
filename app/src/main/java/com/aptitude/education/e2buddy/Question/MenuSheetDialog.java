@@ -54,12 +54,11 @@ import static android.content.Context.MODE_PRIVATE;
 public class MenuSheetDialog extends BottomSheetDialogFragment {
 
 
-    TextView feedback,rateus,shareandearn,faq;
-    TextView username, email,privacy;
-
+    TextView feedback,rateus,shareandearn,faq,username, email,privacy;
     String userid,student_name;
     ImageView userIcon;
     LinearLayout layout;
+    DatabaseReference databaseReference;
     Transformation transformation;
     FirebaseAuth auth;
 
@@ -79,19 +78,6 @@ public class MenuSheetDialog extends BottomSheetDialogFragment {
         shareandearn = view.findViewById(R.id.earn);
         faq = view.findViewById(R.id.faq);
 
-        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Regular.ttf");
-        feedback.setTypeface(type);
-        rateus.setTypeface(type);
-        username.setTypeface(type);
-        email.setTypeface(type);
-        privacy.setTypeface(type);
-        faq.setTypeface(type);
-        shareandearn.setTypeface(type);
-
-        CheckInternet checkInternet = new CheckInternet(getActivity());
-        checkInternet.checkConnection();
-
-        //image
 
         int height= Resources.getSystem().getDisplayMetrics().heightPixels;
         int width= Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -109,6 +95,8 @@ public class MenuSheetDialog extends BottomSheetDialogFragment {
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
         userid = user.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
@@ -189,8 +177,6 @@ public class MenuSheetDialog extends BottomSheetDialogFragment {
     }
 
     private void getPlayerImage(){
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -202,7 +188,6 @@ public class MenuSheetDialog extends BottomSheetDialogFragment {
                     String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
                     String number = dataSnapshot.child("phone_no").getValue(String.class);
                     String emailid = dataSnapshot.child("email").getValue(String.class);
-
 
                     Picasso.with(getActivity())
                             .load(imageUrl)
@@ -243,4 +228,6 @@ public class MenuSheetDialog extends BottomSheetDialogFragment {
         super.onDismiss(dialog);
         System.gc();
     }
+
+
 }

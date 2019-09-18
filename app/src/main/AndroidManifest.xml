@@ -185,8 +185,6 @@
             </intent-filter>
         </service>
 
-        <service android:name=".Intro.LeakLoggerService" />
-
         <activity
             android:name=".One_on_One_Quiz_Challenge.QuestionForQuizChallengeActivity"
             android:screenOrientation="portrait"

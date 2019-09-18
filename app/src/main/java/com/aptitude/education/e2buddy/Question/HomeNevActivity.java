@@ -40,6 +40,7 @@ import com.aptitude.education.e2buddy.App_Sharing.FAQ_Dialog;
 import com.aptitude.education.e2buddy.App_Sharing.Merchandise_Dialog;
 import com.aptitude.education.e2buddy.App_Sharing.RewardFragment;
 import com.aptitude.education.e2buddy.DisplayAnswer.LeaderBoardForQuizFragment;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.ChallengeQuizRequestFragment;
 import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.LoaderForReceiverActivity;
 import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.SendRequestToOpponentFragment;
@@ -68,16 +69,13 @@ import java.util.TimerTask;
 import android.app.DialogFragment;
 public class HomeNevActivity extends AppCompatActivity {
 
-    private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
-    DatabaseReference reference4;
-    String student_name, eid, imageUrl;
+    String  eid;
     FirebaseAuth auth;
-    long notification_hr,notification_min,notification_sec;
-    String sender_name,notification_id,receiver_user_id,sender_id;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+
     InterstitialAd mInterstitialAd;
     Fragment currentFragment = null;
+    DatabaseReference reference;
+    ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +84,13 @@ public class HomeNevActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
 
+
         navigation.getMenu().getItem(2).setChecked(true);
 
         navigation.setItemIconTintList(null);
+
+         reference = FirebaseDatabase.getInstance().getReference();
+
 
         mInterstitialAd = new InterstitialAd(HomeNevActivity.this);
 
@@ -116,7 +118,6 @@ public class HomeNevActivity extends AppCompatActivity {
                             case R.id.navigation_home:
 
                                 if (!(currentFragment instanceof HomeFragment)) {
-                                    System.gc();
                                     HomeFragment fragment = new HomeFragment();
                                     loadFragment(fragment);
                                 }
@@ -126,7 +127,7 @@ public class HomeNevActivity extends AppCompatActivity {
 
 
                                 if (!(currentFragment instanceof PreviousQuizFragment)) {
-                                    System.gc();
+
                                     PreviousQuizFragment previousQuizFragment = new PreviousQuizFragment();
                                     loadFragment(previousQuizFragment);
                                 }
@@ -136,7 +137,6 @@ public class HomeNevActivity extends AppCompatActivity {
                             case R.id.navigation_leaderboard:
 
                                 if (!(currentFragment instanceof LeaderBoardForQuizFragment)) {
-                                    System.gc();
                                     LeaderBoardForQuizFragment  leaderBoardForQuizFragment = new LeaderBoardForQuizFragment();
                                     loadFragment(leaderBoardForQuizFragment);
 
@@ -147,26 +147,18 @@ public class HomeNevActivity extends AppCompatActivity {
                             case R.id.navigation_rewards:
 
                                 if (!(currentFragment instanceof RewardFragment)) {
-                                    System.gc();
                                     RewardFragment rewardFragment = new RewardFragment();
                                     loadFragment(rewardFragment);
                                 }
                                 break;
 
-                           /* case  R.id.navigation_challenge:
 
-                                if (!(currentFragment instanceof SendRequestToOpponentFragment)) {
-                                    SendRequestToOpponentFragment sendRequestToOpponentFragment = new SendRequestToOpponentFragment();
-                                    loadFragment(sendRequestToOpponentFragment);
-                                }
-                                break;
-*/
                         }
                         return false;
                     }
                 });
 
-        getUserName();
+    //    getUserName();
         getDynamicLink();
 
         loadFragment(new HomeFragment());
@@ -186,6 +178,7 @@ public class HomeNevActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
 
         mInterstitialAd.show();
 
@@ -241,6 +234,14 @@ public class HomeNevActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        reference.removeEventListener(valueEventListener);
+
+    }
+
     public static class BottomNavigationViewHelper {
 
         @SuppressLint("RestrictedApi")
@@ -267,79 +268,11 @@ public class HomeNevActivity extends AppCompatActivity {
         }
     }
 
-    private void getUserName(){
 
-        reference4 = FirebaseDatabase.getInstance().getReference();
-
-        reference4.child("user_info").child(eid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                try {
-                    student_name = dataSnapshot.child("student_name").getValue().toString();
-                    imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
-
-                    fullConnectionExample(student_name,imageUrl);
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    private void fullConnectionExample(final String student_name, final String imageUrl) {
-
-
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myConnectionsRef = database.getReference("online_users");
-
-        final DatabaseReference connectedRef = database.getReference(".info/connected");
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
-
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-
-                ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                final boolean isconnected = networkInfo!=null && networkInfo.isConnectedOrConnecting();
-
-
-                if (connected) {
-
-                    myConnectionsRef.child(eid).setValue(new OnlineStatusData(student_name, Boolean.TRUE, imageUrl));
-
-                    reference.child("online_users").child(eid).onDisconnect().removeValue();
-
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("deeke", "Listener was cancelled at .info/connected");
-            }
-        });
-    }
 
     private void getDynamicLink(){
 
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("referral_code");
-        final DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference();
+         reference = FirebaseDatabase.getInstance().getReference("referral_code");
 
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
@@ -360,7 +293,7 @@ public class HomeNevActivity extends AppCompatActivity {
                             Log.e("deeke"," refer code "+code);
 
 
-                            reference1.orderByChild("referral_code").equalTo(code).addValueEventListener(new ValueEventListener() {
+                          valueEventListener =  reference.orderByChild("referral_code").equalTo(code).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -370,7 +303,7 @@ public class HomeNevActivity extends AppCompatActivity {
 
                                         Log.e("deeke"," refer user "+user_id);
 
-                                        reference3.child("referral_code").child(eid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        reference.child("referral_code").child(eid).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -378,7 +311,7 @@ public class HomeNevActivity extends AppCompatActivity {
                                                     //  reference2.child("referral_code").child(eid).child("refered_by").setValue("no");
                                                 }
                                                 else {
-                                                    reference2.child("referral_code").child(eid).child("refered_by").setValue(user_id);
+                                                    reference.child("referral_code").child(eid).child("refered_by").setValue(user_id);
                                                     reference.child("referrals").child(user_id).child(eid).setValue("1");
                                                 }
                                             }
@@ -402,7 +335,7 @@ public class HomeNevActivity extends AppCompatActivity {
                         }
                         else {
 
-                            reference3.child("referral_code").child(eid).addListenerForSingleValueEvent(new ValueEventListener() {
+                            reference.child("referral_code").child(eid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -410,7 +343,7 @@ public class HomeNevActivity extends AppCompatActivity {
                                         //  reference2.child("referral_code").child(eid).child("refered_by").setValue("no");
                                     }
                                     else {
-                                        reference2.child("referral_code").child(eid).child("refered_by").setValue("no");
+                                        reference.child("referral_code").child(eid).child("refered_by").setValue("no");
                                     }
                                 }
 
@@ -430,252 +363,6 @@ public class HomeNevActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
-                new IntentFilter("NotificationData"));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-
-    }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            sender_name = intent.getExtras().getString("sender_name");
-            receiver_user_id = intent.getExtras().getString("receiver_user_id");
-            notification_id = intent.getExtras().getString("notification_id");
-            sender_id = intent.getExtras().getString("sender_id");
-
-            if (sender_name!=null){
-
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-                databaseReference.child("user_notifications").child(receiver_user_id).child(notification_id)
-                        .child("sender_name").child(sender_name).child(sender_id).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        try {
-                            notification_hr = Long.parseLong(dataSnapshot.child("hour").getValue().toString());
-                            notification_min = Long.parseLong(dataSnapshot.child("minut").getValue().toString());
-                            notification_sec = Long.parseLong(dataSnapshot.child("second").getValue().toString());
-                            showAlertDialog(notification_hr,notification_min,notification_sec);
-
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-
-        }
-    };
-
-
-    private void showAlertDialog(long notification_hr, long notification_min, long notification_sec){
-        Animation zoomout;
-        final DatabaseReference databaseReference1;
-        DatabaseReference reference;
-
-        databaseReference1 = FirebaseDatabase.getInstance().getReference("user_notifications");
-        reference = FirebaseDatabase.getInstance().getReference();
-
-        final LayoutInflater inflater = LayoutInflater.from(HomeNevActivity.this);
-        final View alertLayout = inflater.inflate(R.layout.layout_custom_dialog_notification, null);
-        final TextView msg = alertLayout.findViewById(R.id.hj);
-        final TextView tvaccept = alertLayout.findViewById(R.id.tvaccept);
-        final TextView tvreject = alertLayout.findViewById(R.id.tvrej);
-        final ImageView smileFace = alertLayout.findViewById(R.id.smileface);
-
-        zoomout = AnimationUtils.loadAnimation(HomeNevActivity.this, R.anim.zoomin);
-        smileFace.setAnimation(zoomout);
-
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
-
-        msg.setText(sender_name+" has challenged you.");
-
-        final android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(HomeNevActivity.this, R.style.CustomDialogTheme);
-
-        alert.setView(alertLayout);
-        alert.setCancelable(false);
-
-        final android.app.AlertDialog dialog = alert.create();
-
-        tvaccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-
-                databaseReference1.child(receiver_user_id).child(notification_id).child("status").setValue("yes");
-                alertDialog();
-
-            }
-        });
-
-        tvreject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                databaseReference1.child(receiver_user_id).child(notification_id).child("status").setValue("no");
-
-                dialog.dismiss();
-
-            }
-        });
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat hour = new SimpleDateFormat("HH");
-        SimpleDateFormat minut = new SimpleDateFormat("mm");
-        SimpleDateFormat second = new SimpleDateFormat("ss");
-
-        long hour1 = Long.parseLong(hour.format(calendar.getTime()));
-        long minut1 = Long.parseLong(minut.format(calendar.getTime()));
-        long second1 = Long.parseLong(second.format(calendar.getTime()));
-
-        long sender_time = notification_hr*60*60+notification_min*60+notification_sec;
-        long rec_time = hour1*60*60+minut1*60+second1;
-
-        long delayInMillis = 15000-(rec_time*1000-sender_time*1000);
-        long x = Math.abs(delayInMillis);
-
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                dialog.dismiss();
-            }
-        }, x);
-
-    /*    long delayInMillis1 = 15000;
-        Timer timer1 = new Timer();
-        timer1.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-
-            }
-        }, delayInMillis1);*/
-
-        reference.child("user_notifications").child(receiver_user_id).child(notification_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                try {
-                    String cancel_status = dataSnapshot.child("cancel_status").getValue().toString();
-                    // Toast.makeText(getApplicationContext(), ""+cancel_status,Toast.LENGTH_SHORT).show();
-
-                    if (cancel_status.equals("yes")) {
-                        dialog.dismiss();
-                    }
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        dialog.show();
-
-    }
-
-
-    private void alertDialog(){
-        Animation zoomout;
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        final LayoutInflater inflater = LayoutInflater.from(HomeNevActivity.this);
-        final View alertLayout = inflater.inflate(R.layout.layout_custom_dialor_start_quiz, null);
-        final TextView msg = alertLayout.findViewById(R.id.hj);
-        final ImageView smileFace = alertLayout.findViewById(R.id.smileface);
-        final  ImageView img1 = alertLayout.findViewById(R.id.dot1);
-        final  ImageView img2 = alertLayout.findViewById(R.id.dot2);
-        final  ImageView img3 = alertLayout.findViewById(R.id.dot3);
-
-        zoomout = AnimationUtils.loadAnimation(HomeNevActivity.this, R.anim.zoomin);
-        smileFace.setAnimation(zoomout);
-
-        final Animation myFadeInAnimation = AnimationUtils.loadAnimation(HomeNevActivity.this, R.anim.fade_anim);
-        img1.startAnimation(myFadeInAnimation);
-        img2.startAnimation(myFadeInAnimation);
-        img3.startAnimation(myFadeInAnimation);
-
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
-
-        msg.setText("Please wait for "+ sender_name+ " to start the game.");
-
-        final android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(HomeNevActivity.this, R.style.CustomDialogTheme);
-
-        alert.setView(alertLayout);
-        alert.setCancelable(false);
-
-        final android.app.AlertDialog dialog = alert.create();
-
-
-        databaseReference.child("user_notifications").child(receiver_user_id).child(notification_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                try {
-                    boolean playstatus = Boolean.parseBoolean(dataSnapshot.child("play_status").getValue().toString());
-
-                    if (playstatus==true){
-                        dialog.dismiss();
-
-                        pref = getSharedPreferences("sender_info",MODE_PRIVATE);
-                        editor = pref.edit();
-                        editor.putString("s_id", sender_id);
-                        editor.putString("not_id",notification_id);
-                        editor.putString("sender_name",sender_name);
-                        editor.commit();
-
-                        Intent intent = new Intent(HomeNevActivity.this, LoaderForReceiverActivity.class);
-                        startActivity(intent);
-
-                    }
-                }catch (Exception e){
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        dialog.show();
-
-    }
-
 
 
 }

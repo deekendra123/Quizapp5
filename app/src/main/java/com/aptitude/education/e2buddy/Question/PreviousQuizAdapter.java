@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.aptitude.education.e2buddy.AdMob.AdManager;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.PreviousQuizView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,14 +39,9 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
     Context mCtx;
     List<PreviousQuizView> previousQuizViewList;
 
-    String newdate;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    String newdate,userid;
+    FirebaseAuth auth;
     OnItemClickListener listener;
-    SharedPreferences sharedPreferences1;
-    String userid,student_name;
-
-
 
     public PreviousQuizAdapter(Context mCtx, List<PreviousQuizView> previousQuizViewList) {
         this.mCtx = mCtx;
@@ -76,10 +73,6 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
     public void onBindViewHolder(@NonNull QuizHolder holder, int position) {
         PreviousQuizView previousQuizView = previousQuizViewList.get(position);
 
-        sharedPreferences = mCtx.getSharedPreferences("quizpref", MODE_PRIVATE);
-        userid = sharedPreferences.getString("userid", "");
-
-
         newdate = previousQuizView.getQuizdate().replaceAll("-01", "-Jan")
                 .replaceAll("-02", "-Feb")
                 .replaceAll("-03", "-Mar")
@@ -94,14 +87,14 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
                 .replaceAll("-12", "-Dec");
 
 
-        holder.qdate.setText(newdate+"-2019");
-        //    holder.qid.setText("Quiz "+ previousQuizView.getQuizid());
+        auth = FirebaseAuth.getInstance();
+        final FirebaseUser user = auth.getCurrentUser();
+        userid = user.getUid();
 
+        holder.qdate.setText(newdate+"-2019");
         final String id = previousQuizViewList.get(position).getQuizid();
         final String date = previousQuizViewList.get(position).getQuizdate();
 
-        sharedPreferences = mCtx.getSharedPreferences("quizpref", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
         holder.itemView.setClickable(false);
 

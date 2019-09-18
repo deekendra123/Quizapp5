@@ -36,11 +36,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
+import com.aptitude.education.e2buddy.Intro.Quizapp;
 import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.LoaderForReceiverActivity;
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
+import com.aptitude.education.e2buddy.Question.QuizQuestionTimeBasedActivity;
 import com.aptitude.education.e2buddy.Question.StartQuizActivity;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.AnswerView;
+import com.aptitude.education.e2buddy.ViewData.CreditView;
+import com.aptitude.education.e2buddy.ViewData.InsertTotalScoreData;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -48,8 +52,10 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
@@ -66,7 +72,7 @@ import java.util.TimerTask;
 
 public class ResultActivity extends AppCompatActivity {
 
-    DatabaseReference databaseReference6;
+
     Transformation transformation;
     ImageView userIcon;
     ImageView img1, img2, img3, img4;
@@ -75,8 +81,9 @@ public class ResultActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     DatabaseReference databaseReference;
     List<AnswerView> answerViewList;
-    String userid,quizdate ,date,value;
-    ProgressDialog progressDialog;
+    String userid,quizdate ,date,value,quizids,question,corr_ans,quizid;
+    int count1 = 0, scoreCount = 0,count = 0, scores = 0;
+    ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,31 +103,21 @@ public class ResultActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.linear);
         tvCorrectAnswer = findViewById(R.id.tvcorrectans);
         tvanswer = findViewById(R.id.tvans);
+        Quizapp.getRefWatcher(ResultActivity.this).watch(this);
 
-        progressDialog = new ProgressDialog(ResultActivity.this);
-        progressDialog.setCancelable(true);
-        progressDialog.setMessage("Data Loading...");
-        progressDialog.show();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
         date = sdf.format(new Date());
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         quizdate = getIntent().getStringExtra("quiz_date");
         value  = getIntent().getStringExtra("curent_date");
         userid = getIntent().getStringExtra("userid");
 
+        answerViewList = new ArrayList<>();
 
-        Runnable progressRunnable = new Runnable() {
-
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-
-            }
-        };
-
-        Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 3000);
+        showLoader();
 
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
@@ -129,19 +126,17 @@ public class ResultActivity extends AppCompatActivity {
                 .oval(false)
                 .build();
 
-        answerViewList = new ArrayList<>();
+
 
         getPlayerImage();
-        databaseReference6 = FirebaseDatabase.getInstance().getReference();
         getTodayQuizScore();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         btviewans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                System.gc();
+  //              System.gc();
                 FragmentManager fm = getSupportFragmentManager();
                 DialogFragment dialog = View_Answer_Dialog.newInstance();
 
@@ -161,7 +156,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                System.gc();
+//                System.gc();
                 Intent intent = new Intent(getApplicationContext(), LeaderBoardForQuizActivity.class);
                 intent.putExtra("quiz_date",quizdate);
                 intent.putExtra("curent_date", value);
@@ -171,14 +166,151 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void showLoader() {
+
+            final ProgressDialog dialog = new ProgressDialog(ResultActivity.this);
+            dialog.setTitle("Please wait...");
+            dialog.setMessage("Generating Your Result");
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+
+            long delayInMillis = 4000;
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    getQuestionId();
+                    dialog.dismiss();
+                    insertTotalQuizScore();
+
+                }
+            }, delayInMillis);
+
+
+    }
+    private void getQuestionId() {
+       valueEventListener = databaseReference.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+
+                   String q_id = dataSnapshot1.getKey();
+
+                    //Toast.makeText(getApplicationContext(), ""+q_id,Toast.LENGTH_SHORT).show();
+
+                    getUserAnswer(q_id);
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void getUserAnswer(final String q_id) {
+       valueEventListener = databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).child(q_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //  Toast.makeText(getApplicationContext(),""+useranswer +"\n"+ timeleft,Toast.LENGTH_SHORT).show();
+                try {
+                    String useranswer = dataSnapshot.child("useranswer").getValue(String.class);
+                    int timeleft = Integer.parseInt(dataSnapshot.child("timeleft").getValue().toString());
+                    Log.d("AnswerActivity", "questionid :" + q_id);
+
+
+                    if (useranswer == null) {
+                        String.valueOf(useranswer.replace(null, "question was not given"));
+
+                    }
+
+                    getQuestion(q_id, useranswer, timeleft);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+    }
+
+    private void getQuestion(final String questionId, final String useranswer, final int timeleft){
+        final String TAG = getClass().getSimpleName();
+
+        valueEventListener = databaseReference.child("questions").child(questionId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    Log.d(TAG, "children are: "+dataSnapshot.getKey());
+
+//                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "childs: "+dataSnapshot.getKey());
+                    question = dataSnapshot.child("Question").getValue(String.class);
+                    corr_ans = dataSnapshot.child("Answer").getValue(String.class);
+
+
+                    if (corr_ans.equals(useranswer)) {
+                        count = count+2;
+
+                        scores = scores+timeleft*2;
+                        count1 = count1+1;
+
+                    }
+
+
+
+                    insertCredit();
+
+                    //  }
+                }catch (NullPointerException | DatabaseException e){
+                    e.printStackTrace();
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
 
 
+    private void insertCredit(){
+
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("daily_user_credit");
+
+        final int num =1;
+
+        CreditView creditView = new CreditView(scores,quizdate,quizid,count1);
+
+        reference1.child(userid).child(quizdate).child(value).setValue(creditView);
+
+    }
+
+
     private void getTodayQuizScore(){
-        databaseReference6.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
+      valueEventListener =  databaseReference.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -230,10 +362,8 @@ public class ResultActivity extends AppCompatActivity {
 
     }
     private void getPlayerImage(){
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("user_info").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -261,7 +391,7 @@ public class ResultActivity extends AppCompatActivity {
         super.onBackPressed();
 
         System.gc();
-        trimCache(getApplicationContext());
+  //      trimCache(getApplicationContext());
 
         Intent intent = new Intent(getApplicationContext(), HomeNevActivity.class);
         startActivity(intent);
@@ -270,34 +400,75 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    public static void trimCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            if (dir != null && dir.isDirectory()) {
-                deleteDir(dir);
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
+    private void insertTotalQuizScore(){
 
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
+        databaseReference.child("daily_user_credit").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                    String id = dataSnapshot1.getKey();
+
+                    getCreditScore(id);
                 }
-            }
-        }
 
-        // The directory is now empty so delete it
-        return dir.delete();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    private void getCreditScore(String date){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference reference6;
+        reference6 = FirebaseDatabase.getInstance().getReference("daily_user_total_score");
+
+        final Query lastQuery = reference.child("daily_user_credit").child(userid).child(date).orderByKey().limitToLast(1);
+
+
+        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                quizids = dataSnapshot.getKey();
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                    try {
+                        String id = dataSnapshot1.getKey();
+
+                        int quiz = (Integer.parseInt(dataSnapshot1.child("credit_points").getValue().toString()));
+
+                        scoreCount = scoreCount + quiz;
+
+                        InsertTotalScoreData insertTotalScoreData = new InsertTotalScoreData(String.valueOf(scoreCount));
+                        reference6.child(userid).setValue(insertTotalScoreData);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseReference.removeEventListener(valueEventListener);
+    }
 }
 
 
