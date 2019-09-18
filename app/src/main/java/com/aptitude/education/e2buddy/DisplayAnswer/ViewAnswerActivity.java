@@ -123,7 +123,6 @@ public class ViewAnswerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        //databaseReference6 = FirebaseDatabase.getInstance().getReference();
 
         sharedPreferences = getSharedPreferences("quizpref", MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -155,8 +154,6 @@ public class ViewAnswerActivity extends AppCompatActivity {
 
                     q_id = dataSnapshot1.getKey();
 
-                    //Toast.makeText(getApplicationContext(), ""+q_id,Toast.LENGTH_SHORT).show();
-
                     getUserAnswer(q_id);
 
                 }
@@ -178,14 +175,12 @@ public class ViewAnswerActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try {
                             long count = dataSnapshot.getChildrenCount();
-                          //  Toast.makeText(getApplicationContext(), ""+ count,Toast.LENGTH_SHORT).show();
                             if (count<3){
 
                                 editor.putString("quizid", quizid);
                                 editor.putString("quizdate",quizdate);
                                 editor.commit();
                                 Intent intent = new Intent(ViewAnswerActivity.this, StartQuizActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 finish();
 
@@ -208,7 +203,6 @@ public class ViewAnswerActivity extends AppCompatActivity {
             }
         });
 
-        //getPlayerName();
 
     }
 
@@ -219,13 +213,8 @@ public class ViewAnswerActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                         useranswer = dataSnapshot.child("useranswer").getValue(String.class);
-                        Log.d("AnswerActivity", "questionid :"+q_id);
 
                         try {
-
-//                            if (useranswer==null){
-////                                String.valueOf(useranswer.replace(null, "question was not given"));
-//                            }
 
                             getQuestion(q_id, useranswer);
 

@@ -84,7 +84,6 @@ public class RewardFragment extends Fragment {
         tv9 = view.findViewById(R.id.tv9);
         tv10 = view.findViewById(R.id.tv10);
 
-        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         return view;
     }

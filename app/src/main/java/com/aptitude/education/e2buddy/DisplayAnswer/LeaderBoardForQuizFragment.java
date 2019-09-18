@@ -108,7 +108,6 @@ public class LeaderBoardForQuizFragment extends Fragment {
         img_info = view.findViewById(R.id.img_info);
         userIcon = view.findViewById(R.id.e2buddy);
 
-        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();

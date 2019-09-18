@@ -166,7 +166,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 

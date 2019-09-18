@@ -85,7 +85,6 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         score = findViewById(R.id.textView13);
         userIcon = findViewById(R.id.e2buddy);
 
-        Quizapp.getRefWatcher(LeaderBoardForQuizActivity.this).watch(this);
 
 
         quizdate = getIntent().getStringExtra("quiz_date");

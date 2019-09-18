@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -91,11 +93,8 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
         next = findViewById(R.id.bnext);
         tvcancelquiz = findViewById(R.id.tvcancel);
         onlinuser = findViewById(R.id.onlineuser);
-        Quizapp.getRefWatcher(QuizQuestionTimeBasedActivity.this).watch(this);
-
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
 
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
@@ -149,9 +148,6 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
 
                     q_id = dataSnapshot1.getKey();
-
-                    //    Toast.makeText(getApplicationContext(), ""+q_id,Toast.LENGTH_SHORT).show();
-
                     getQuizQuestions(q_id);
 
                 }
@@ -240,12 +236,10 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
                         player.reset();
                         player.release();
                         player = null;
-                        player = MediaPlayer.create(QuizQuestionTimeBasedActivity.this, R.raw.track1);
                         player1.stop();
                         player1.reset();
                         player1.release();
                         player1 = null;
-                        player1 = MediaPlayer.create(QuizQuestionTimeBasedActivity.this, R.raw.track4);
                     }
 
 

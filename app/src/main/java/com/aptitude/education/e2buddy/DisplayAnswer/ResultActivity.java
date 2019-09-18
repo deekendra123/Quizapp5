@@ -103,7 +103,6 @@ public class ResultActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.linear);
         tvCorrectAnswer = findViewById(R.id.tvcorrectans);
         tvanswer = findViewById(R.id.tvans);
-        Quizapp.getRefWatcher(ResultActivity.this).watch(this);
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
@@ -117,6 +116,8 @@ public class ResultActivity extends AppCompatActivity {
 
         answerViewList = new ArrayList<>();
 
+
+        getQuestionId();
         showLoader();
 
         transformation = new RoundedTransformationBuilder()
@@ -177,14 +178,15 @@ public class ResultActivity extends AppCompatActivity {
             dialog.setCancelable(false);
             dialog.show();
 
-            long delayInMillis = 4000;
+            insertTotalQuizScore();
+
+
+        long delayInMillis = 4000;
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    getQuestionId();
                     dialog.dismiss();
-                    insertTotalQuizScore();
 
                 }
             }, delayInMillis);

@@ -103,7 +103,7 @@ public class StartQuizActivity extends AppCompatActivity {
                 start.setEnabled(false);
                 System.gc();
 
-                Intent intent = new Intent(getApplicationContext(), QuizQuestionTimeBasedActivity.class);
+                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                 intent.putExtra("quiz_date",quiz_date);
                 intent.putExtra("curent_date", value);
                 startActivity(intent);

@@ -235,13 +235,6 @@ public class HomeNevActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        reference.removeEventListener(valueEventListener);
-
-    }
-
     public static class BottomNavigationViewHelper {
 
         @SuppressLint("RestrictedApi")

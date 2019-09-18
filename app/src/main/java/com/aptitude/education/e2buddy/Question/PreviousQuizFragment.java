@@ -107,7 +107,6 @@ public class PreviousQuizFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         getActivity().getFragmentManager().popBackStack();
 

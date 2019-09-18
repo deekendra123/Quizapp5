@@ -88,7 +88,6 @@ public class View_Answer_Dialog extends DialogFragment {
         tvCorrectAnswer = view.findViewById(R.id.tvcorrectans);
         tvanswer = view.findViewById(R.id.tvans);
 
-        Quizapp.getRefWatcher(getActivity()).watch(this);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
