@@ -30,8 +30,8 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.Quizholder> {
     DatabaseReference databaseReference;
     String ans;
     Button btn_unfocus;
-    public String[] qnum = {"1/10","2/10","3/10","4/10","5/10","6/10","7/10","8/10","9/10","10/10"};
-    final Button[] btn = new Button[4];
+   // public String[] qnum = {"1/10","2/10","3/10","4/10","5/10","6/10","7/10","8/10","9/10","10/10"};
+   // final Button[] btn = new Button[4];
 
     public QuizAdapter(Context mCtx, List<QuestionView> list, String value, String userid, String quizdate) {
         this.mCtx = mCtx;
@@ -62,73 +62,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.Quizholder> {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy::HH:mm:ss");
         final String date = sdf.format(new Date());
 
-        //questionid.setText("Question id : " +questionView.getQuestionid());
-
-
-
-        holder.quenunber.setText("Question : " + qnum[position]);
+       // holder.quenunber.setText("Question : " + qnum[position]);
         holder.question.setText(questionView.getQuestioname());
         holder.opt1.setText(questionView.getOption1());
         holder.opt2.setText(questionView.getOption2());
         holder.opt3.setText(questionView.getOption3());
         holder.opt4.setText(questionView.getOption4());
 
-        btn_unfocus = btn[0];
-
-        for (int i = 0; i < btn.length; i++) {
-
-            if(i == 0)
-            {
-                btn[i]=holder.bt1;
-            }else if(i == 1)
-            {
-                btn[i]=holder.bt2;
-            }else if(i == 2)
-            {
-                btn[i]= holder.bt3;
-            }else if(i == 3)
-            {
-                btn[1]=holder.bt4;
-            }
-            btn[i].setBackgroundColor(Color.rgb(207, 207, 207));
-            btn[i].setBackgroundResource(R.drawable.button);
-
-            btn[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String ans;
-                    switch (v.getId()) {
-                        case R.id.rdops1:
-                            setFocus(btn_unfocus, btn[0]);
-                            ans = btn[0].getText().toString();
-                            insertAnswer(questionView.getQuestionid(), ans);
-                            break;
-
-                        case R.id.rdops2:
-                            setFocus(btn_unfocus, btn[1]);
-                            ans = btn[1].getText().toString();
-                            insertAnswer(questionView.getQuestionid(), ans);
-                            break;
-
-                        case R.id.rdops3:
-                            setFocus(btn_unfocus, btn[2]);
-                            ans = btn[2].getText().toString();
-                            insertAnswer(questionView.getQuestionid(), ans);
-                            break;
-
-                        case R.id.rdops4:
-                            setFocus(btn_unfocus, btn[3]);
-                            ans = btn[3].getText().toString();
-                            insertAnswer(questionView.getQuestionid(), ans);
-                            break;
-                    }
-                }
-            });
-        }
-
-        btn_unfocus = btn[0];
-    }
+          }
 
     @Override
     public int getItemCount() {
