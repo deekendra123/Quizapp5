@@ -1,28 +1,19 @@
 package com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge;
 
 import android.app.ProgressDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -30,11 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
-import com.aptitude.education.e2buddy.Question.MenuSheetDialog;
+import com.aptitude.education.e2buddy.Menu.MenuSheetDialog;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.OnlineStatusData;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,8 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.SEARCH_SERVICE;
 
 public class SendRequestToOpponentFragment extends Fragment {
 
@@ -66,7 +54,6 @@ public class SendRequestToOpponentFragment extends Fragment {
     ImageView img_info;
     EditText searchView1;
     TextView tvchallenge;
-    AdView mAdView;
     public SendRequestToOpponentFragment() {
         // Required empty public constructor
     }
@@ -100,12 +87,6 @@ public class SendRequestToOpponentFragment extends Fragment {
         tvchallenge = view.findViewById(R.id.tvchallenge);
         img_info = view.findViewById(R.id.img_info);
 
-        mAdView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-
-//        toolbar = view.findViewById(R.id.toolbar);
         list = new ArrayList<>();
 
         CheckInternet checkInternet = new CheckInternet(getActivity());

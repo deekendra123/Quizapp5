@@ -16,11 +16,7 @@ public class CheckInternet {
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager)mctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     public void checkConnection(){

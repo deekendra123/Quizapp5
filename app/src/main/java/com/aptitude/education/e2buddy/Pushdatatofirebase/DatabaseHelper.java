@@ -17,14 +17,16 @@ import java.io.OutputStream;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;
-    private static String DB_NAME = "quiz";
+    private static String DB_NAME = "deeke";
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
     public DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, 10 );
+        super(context, DB_NAME, null, 16 );
         this.myContext = context;
-        this.DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
+      //  this.DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
+        this.DB_PATH = this.myContext.getDatabasePath(DB_NAME).getAbsolutePath();
+
         Log.e("Path 1", DB_PATH);
     }
 
@@ -52,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (checkDB != null) {
             checkDB.close();
         }
-        return checkDB != null ? true : false;
+        return checkDB != null;
     }
 
     private void copyDataBase() throws IOException {
@@ -100,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return myDataBase.query("quiz", null, null, null, null, null, null);
+        return myDataBase.query("quiz2", null, null, null, null, null, null);
     }
 
 

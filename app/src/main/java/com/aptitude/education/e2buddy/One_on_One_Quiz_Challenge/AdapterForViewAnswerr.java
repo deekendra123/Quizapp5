@@ -2,9 +2,9 @@ package com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +86,7 @@ public class AdapterForViewAnswerr extends RecyclerView.Adapter<AdapterForViewAn
             img1 = itemView.findViewById(R.id.img3);
             img2 = itemView.findViewById(R.id.img4);
 
-            Typeface type = (Typeface) Typeface.createFromAsset(mCtx.getAssets(), "fonts/Roboto-Regular.ttf");
+            Typeface type = Typeface.createFromAsset(mCtx.getAssets(), "fonts/Roboto-Regular.ttf");
             textView.setTypeface(type);
             user_ans.setTypeface(type);
             corr_ans.setTypeface(type);

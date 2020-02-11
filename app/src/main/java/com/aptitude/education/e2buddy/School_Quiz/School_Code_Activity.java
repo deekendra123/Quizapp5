@@ -1,8 +1,8 @@
 package com.aptitude.education.e2buddy.School_Quiz;
 
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,7 +28,7 @@ public class School_Code_Activity extends AppCompatActivity {
     EditText schoolCode;
     ImageView submit;
     Animation fromtop;
-    TextView skip, text,error;
+    TextView skip, text;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
     ImageView icon;
@@ -45,17 +45,8 @@ public class School_Code_Activity extends AppCompatActivity {
         skip = findViewById(R.id.buttonSkip);
         icon = findViewById(R.id.logo);
         text = findViewById(R.id.t1);
-        error = findViewById(R.id.error);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        text.setTypeface(type);
-        schoolCode.setTypeface(type);
-        skip.setTypeface(type);
-        //tvCode.setTypeface(type);
-
-        fromtop = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fromtop);
-        icon.setAnimation(fromtop);
-
+        skip.setText(R.string.skip_string);
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
         userid = user.getUid();
@@ -80,7 +71,6 @@ public class School_Code_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 if (schoolCode.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Enter Your School Code", Toast.LENGTH_SHORT).show();
                 }
@@ -94,13 +84,11 @@ public class School_Code_Activity extends AppCompatActivity {
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                 String school_code = dataSnapshot1.getKey();
 
-                              //  Toast.makeText(getApplicationContext(), "School Code  "+ school_code, Toast.LENGTH_SHORT).show();
-
                                 if (schoolCode.getText().toString().equalsIgnoreCase(school_code)){
 
+                                    String school_code1 = school_code.toUpperCase();
                                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-                                    databaseReference.child("user_info").child(userid).child("school_code").setValue(school_code);
+                                    databaseReference.child("user_info").child(userid).child("school_code").setValue(school_code1);
 
                                     System.gc();
                                     Intent intent = new Intent(getApplicationContext(), Student_Details_Activity.class);
@@ -110,8 +98,7 @@ public class School_Code_Activity extends AppCompatActivity {
 
                                 }
                                 else {
-                                    error.setText("Invalid School Code");
-                          //          Toast.makeText(getApplicationContext(), "Invalid School Code", Toast.LENGTH_SHORT).show();
+                                    schoolCode.setError("Invalid School Code");
                                 }
                             }
                         }

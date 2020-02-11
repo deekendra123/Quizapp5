@@ -14,8 +14,9 @@ public class QuestionView {
     private String option3;
     private String option4;
     private String answer;
-
     private String answernull;
+    private String questionImage;
+
 
 
 
@@ -33,6 +34,18 @@ public class QuestionView {
         this.option4 = option4;
         this.answer = answer;
         this.answernull = answernull;
+    }
+
+    public QuestionView(String questionid, String questioname, String option1, String option2, String option3, String option4, String answer, String answernull, String questionImage) {
+        this.questionid = questionid;
+        this.questioname = questioname;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.answer = answer;
+        this.answernull = answernull;
+        this.questionImage = questionImage;
     }
 
     public String getQuestionid() {
@@ -97,5 +110,13 @@ public class QuestionView {
 
     public void setAnswernull(String answernull) {
         this.answernull = answernull;
+    }
+
+    public String getQuestionImage() {
+        return questionImage;
+    }
+
+    public void setQuestionImage(String questionImage) {
+        this.questionImage = questionImage;
     }
 }

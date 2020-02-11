@@ -2,33 +2,25 @@ package com.aptitude.education.e2buddy.Intro;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.School_Quiz.School_Code_Activity;
-import com.aptitude.education.e2buddy.ViewData.Data;
 import com.aptitude.education.e2buddy.ViewData.UserData;
-import com.fasterxml.jackson.databind.ser.std.DateTimeSerializerBase;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -59,30 +51,25 @@ public class IntroActivity extends AppCompatActivity{
     Button signInButton, loginwithphone;
     private static final int RC_SIGN_IN = 234;
 
-    //Tag for the logs optional
     private static final String TAG = "Quizapp";
 
-    //creating a GoogleSignInClient object
     GoogleSignInClient mGoogleSignInClient;
 
-    boolean doubleclick = false;
     private FirebaseAuth.AuthStateListener listener;
 
     FirebaseAuth mAuth;
-    String student_name,stud_class;
 
     ProgressDialog progressDialog;
-
-    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        viewPager = findViewById(R.id.view_pager);
+        dotsLayout = findViewById(R.id.layoutDots);
 
       signInButton = findViewById(R.id.buttonSignIn);
+
   //    loginwithphone = findViewById(R.id.loginphone);
 
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
@@ -98,11 +85,6 @@ public class IntroActivity extends AppCompatActivity{
         addDotIndicator(0);
 
         viewPager.addOnPageChangeListener(onPageChangeListener);
-
-
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        signInButton.setTypeface(type);
-//        loginwithphone.setTypeface(type);
 
         listener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -224,15 +206,16 @@ public class IntroActivity extends AppCompatActivity{
 
                 fireBaseAuthwithGoogle(account);
 
-                progressDialog = new ProgressDialog(IntroActivity.this);
-                progressDialog.setCancelable(true);
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setProgress(0);
-                progressDialog.setMax(100);
-                progressDialog.show();
+                if (!isFinishing()) {
+                    progressDialog = new ProgressDialog(IntroActivity.this);
+                    progressDialog.setCancelable(true);
+                    progressDialog.setMessage("Please Wait...");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setProgress(0);
+                    progressDialog.setMax(100);
+                    progressDialog.show();
+                }
             } catch (ApiException e) {
-                Toast.makeText(IntroActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -296,6 +279,8 @@ public class IntroActivity extends AppCompatActivity{
         username = user.getDisplayName();
         imageUri = user.getPhotoUrl().toString();
 
+   //     sessionManager.createLoginSession(userid,username,useremail);
+
         token_id = FirebaseInstanceId.getInstance().getToken();
         databaseReference = FirebaseDatabase.getInstance().getReference("user_info");
         final UserData data = new UserData(useremail, token_id, username,"0",imageUri);
@@ -319,7 +304,7 @@ public class IntroActivity extends AppCompatActivity{
         });
 
 
-        Toast.makeText(IntroActivity.this, "User Signed In", Toast.LENGTH_SHORT).show();
+        Toast.makeText(IntroActivity.this, "Successfully Signed In", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -2,6 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
+    <item
+        android:id="@+id/navigation_placement_paper"
+        android:icon="@drawable/ic_test"
+        android:title="Placement"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/navigation_leaderboard"
         android:icon="@drawable/ic_leaderboard"
@@ -10,12 +19,16 @@
         app:showAsAction="ifRoom"/>
 
 
+<!--
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_play_arrow_black_24dp"
-        android:title="More Quiz"
+        android:id="@+id/internships"
+        android:icon="@drawable/ic_portfolio"
+        android:title="Internship"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
+-->
+
+
 
     <item
         android:id="@+id/navigation_home"
@@ -30,10 +43,17 @@
         android:title="Rewards"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
-<!--
 
+    <item
+        android:id="@+id/navigation_menu"
+        android:icon="@drawable/ic_menu_black_24dp"
+        android:title="Menu"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+<!--
  <item
-          android:id="@+id/challenge"
+          android:id="@+id/nav_challenge"
           android:icon="@drawable/ic_people"
           android:title="Challenge"
           android:enabled="true"

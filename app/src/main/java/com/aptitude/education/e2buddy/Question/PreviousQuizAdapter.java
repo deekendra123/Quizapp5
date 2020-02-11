@@ -2,19 +2,17 @@ package com.aptitude.education.e2buddy.Question;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.aptitude.education.e2buddy.AdMob.AdManager;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.PreviousQuizView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,15 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.io.File;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
-
-/**
- * Created by Matrix on 28-01-2019.
- */
 
 public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapter.QuizHolder> {
 
@@ -65,7 +56,7 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
     @Override
     public QuizHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mCtx).inflate(R.layout.pre_quiz_item, parent, false);
+        View view = LayoutInflater.from(mCtx).inflate(R.layout.daily_quiz_item, parent, false);
         return new QuizHolder(view);
     }
 
@@ -91,16 +82,24 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
         final FirebaseUser user = auth.getCurrentUser();
         userid = user.getUid();
 
-        holder.qdate.setText(newdate+"-2019");
+
+        holder.qdate.setText(newdate+"");
         final String id = previousQuizViewList.get(position).getQuizid();
         final String date = previousQuizViewList.get(position).getQuizdate();
 
 
-        holder.itemView.setClickable(false);
+        if (position==0){
+            holder.imageView.setBackgroundResource(R.drawable.ic_playbutton);
+            holder.qdate.setText("Today Quiz");
+            Animation myFadeInAnimation = AnimationUtils.loadAnimation(mCtx, R.anim.play_anim);
+            holder.imageView.startAnimation(myFadeInAnimation);
+
+        }
+
 
         final AlphaAnimation buttonClick = new AlphaAnimation(1F, 1F);
 
-        holder.playquiz.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -114,7 +113,6 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
                             //  Toast.makeText(mCtx, ""+ count,Toast.LENGTH_SHORT).show();
                             if (count<3){
 
-                                previousQuizViewList.clear();
                                 Intent intent = new Intent(mCtx, StartQuizActivity.class);
                                 intent.putExtra("quiz_date", date);
                                 mCtx.startActivity(intent);
@@ -152,22 +150,14 @@ public class PreviousQuizAdapter extends RecyclerView.Adapter<PreviousQuizAdapte
 
     public class QuizHolder extends RecyclerView.ViewHolder {
 
-        TextView qid, qdate, textView;
-        Button playquiz;
+        TextView qdate;
+        ImageView imageView;
         public QuizHolder(final View itemView) {
             super(itemView);
 
             //   qid = itemView.findViewById(R.id.qid);
             qdate = itemView.findViewById(R.id.qdate);
-            textView = itemView.findViewById(R.id.qdates);
-            playquiz = itemView.findViewById(R.id.playquiz);
-
-            Typeface type = Typeface.createFromAsset(mCtx.getAssets(), "fonts/Roboto-Regular.ttf");
-            //qid.setTypeface(type);
-
-            qdate.setTypeface(type);
-            playquiz.setTypeface(type);
-            textView.setTypeface(type);
+            imageView = itemView.findViewById(R.id.imageView);
 
         }
     }

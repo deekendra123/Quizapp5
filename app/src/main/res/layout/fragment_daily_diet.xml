@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Question.DailyDietFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+
+
+            <RelativeLayout
+                android:id="@+id/layout5"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bgcard1">
+
+                <TextView
+                    android:id="@+id/tvRegistered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_teamwork"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/tvTournamentDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:drawableLeft="@drawable/ic_cal"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tvTaournament"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Open Tournament"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTaournament"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/textwin"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="7dp"
+                        android:gravity="center"
+                        android:text="Win"
+                        android:textColor="#ffffff"
+                        android:textSize="17.5dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/points"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="53dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="5000"
+                        android:textColor="#ffffff"
+                        android:textSize="33dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textpoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="7dp"
+                        android:gravity="center"
+                        android:text="Points"
+                        android:textColor="#ffffff"
+                        android:textSize="17.5dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvQuizStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bgback10"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="Live at 12:00 AM on 15 Oct"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/seeTournamentResult"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/circle1"
+                android:gravity="center"
+
+                android:text="Last    Tournament Result"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="11dp"
+                android:visibility="invisible"
+                tools:ignore="VectorDrawableCompat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btparticipate"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="155dp"
+                android:background="@drawable/bgback"
+                android:padding="8dp"
+                android:text="Click to Participate"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/layout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout5"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="4dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    card_view:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bgcard1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/quiz"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Earn Points"
+                                android:textColor="#ffffff"
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/quizhistory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginRight="20dp"
+                                android:background="@drawable/ic_history"
+                                android:text=""
+                                android:textColor="#ffffff"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/prerecycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout7"
+                android:layout_width="match_parent"
+                android:layout_height="255dp"
+                android:layout_below="@+id/layout6"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/bgcard1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvday1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:text="Word of the Day"
+                    android:textColor="#FFFFFF"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20dp"
+
+
+                    />
+                <ImageView
+                android:id="@+id/imgArrorR"
+                android:layout_width="27dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="5dp"
+                android:layout_height="27dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_alignParentRight="true"
+                android:background="@drawable/ic_arrow_forward_black_24dp">
+
+
+            </ImageView>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerViewWord"/>
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="420dp"
+                android:background="@drawable/ic_brainstorm">
+
+            </ImageView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</FrameLayout>

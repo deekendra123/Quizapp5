@@ -27,11 +27,54 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
 
-        android:text="Insert Today Quiz Data"
+        android:text="Insert Daily Quiz Dates"
         android:layout_gravity="center"
         android:layout_marginTop="90dp"
         tools:layout_editor_absoluteX="134dp"
         tools:layout_editor_absoluteY="139dp" />
+
+
+    <Button
+        android:id="@+id/button03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+
+        android:text="Insert Tournament Quiz Dates"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="139dp" />
+
+
+    <Button
+        android:id="@+id/button04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+
+        android:text="Insert word of the month"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="139dp" />
+    <Button
+        android:id="@+id/button05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+
+        android:text="Insert Category Quiz Question"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="139dp" />
+
+
 
 
 </LinearLayout>

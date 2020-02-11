@@ -25,14 +25,62 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Question.QuizActivity"
+        android:theme="@style/AppThemeFont">
+        <activity android:name=".Placement_Papers.BookmarkQuestionActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".Placement_Papers.PlacementResultActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Placement_Papers.PlacementQuizQuestionsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Placement_Papers.Quiz_Instruction_Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Placement_Papers.PlacementPapersActivity" />
+        <activity
+            android:name=".Quiz_Category.StartCategoryQuizActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Quiz_Category.CategoryResultActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Quiz_Category.QuizCategoryQuestionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Question.QuizHistoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Quiz_Tournament.Quiz_Tournament_Result_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Quiz_Tournament.ResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Quiz_Tournament.TournamentQuizActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DisplayAnswer.OverAllLeaderBoardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".School_Quiz.StudentProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".School_Quiz.EditStudentProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".School_Quiz.Student_Details_Activity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".School_Quiz.School_Code_Activity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
@@ -43,6 +91,10 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".Notification_Service.Word_of_the_Day_Notification" />
+        <receiver android:name=".Notification_Service.Daily_Quiz_Notification" />
+        <receiver android:name=".Notification_Service.Tournament_Quiz_Notification" />
+
 
         <activity
             android:name=".One_on_One_Quiz_Challenge.OneonOneStartQuiz"
@@ -63,19 +115,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Intro.InsertImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Intro.UpdateUserImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Intro.InsertUserImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DisplayAnswer.ViewAnswerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -84,30 +124,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".One_on_One_Quiz_Challenge.SendQuizRequestActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Quiz_for_Group.ViewAnswerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Quiz_for_Group.ResultActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Quiz_for_Group.QuizQuestionsForAdminActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Quiz_for_Group.RequestAcceptedUsersActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Quiz_for_Group.StartQuizForGroupActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.example.matrix.e2buddy.Quiz_for_Group.StartQuizForGroupActivity.TARGETNOTIFICATIONS" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Intro.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Intro.OTPVerificationActivity"
@@ -197,6 +213,10 @@
             android:name=".One_on_One_Quiz_Challenge.QuestionForUser2Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true" />
     </application>
 
 </manifest>

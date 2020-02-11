@@ -7,24 +7,22 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.AnswerViewForOneOnOne;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,7 +62,6 @@ public class ViewAnswerForReceiverActivity extends AppCompatActivity {
     String sender_name,notification_id,receiver_user_id,sender_id;
     SharedPreferences pref;
     SharedPreferences.Editor editor1;
-    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +74,12 @@ public class ViewAnswerForReceiverActivity extends AppCompatActivity {
         tvanswer = findViewById(R.id.tvans);
         tvCorrectAnswer = findViewById(R.id.tvcorrectans);
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
 
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
         checkInternet.checkConnection();
 
-        Typeface type = (Typeface) Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         tvusername.setTypeface(type);
         tvanswer.setTypeface(type);
         tvCorrectAnswer.setTypeface(type);
@@ -152,7 +146,7 @@ public class ViewAnswerForReceiverActivity extends AppCompatActivity {
                 String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
 
 
-                Picasso.with(getApplicationContext())
+                Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.userimg)
                         .fit()
@@ -318,9 +312,6 @@ public class ViewAnswerForReceiverActivity extends AppCompatActivity {
         zoomout = AnimationUtils.loadAnimation(ViewAnswerForReceiverActivity.this, R.anim.zoomin);
         smileFace.setAnimation(zoomout);
 
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
-
         msg.setText(sender_name+" has challenged you.");
 
         final android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(ViewAnswerForReceiverActivity.this, R.style.CustomDialogTheme);
@@ -435,9 +426,6 @@ public class ViewAnswerForReceiverActivity extends AppCompatActivity {
         img1.startAnimation(myFadeInAnimation);
         img2.startAnimation(myFadeInAnimation);
         img3.startAnimation(myFadeInAnimation);
-
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
 
         msg.setText("Please wait for "+ sender_name+ " to start the game.");
 

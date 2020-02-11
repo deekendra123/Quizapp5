@@ -154,14 +154,15 @@
                 android:layout_marginTop="165dp"
 
                 android:gravity="center"
-                android:text="Top 10 Players"
+                android:text="Todays Chart Leaders"
                 android:textColor="#000000"
 
-                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textSize="18dp"
 
                 />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -169,16 +170,6 @@
                 android:id="@+id/leaderboard"
                 />
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="20dp"
-                ads:adSize="BANNER"
-                android:layout_marginTop="20dp"
-                ads:adUnitId="@string/banner_ad"
-                />
 
 
         </LinearLayout>

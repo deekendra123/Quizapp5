@@ -1,48 +1,33 @@
 package com.aptitude.education.e2buddy.DisplayAnswer;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aptitude.education.e2buddy.Intro.CheckInternet;
-import com.aptitude.education.e2buddy.Intro.Quizapp;
-import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.Question.StartQuizActivity;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.AnswerView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Transformation;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class View_Answer_Dialog extends DialogFragment {
     private View_Answer_Dialog.Callback callback;
@@ -51,11 +36,9 @@ public class View_Answer_Dialog extends DialogFragment {
     TextView tvuser,tvanswer,tvCorrectAnswer;
     Button bttry;
     DatabaseReference databaseReference;
-    String userid,useranswer,question,corr_ans, questionId,quizdate;
-    String TAG = getClass().getSimpleName();
+    String userid,useranswer,question,corr_ans,quizdate,q_id,value;
     AnswerAdapter answerAdapter;
     List<AnswerView> answerViewList;
-    String q_id,value;
     ValueEventListener valueEventListener;
     ProgressDialog progressDialog;
 
@@ -81,13 +64,10 @@ public class View_Answer_Dialog extends DialogFragment {
         ImageButton closeDialog = view.findViewById(R.id.fullscreen_dialog_close);
         ImageButton homeButton = view.findViewById(R.id.fullscreen_dialog_home);
         tvuser = view.findViewById(R.id.tvuser);
-
         recyclerView = view.findViewById(R.id.answerrecy);
         bttry = view.findViewById(R.id.bttryagain);
-
         tvCorrectAnswer = view.findViewById(R.id.tvcorrectans);
         tvanswer = view.findViewById(R.id.tvans);
-
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
@@ -97,58 +77,27 @@ public class View_Answer_Dialog extends DialogFragment {
         progressDialog.setMax(100);
         progressDialog.show();
 
-
-        Runnable progressRunnable = new Runnable() {
-
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-
-            }
-        };
-
-        Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 3500);
-
         Bundle bundle = getArguments();
         quizdate = bundle.getString("quiz_date","");
         value = bundle.getString("curent_date","");
         userid = bundle.getString("userid","");
 
         answerViewList = new ArrayList<>();
-
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
-
         getTodayQuizScore();
-
-        for (int i=0;i<answerViewList.size();i++){
-            AnswerView answerView = answerViewList.get(i);
-
-            Toast.makeText(getActivity(), ""+ answerView.getCorrectAnswer(),Toast.LENGTH_SHORT).show();
-
-        }
 
         answerAdapter = new AnswerAdapter(getActivity(), answerViewList);
         recyclerView.setAdapter(answerAdapter);
 
-       valueEventListener = databaseReference.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
+       valueEventListener = databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-
                     q_id = dataSnapshot1.getKey();
-
-                    //Toast.makeText(getApplicationContext(), ""+q_id,Toast.LENGTH_SHORT).show();
-
                     getUserAnswer(q_id);
-
                 }
             }
             @Override
@@ -162,21 +111,20 @@ public class View_Answer_Dialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-
                 databaseReference.child("daily_user_credit").child(userid).child(quizdate).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try {
                             long count = dataSnapshot.getChildrenCount();
-                            //  Toast.makeText(getApplicationContext(), ""+ count,Toast.LENGTH_SHORT).show();
                             if (count<3){
-
-
                                 System.gc();
                                 Intent intent = new Intent(getActivity(), StartQuizActivity.class);
                                 intent.putExtra("quiz_date", quizdate);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-
+                                getActivity().finish();
+                                ResultActivity.getInstance().finish();
+                                dismiss();
 
                             }else {
                                 Toast.makeText(getActivity(), "You have already attemped 3 times", Toast.LENGTH_LONG).show();
@@ -207,9 +155,7 @@ public class View_Answer_Dialog extends DialogFragment {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HomeNevActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+              getActivity().onBackPressed();
             }
         });
 
@@ -224,12 +170,12 @@ public class View_Answer_Dialog extends DialogFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 useranswer = dataSnapshot.child("useranswer").getValue(String.class);
-                Log.d("AnswerActivity", "questionid :"+questionId);
+               // Log.d("AnswerActivity", "questionid :"+questionId);
 
                 try {
 
                     if (useranswer==null){
-                        String.valueOf(useranswer.replace(null, "question was not given"));
+                        useranswer.replace(null, "question was not given");
                     }
 
                     getQuestion(q_id, useranswer);
@@ -259,18 +205,13 @@ public class View_Answer_Dialog extends DialogFragment {
 
 
                 try {
-                    String score = dataSnapshot.child("credit_points").getValue().toString();
                     String corr_answer = dataSnapshot.child("correct_answers").getValue().toString();
                     tvCorrectAnswer.setText(""+corr_answer+"/10");
-                    // progressDialog.dismiss();
-
                 }
 
                 catch (Exception e){
                     e.printStackTrace();
                 }
-                //   progressDialog.dismiss();
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -287,28 +228,19 @@ public class View_Answer_Dialog extends DialogFragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
-                    Log.d(TAG, "children are: "+dataSnapshot.getKey());
-
-                    Log.d(TAG, "childs: "+dataSnapshot.getKey());
                     question = dataSnapshot.child("Question").getValue(String.class);
                     corr_ans = dataSnapshot.child("Answer").getValue(String.class);
-
                     answerViewList.add(new AnswerView(
                             questionId,  question, corr_ans, useranswer
                     ));
 
                     answerAdapter = new AnswerAdapter(getActivity(), answerViewList);
                     recyclerView.setAdapter(answerAdapter);
-
-//                    progressDialog.dismiss();
-
+                    progressDialog.dismiss();
 
                 }catch (NullPointerException | DatabaseException e){
                     e.printStackTrace();
                 }
-
-
-
             }
 
             @Override

@@ -2,16 +2,12 @@ package com.aptitude.education.e2buddy.Intro;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -82,12 +78,6 @@ public class InsertUserImageActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/DroidSerif-Regular.ttf");
-
-        profile.setTypeface(type);
-        upload.setTypeface(type);
-        tvusername.setTypeface(type);
-        appname.setTypeface(type);
 
         references = FirebaseDatabase.getInstance().getReference();
 
@@ -117,7 +107,7 @@ public class InsertUserImageActivity extends AppCompatActivity {
                 try {
                     String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
 
-                    Picasso.with(getApplicationContext())
+                    Picasso.get()
                             .load(imageUrl)
                             .placeholder(R.drawable.userimg)
                             .fit()
@@ -195,6 +185,7 @@ public class InsertUserImageActivity extends AppCompatActivity {
                             }
                         }, 500);
 
+
                         ImageData upload = new ImageData(taskSnapshot.getDownloadUrl().toString());
                         mDatabaseRef.child("user_info").child(userid).child("image_Url").setValue(taskSnapshot.getDownloadUrl().toString());
 
@@ -241,7 +232,7 @@ public class InsertUserImageActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
-            Picasso.with(this)
+            Picasso.get()
                     .load(mImageUri)
                     .placeholder(R.drawable.userimg)
                     .fit()

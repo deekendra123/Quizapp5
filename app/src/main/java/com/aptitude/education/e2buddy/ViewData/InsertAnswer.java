@@ -1,5 +1,11 @@
 package com.aptitude.education.e2buddy.ViewData;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 /**
  * Created by Matrix on 26-12-2018.
  */
@@ -15,6 +21,7 @@ public class InsertAnswer {
         this.datetime = datetime;
 
     }
+
 
     public InsertAnswer(long timeleft) {
         this.timeleft = timeleft;

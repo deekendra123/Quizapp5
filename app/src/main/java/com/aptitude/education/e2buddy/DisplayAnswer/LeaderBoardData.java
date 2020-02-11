@@ -1,7 +1,7 @@
 package com.aptitude.education.e2buddy.DisplayAnswer;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by Matrix on 31-01-2019.

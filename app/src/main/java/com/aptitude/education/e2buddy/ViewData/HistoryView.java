@@ -10,20 +10,14 @@ public class HistoryView {
     String quizname;
     String date;
     String coins;
+    String correct_answer;
 
-    public HistoryView(String id, String quizname, String date, String coins) {
+    public HistoryView(String id, String quizname, String date, String coins, String correct_answer) {
         this.id = id;
         this.quizname = quizname;
         this.date = date;
         this.coins = coins;
-    }
-
-    public HistoryView(String id, String latest_quiz_id, String quizname, String date, String coins) {
-        this.id = id;
-        this.latest_quiz_id = latest_quiz_id;
-        this.quizname = quizname;
-        this.date = date;
-        this.coins = coins;
+        this.correct_answer = correct_answer;
     }
 
 
@@ -65,5 +59,13 @@ public class HistoryView {
 
     public void setLatest_quiz_id(String latest_quiz_id) {
         this.latest_quiz_id = latest_quiz_id;
+    }
+
+    public String getCorrect_answer() {
+        return correct_answer;
+    }
+
+    public void setCorrect_answer(String correct_answer) {
+        this.correct_answer = correct_answer;
     }
 }

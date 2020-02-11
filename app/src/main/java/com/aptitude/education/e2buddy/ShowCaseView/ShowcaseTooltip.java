@@ -724,7 +724,7 @@ public class ShowcaseTooltip {
             if (activity != null) {
                 return activity;
             } else {
-                return ((Context) fragment.getActivity());
+                return fragment.getActivity();
             }
         }
 

@@ -2,53 +2,37 @@ package com.aptitude.education.e2buddy.Question;
 
 import android.annotation.SuppressLint;
 
-import android.app.FragmentManager;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.annotation.NonNull;
 
-import com.aptitude.education.e2buddy.App_Sharing.FAQ_Dialog;
-import com.aptitude.education.e2buddy.App_Sharing.Merchandise_Dialog;
-import com.aptitude.education.e2buddy.App_Sharing.RewardFragment;
-import com.aptitude.education.e2buddy.DisplayAnswer.LeaderBoardForQuizFragment;
-import com.aptitude.education.e2buddy.Intro.Quizapp;
-import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.ChallengeQuizRequestFragment;
-import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.LoaderForReceiverActivity;
-import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.SendRequestToOpponentFragment;
-import com.aptitude.education.e2buddy.R;
-import com.aptitude.education.e2buddy.ViewData.OnlineStatusData;
+import com.aptitude.education.e2buddy.Internship.InternshipFragment;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Handler;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.aptitude.education.e2buddy.Menu.MenuSheetDialog;
+import com.aptitude.education.e2buddy.Menu.RewardFragment;
+import com.aptitude.education.e2buddy.DisplayAnswer.LeaderBoardForQuizFragment;
+import com.aptitude.education.e2buddy.Intro.IntroActivity;
+import com.aptitude.education.e2buddy.Placement_Papers.PlacementQuizFragment;
+import com.aptitude.education.e2buddy.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,48 +46,48 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-import android.app.DialogFragment;
+
 public class HomeNevActivity extends AppCompatActivity {
 
-    String  eid;
+    String eid;
     FirebaseAuth auth;
-
-    InterstitialAd mInterstitialAd;
     Fragment currentFragment = null;
     DatabaseReference reference;
-    ValueEventListener valueEventListener;
+
+    private InterstitialAd interstitialAd;
+    private boolean doubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_nev);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
 
-
-        navigation.getMenu().getItem(2).setChecked(true);
+       navigation.getMenu().getItem(2).setChecked(true);
 
         navigation.setItemIconTintList(null);
 
-         reference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference();
 
 
-        mInterstitialAd = new InterstitialAd(HomeNevActivity.this);
-
-        mInterstitialAd.setAdUnitId(getString(R.string.Interstitial_ad));
-
+        interstitialAd= new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getString(R.string.Interstitial_ad));
         AdRequest adRequest = new AdRequest.Builder().build();
-
-        mInterstitialAd.loadAd(adRequest);
+        interstitialAd.loadAd(adRequest);
 
 
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
-        eid = user.getUid();
+
+        if(user != null){
+            eid = user.getUid();
+        }
+        else {
+            Intent intent = new Intent(HomeNevActivity.this, IntroActivity.class);
+            startActivity(intent);
+        }
 
         navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -115,32 +99,14 @@ public class HomeNevActivity extends AppCompatActivity {
 
                         switch (item.getItemId()) {
 
+
                             case R.id.navigation_home:
 
-                                if (!(currentFragment instanceof HomeFragment)) {
-                                    HomeFragment fragment = new HomeFragment();
+                                if (!(currentFragment instanceof QuizHomeFragment)) {
+                                    QuizHomeFragment fragment = new QuizHomeFragment();
                                     loadFragment(fragment);
                                 }
 
-                                break;
-                            case R.id.navigation_dashboard:
-
-
-                                if (!(currentFragment instanceof PreviousQuizFragment)) {
-
-                                    PreviousQuizFragment previousQuizFragment = new PreviousQuizFragment();
-                                    loadFragment(previousQuizFragment);
-                                }
-
-                                break;
-
-                            case R.id.navigation_leaderboard:
-
-                                if (!(currentFragment instanceof LeaderBoardForQuizFragment)) {
-                                    LeaderBoardForQuizFragment  leaderBoardForQuizFragment = new LeaderBoardForQuizFragment();
-                                    loadFragment(leaderBoardForQuizFragment);
-
-                                }
                                 break;
 
 
@@ -152,88 +118,105 @@ public class HomeNevActivity extends AppCompatActivity {
                                 }
                                 break;
 
+                            case R.id.navigation_leaderboard:
+
+                                if (!(currentFragment instanceof LeaderBoardForQuizFragment)) {
+                                    LeaderBoardForQuizFragment leaderBoardForQuizFragment = new LeaderBoardForQuizFragment();
+                                    loadFragment(leaderBoardForQuizFragment);
+
+                                }
+                                break;
+
+
+                            case R.id.navigation_placement_paper:
+
+                                if (!(currentFragment instanceof PlacementQuizFragment)) {
+                                    PlacementQuizFragment leaderBoardForQuizFragment = new PlacementQuizFragment();
+                                    loadFragment(leaderBoardForQuizFragment);
+
+                                }
+                                break;
+
+                         /*   case R.id.internships:
+
+                                if (!(currentFragment instanceof PlacementQuizFragment)) {
+                                    InternshipFragment internshipFragment = new InternshipFragment();
+                                    loadFragment(internshipFragment);
+
+                                }
+                                break;*/
+
+
+
+                            case R.id.navigation_menu:
+
+                                    MenuSheetDialog menuSheetDialog = new MenuSheetDialog();
+                                    menuSheetDialog.setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
+                                    menuSheetDialog.show(getSupportFragmentManager(), "quizapp2");
+
+                                break;
+
 
                         }
                         return false;
                     }
                 });
 
-    //    getUserName();
+        //    getUserName();
         getDynamicLink();
 
-        loadFragment(new HomeFragment());
+        loadFragment(new QuizHomeFragment());
     }
 
 
+    private boolean loadFragment(Fragment fragment) {
 
-    private boolean loadFragment(android.support.v4.app.Fragment fragment) {
-
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_container, fragment);
         fragmentTransaction.commit();
         return true;
 
     }
 
-
     @Override
     public void onBackPressed() {
 
+       this.doubleBackToExitPressedOnce = true;
 
-        mInterstitialAd.show();
+        if (doubleBackToExitPressedOnce) {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+                interstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        finish();
+                    }
+                });
+            }else{
+
+                new AlertDialog.Builder(HomeNevActivity.this)
+                        .setTitle("Really Exit?")
+                        .setMessage("Are you sure you want to exit?")
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                HomeNevActivity.super.onBackPressed();
+                            }
+                        }).create().show();
+
+            }
+
+            return;
         }
-        else {
-            new AlertDialog.Builder(HomeNevActivity.this)
-                    .setTitle("Really Exit?")
-                    .setMessage("Are you sure you want to exit?")
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            HomeNevActivity.super.onBackPressed();
-                        }
-                    }).create().show();
-        }
 
 
-        mInterstitialAd.setAdListener(new AdListener() {
 
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-            }
 
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-            }
 
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
-            public void onAdClosed() {
-                HomeNevActivity.super.onBackPressed();
-                // Code to be executed when the interstitial ad is closed.
-            }
-        });
 
     }
-
 
     public static class BottomNavigationViewHelper {
 
@@ -248,7 +231,7 @@ public class HomeNevActivity extends AppCompatActivity {
                 shiftingMode.setAccessible(false);
                 for (int i = 0; i < menuView.getChildCount(); i++) {
                     BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                    item.setShiftingMode(false);
+                    item.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
                     // set once again checked value, so view will be updated
                     item.setChecked(item.getItemData().isChecked());
                 }
@@ -262,10 +245,9 @@ public class HomeNevActivity extends AppCompatActivity {
     }
 
 
+    private void getDynamicLink() {
 
-    private void getDynamicLink(){
-
-         reference = FirebaseDatabase.getInstance().getReference("referral_code");
+        reference = FirebaseDatabase.getInstance().getReference("referral_code");
 
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
@@ -278,32 +260,31 @@ public class HomeNevActivity extends AppCompatActivity {
 
                             deepLink = pendingDynamicLinkData.getLink();
 
-                            Log.e("deeke"," detect link "+deepLink);
+                            Log.e("deeke", " detect link " + deepLink);
 
                             String link = deepLink.toString();
                             final String code = link.substring(27);
 
-                            Log.e("deeke"," refer code "+code);
+                            Log.e("deeke", " refer code " + code);
 
 
-                          valueEventListener =  reference.orderByChild("referral_code").equalTo(code).addValueEventListener(new ValueEventListener() {
+                            reference.orderByChild("referral_code").equalTo(code).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
-                                        final String user_id =dataSnapshot1.getKey();
+                                        final String user_id = dataSnapshot1.getKey();
 
-                                        Log.e("deeke"," refer user "+user_id);
+                                        Log.e("deeke", " refer user " + user_id);
 
                                         reference.child("referral_code").child(eid).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                                if (dataSnapshot.hasChild("refered_by")){
+                                                if (dataSnapshot.hasChild("refered_by")) {
                                                     //  reference2.child("referral_code").child(eid).child("refered_by").setValue("no");
-                                                }
-                                                else {
+                                                } else {
                                                     reference.child("referral_code").child(eid).child("refered_by").setValue(user_id);
                                                     reference.child("referrals").child(user_id).child(eid).setValue("1");
                                                 }
@@ -325,17 +306,15 @@ public class HomeNevActivity extends AppCompatActivity {
                             });
 
 
-                        }
-                        else {
+                        } else {
 
                             reference.child("referral_code").child(eid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    if (dataSnapshot.hasChild("refered_by")){
-                                        //  reference2.child("referral_code").child(eid).child("refered_by").setValue("no");
-                                    }
-                                    else {
+                                    if (dataSnapshot.hasChild("refered_by")) {
+
+                                    } else {
                                         reference.child("referral_code").child(eid).child("refered_by").setValue("no");
                                     }
                                 }
@@ -356,6 +335,7 @@ public class HomeNevActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
 }

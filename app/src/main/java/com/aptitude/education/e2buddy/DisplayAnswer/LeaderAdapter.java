@@ -1,28 +1,19 @@
 package com.aptitude.education.e2buddy.DisplayAnswer;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.aptitude.education.e2buddy.R;
-import com.aptitude.education.e2buddy.ViewData.InsertRank;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Matrix on 08-02-2019.
@@ -63,32 +54,6 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
         return new LeaderHolder(view);
     }
 
-
-    public void inserRank(){
-
-        for (int i=0; i<list.size() ;i++){
-
-            LeaderBoardData data = list.get(i);
-
-            int i1 = i;
-            if (i1==i){
-                i1++;
-                InsertRank insertRank = new InsertRank(data.getScore());
-
-                // reference6.child(data.getUserid()).setValue(insertRank);
-                rankcounter++;
-
-                if (userid.equals(data.getUserid())){
-                    yourrank.setText(""+i1);
-                }
-            }
-
-
-        }
-
-
-    }
-
     @Override
     public void onBindViewHolder(@NonNull LeaderHolder holder, int position) {
 
@@ -98,7 +63,10 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
 
         holder.score.setText("" + leaderBoardData.getScore());
 
-        Picasso.with(mCtx)
+        holder.layout.setBackgroundResource(R.drawable.ic_medal);
+
+
+        Picasso.get()
                 .load(leaderBoardData.getImage_Url())
                 .placeholder(R.drawable.userimg)
                 .fit()
@@ -113,9 +81,6 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
             int i1 = i;
             if (i1==i){
                 i1++;
-                InsertRank insertRank = new InsertRank(data.getScore());
-
-                //reference6.child(data.getUserid()).setValue(insertRank);
                 rankcounter++;
 
                 if (userid.equals(data.getUserid())){
@@ -124,73 +89,16 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
             }
 
         }
-
-
-        if (position==0){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-
-        if (position==1){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==2){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==3){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==4){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==5){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==6){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==7){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==8){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-        if (position==9){
-
-            holder.layout.setBackgroundResource(R.drawable.ic_medal);
-
-        }
-
     }
 
     @Override
     public int getItemCount() {
         return Math.min(list.size(), 10);
-
-        // return list.size();
     }
 
     public class LeaderHolder extends RecyclerView.ViewHolder {
 
-        TextView leaderdata,rack, score;
-        TextView imageView;
+        TextView leaderdata, score;
         LinearLayout layout;
         ImageView linearLayout;
         Transformation transformation;
@@ -203,10 +111,6 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
             score = itemView.findViewById(R.id.textView13);
             linearLayout = itemView.findViewById(R.id.img);
             layout = itemView.findViewById(R.id.scoresss);
-
-            Typeface type = Typeface.createFromAsset(mCtx.getAssets(), "fonts/Roboto-Regular.ttf");
-            leaderdata.setTypeface(type);
-            score.setTypeface(type);
 
             transformation = new RoundedTransformationBuilder()
                     .borderColor(mCtx.getResources().getColor(R.color.gray))

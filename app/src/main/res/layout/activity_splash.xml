@@ -28,7 +28,7 @@
         android:textSize="50dp"
         android:textColor="#FFFFFF"
         android:gravity="center"
-        android:text="E2 Buddy"
+        android:text="E2Buddy"
         android:textStyle="bold"/>
 
 
@@ -44,6 +44,6 @@
         android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:gravity="center"
-        android:text="Students Aptitude Learning Partner"
+        android:text="Students Learning Partner"
         android:textStyle="bold"/>
 </RelativeLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Placement_Papers.PlacementQuizQuestionsActivity">
+
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@drawable/bglayout">
+
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="20:00"
+            android:textSize="20dp" />
+
+         <ProgressBar
+             android:id="@+id/progress_horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="10dp"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+             android:layout_below="@id/textViewTime"
+
+             style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+             />
+
+    </RelativeLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/slidequestion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+>
+
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <RelativeLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvBookmark"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="95dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/circle1"
+                android:gravity="center"
+                android:text="View   Stared"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="11dp"
+                tools:ignore="VectorDrawableCompat" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bnext"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btdesign"
+            android:layout_marginTop="110dp"
+            android:text="next"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textAllCaps="true"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/bprevious"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btdesign1"
+            android:layout_marginTop="110dp"
+            android:text="BACK"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_marginBottom="10dp"
+            android:visibility="invisible"
+            android:layout_toLeftOf="@id/bnext"
+            android:layout_marginRight="10dp"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dig"
+
+
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textColor="#ffffff"
+
+            android:textAlignment="center"
+            android:id="@+id/hj"
+            android:text="Enter Your School Code"
+            android:layout_marginTop="16dp"
+
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:id="@+id/codelayout"
+            android:layout_below="@+id/hj"
+            android:background="@drawable/shape">
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView5"
+                android:layout_marginTop="4dp"
+                app:srcCompat="@drawable/ic_student"
+                tools:ignore="VectorDrawableCompat" />
+            <View
+                android:layout_width="2dp"
+                android:layout_height="45dp"
+                android:background="#B9B8B8"
+                android:layout_marginLeft="8dp"/>
+
+
+
+            <EditText
+                android:layout_width="303dp"
+                android:layout_height="match_parent"
+                android:id="@+id/userSchoolCode"
+
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_marginLeft="10dp"
+                android:cursorVisible="true"
+
+                android:inputType="text"
+                android:textCursorDrawable="@null"
+                android:hint="Have a school code ? Enter here"/>
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            android:id="@+id/codelayout1"
+            android:gravity="right"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/codelayout"
+          >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:textColor="#ffffff"
+
+                android:textAlignment="center"
+                android:id="@+id/save"
+                android:text="Save"
+                android:layout_marginTop="6dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:textColor="#ffffff"
+
+                android:textAlignment="center"
+                android:id="@+id/cancel"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Cancel"
+                android:layout_marginTop="6dp"
+
+                />
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

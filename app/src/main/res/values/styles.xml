@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:typeface">serif</item>
 
     </style>
 
@@ -70,12 +69,6 @@
         ...
     </style>
 
-    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
-        <!-- Custom Attr-->
-        <item name="fontPath">fonts/DroidSerif-Regular.ttf</item>
-    </style>
-
-
     <style name="full_screen_dialog" parent="@android:style/Theme.Translucent">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -93,6 +86,21 @@
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@fonts/Roboto-Black</item>
+    </style>
+
+    <style name= "AppThemeFont" parent= "AppTheme" >
+        <item name= "android:textViewStyle" > @style/RobotoTextViewStyle </item>
+    </style>
+    <style name= "RobotoTextViewStyle" parent= "android:Widget.TextView" >
+        <item name= "android:fontFamily" >@fonts/Roboto-Regular</item>
+    </style>
+
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12dp</item>
     </style>
 
 </resources>

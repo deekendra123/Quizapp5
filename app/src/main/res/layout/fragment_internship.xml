@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/framelayout"
+    android:background="@drawable/mainbackground"
+    tools:context=".Internship.InternshipFragment">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:id="@+id/layout14"
+        android:background="@drawable/bglayout"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Internships - Industrial Training"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:layout_marginTop="12dp"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            />
+
+</RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#E7E6E6"
+            android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Every year E2Buddy provides Industrial Training and Internship to 250 students from various Indian Universities and Colleges. \n\nThis helps students to strengthen their resume and get their dream Job."
+        android:textColor="#DAD7D7"
+        android:id="@+id/text1"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:textSize="15dp"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:id="@+id/linearCongo"
+        android:orientation="vertical">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:lottie_rawRes="@raw/thumbsup"
+            android:layout_gravity="center"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="40dp"
+            android:id="@+id/textMsg1"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Congratulations"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:id="@+id/textMsg"
+            android:textStyle="bold"
+            android:layout_marginRight="55dp"
+            android:layout_marginLeft="65dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text=""/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="17dp"
+            android:id="@+id/tvDetails"
+
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:text="Internship Details"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:id="@+id/tvDate"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Date From : "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:id="@+id/tvDateFrom"
+                android:gravity="center"
+                android:text=""/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:id="@+id/tvDate1"
+                android:text="Date To     : "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:id="@+id/tvDateTo"
+                android:gravity="center"
+                android:text=""/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerInternship"
+        android:layout_below="@+id/layout14"
+
+        android:visibility="visible"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="395dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/layout14"
+        android:id="@+id/relativeLayout"
+        android:visibility="invisible"
+        android:layout_marginTop="20dp">
+
+
+        <ImageView
+            android:id="@+id/imgSuccessfull"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/right"
+            android:visibility="visible"
+            tools:ignore="VectorDrawableCompat" />
+
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgSuccessfull"
+            android:layout_marginTop="15dp"
+
+            android:text="Congratulations! You have successfully \n applied."
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+        <RelativeLayout
+            android:id="@+id/relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/tvDesc"
+            android:background="@drawable/bgcard10"
+            android:orientation="vertical">
+
+
+
+
+            <TextView
+                android:id="@+id/tvInternshipName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+
+                android:text=""
+                android:layout_marginLeft="80dp"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_programming"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="#ffffff"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:ignore="VectorDrawableCompat" />
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/seeTournamentResult"
+            android:layout_width="105dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="65dp"
+            android:background="@drawable/circle2"
+            android:gravity="center"
+            android:text="Applied \n Successfully"
+            android:textColor="#ffffff"
+            android:textSize="11dp"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible"
+            tools:ignore="VectorDrawableCompat" />
+
+
+        <TextView
+            android:id="@+id/tvDesc1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativelayout"
+            android:layout_marginTop="35dp"
+
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+
+            android:textSize="18dp"
+
+            android:text="On shortlisting, you will receive an Email."
+            android:drawableLeft="@drawable/ic_check"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+</FrameLayout>

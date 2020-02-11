@@ -9,9 +9,9 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -31,19 +31,14 @@ import com.aptitude.education.e2buddy.ViewData.InsertAnswer;
 import com.aptitude.education.e2buddy.ViewData.QuestionIdData;
 import com.aptitude.education.e2buddy.ViewData.QuestionView;
 import com.aptitude.education.e2buddy.ViewData.TimeData;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class QuestionForUser2Activity extends AppCompatActivity {
 
@@ -113,7 +108,7 @@ public class QuestionForUser2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_for_user2);
 
-        layouts = (LinearLayout) findViewById(R.id.dots);
+        layouts = findViewById(R.id.dots);
         layoutforuser1 = findViewById(R.id.user1);
         tvreceiver = findViewById(R.id.tvreceiver);
         tvsender = findViewById(R.id.tvsender);
@@ -122,13 +117,13 @@ public class QuestionForUser2Activity extends AppCompatActivity {
         viewPager = findViewById(R.id.slidequestion);
         next = findViewById(R.id.bnext);
         tiemr = findViewById(R.id.timer);
-        progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
+        progressBarCircle = findViewById(R.id.progressBarCircle);
 
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
         checkInternet.checkConnection();
 
 
-        Typeface type = (Typeface) Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         tvreceiver.setTypeface(type);
         tvsender.setTypeface(type);
         next.setTypeface(type);

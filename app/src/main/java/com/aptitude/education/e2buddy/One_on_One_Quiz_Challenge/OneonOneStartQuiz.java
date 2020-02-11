@@ -3,7 +3,7 @@ package com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -233,8 +233,6 @@ public class OneonOneStartQuiz extends AppCompatActivity {
         img2.startAnimation(myFadeInAnimation);
         img3.startAnimation(myFadeInAnimation);
 
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
 
         msg.setText("Please wait for "+ sender_name+ " to start the game.");
 

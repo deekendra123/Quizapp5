@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +72,7 @@ public class AdapterForQuizChallenge extends PagerAdapter {
         final   String ans;
 
 
-        layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = layoutInflater.inflate(R.layout.que_layout_for_one_on_one, container, false);
 
         TextView question = view.findViewById(R.id.question);
@@ -126,7 +126,7 @@ public class AdapterForQuizChallenge extends PagerAdapter {
 
         btn_unfocus = btn[0];
         for(int i = 0; i < btn.length; i++){
-            btn[i] = (Button) view.findViewById(btn_id[i]);
+            btn[i] = view.findViewById(btn_id[i]);
             btn[i].setBackgroundColor(Color.rgb(207, 207, 207));
             btn[i].setBackgroundResource(R.drawable.button);
 

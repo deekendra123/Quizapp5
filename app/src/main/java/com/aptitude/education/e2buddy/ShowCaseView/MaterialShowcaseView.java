@@ -137,18 +137,9 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
         mContentTextView = contentView.findViewById(R.id.tv_content);
         mDismissButton = contentView.findViewById(R.id.tv_dismiss);
 
-
-
-        Typeface type = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSerif-Regular.ttf");
-        mContentTextView.setTypeface(type);
-        mTitleTextView.setTypeface(type);
-        mDismissButton.setTypeface(type);
-
-
         mDismissButton.setOnClickListener(this);
 
         mSkipButton = contentView.findViewById(R.id.tv_skip);
-        mSkipButton.setTypeface(type);
 
         mSkipButton.setOnClickListener(this);
     }
@@ -550,7 +541,7 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
 
     public void removeShowcaseListener(MaterialShowcaseSequence showcaseListener) {
 
-        if ((mListeners != null) && mListeners.contains(showcaseListener)) {
+        if ((mListeners != null)) {
             mListeners.remove(showcaseListener);
         }
     }

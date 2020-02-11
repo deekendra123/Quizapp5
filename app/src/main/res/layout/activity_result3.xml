@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/bgcard2"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Quiz_Tournament.ResultActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/userimg"
+            android:layout_marginTop="10dp"
+
+            android:background="@drawable/ic_checked"
+            >
+
+        </ImageView>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="27dp"
+        android:id="@+id/tv1"
+        android:textAlignment="center"
+        android:layout_marginTop="13dp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:text="Submitted Successfully"
+        />
+
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:id="@+id/img4"
+        app:srcCompat="@drawable/goforit"
+        android:layout_marginTop="30dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:background="@drawable/bglayout4"
+        android:text="Result will be declared Tomorrow"
+        android:id="@+id/tvtext"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Go to Home"
+        android:layout_marginTop="20dp"
+        android:id="@+id/bthome"
+        android:textAllCaps="false"
+        android:background="@drawable/button_design"/>
+
+
+</LinearLayout>

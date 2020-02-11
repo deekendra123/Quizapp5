@@ -1,13 +1,10 @@
 package com.aptitude.education.e2buddy.Intro;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -66,15 +63,6 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
         checkInternet.checkConnection();
-
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/DroidSerif-Regular.ttf");
-        tv1.setTypeface(type);
-        tv2.setTypeface(type);
-        tv3.setTypeface(type);
-        tvno.setTypeface(type);
-        resend_otp.setTypeface(type);
-        timer.setTypeface(type);
-        //buttonSignIn.setTypeface(type);
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();

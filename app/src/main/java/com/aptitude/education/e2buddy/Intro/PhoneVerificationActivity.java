@@ -1,11 +1,9 @@
 package com.aptitude.education.e2buddy.Intro;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.R;
@@ -23,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.rilixtech.Country;
 import com.rilixtech.CountryCodePicker;
 
 import io.michaelrocks.libphonenumber.android.NumberParseException;
@@ -64,9 +60,9 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
         checkInternet.checkConnection();
 
-        name.setHint(name.getHint()+" "+getString(R.string.asteriskred));
+      /*  name.setHint(name.getHint()+" "+getString(R.string.asteriskred));
         number.setHint(number.getHint()+" "+getString(R.string.asteriskred));
-//        email.setHint(email.getHint()+" "+getString(R.string.asteriskred));
+*///        email.setHint(email.getHint()+" "+getString(R.string.asteriskred));
 
         icon = findViewById(R.id.logo);
 
@@ -102,15 +98,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         thread.start();
       //  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/DroidSerif-Regular.ttf");
-        email.setTypeface(type);
-        name.setTypeface(type);
-        number.setTypeface(type);
-        textView.setTypeface(type);
-        textView1.setTypeface(type);
-        tv.setTypeface(type);
-        ccp.setTypeFace(type);
-        databaseReference = FirebaseDatabase.getInstance().getReference("user_info");
+     databaseReference = FirebaseDatabase.getInstance().getReference("user_info");
 
         token_id = FirebaseInstanceId.getInstance().getToken();
 

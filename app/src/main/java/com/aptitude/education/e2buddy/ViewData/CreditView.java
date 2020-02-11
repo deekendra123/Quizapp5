@@ -8,14 +8,27 @@ public class CreditView {
 
     int credit_points;
     String date_time;
-    String quiz_name;
-    int correct_answers;
 
-    public CreditView(int credit_points, String date_time, String quiz_name, int correct_answers) {
+    int correct_answers;
+    String timeleft;
+
+
+
+    public CreditView(int credit_points, String date_time, int correct_answers) {
         this.credit_points = credit_points;
         this.date_time = date_time;
-        this.quiz_name = quiz_name;
+
         this.correct_answers = correct_answers;
+    }
+
+    public CreditView(int credit_points, int correct_answers) {
+        this.credit_points = credit_points;
+        this.correct_answers = correct_answers;
+    }
+
+    public CreditView(String timeleft,int correct_answers) {
+        this.correct_answers = correct_answers;
+        this.timeleft = timeleft;
     }
 
 
@@ -35,19 +48,19 @@ public class CreditView {
         this.date_time = date_time;
     }
 
-    public String getQuiz_name() {
-        return quiz_name;
-    }
-
-    public void setQuiz_name(String quiz_name) {
-        this.quiz_name = quiz_name;
-    }
-
-    public int getCorrect_answers() {
+     public int getCorrect_answers() {
         return correct_answers;
     }
 
     public void setCorrect_answers(int correct_answers) {
         this.correct_answers = correct_answers;
+    }
+
+    public String getTimeleft() {
+        return timeleft;
+    }
+
+    public void setTimeleft(String timeleft) {
+        this.timeleft = timeleft;
     }
 }

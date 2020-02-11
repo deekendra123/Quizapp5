@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@drawable/starsnot"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/layout">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/not_logo"/>
+
+        <!-- <TextView
+             android:layout_width="70dp"
+             android:layout_height="25dp"
+             android:textSize="15dp"
+             android:textColor="#ffffff"
+             android:layout_marginTop="10dp"
+             android:gravity="center"
+             android:background="#000000"
+             android:text="E2Buddy"/>
+ -->
+        <!-- <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/animation_view"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+             android:scaleType="centerCrop"
+             app:lottie_rawRes="@raw/thumbsup"
+             android:layout_gravity="center"
+             app:lottie_loop="false"
+
+             app:lottie_autoPlay="true" />
+ -->
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:id="@+id/text1"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:textAllCaps="true"
+        android:layout_below="@id/layout"
+        android:layout_centerHorizontal="true"
+
+        android:text="Today Quiz is Live"/>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_below="@+id/tvTaournament"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/textwin"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="7dp"
+            android:gravity="center"
+            android:text="Play to Increase your Knowledge"
+            android:textColor="#ffffff"
+            android:textSize="16.5dp"
+            android:textStyle="bold" />
+
+        </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvJoin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Play Now"
+        android:textStyle="bold"
+        android:background="#C2185B"
+        android:textColor="#ffffff"
+        android:textSize="17.5dp"/>
+
+</LinearLayout>

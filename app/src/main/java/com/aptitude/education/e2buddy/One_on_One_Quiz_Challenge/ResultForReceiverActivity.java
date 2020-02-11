@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aptitude.education.e2buddy.Intro.CheckInternet;
-import com.aptitude.education.e2buddy.Question.HomeFragment;
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
-import com.aptitude.education.e2buddy.Question.StartQuizActivity;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.Questionids;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,9 +74,6 @@ public class ResultForReceiverActivity extends AppCompatActivity {
     String notification_id,receiver_user_id;
     SharedPreferences pref;
     SharedPreferences.Editor editor1;
-    AdView mAdView;
-    InterstitialAd mInterstitialAd;
-    AdRequest adRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,30 +92,13 @@ public class ResultForReceiverActivity extends AppCompatActivity {
         bthome = findViewById(R.id.button4);
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
-        mAdView = (AdView) findViewById(R.id.adView);
-        adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-        mInterstitialAd = new InterstitialAd(ResultForReceiverActivity.this);
-
-        mInterstitialAd.setAdUnitId(getString(R.string.Interstitial_ad));
-
-        mInterstitialAd.loadAd(adRequest);
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-            }
-        });
 
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
         checkInternet.checkConnection();
 
 
 
-        Typeface type = (Typeface) Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         user1name.setTypeface(type);
         user2name.setTypeface(type);
         user1score.setTypeface(type);
@@ -205,7 +179,7 @@ public class ResultForReceiverActivity extends AppCompatActivity {
 
                 String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
 
-                Picasso.with(getApplicationContext())
+                Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.userimg)
                         .fit()
@@ -231,7 +205,7 @@ public class ResultForReceiverActivity extends AppCompatActivity {
 
                 String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
 
-                Picasso.with(getApplicationContext())
+                Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.mipmap.ic_launcher)
                         .fit()
@@ -492,8 +466,6 @@ public class ResultForReceiverActivity extends AppCompatActivity {
         zoomout = AnimationUtils.loadAnimation(ResultForReceiverActivity.this, R.anim.zoomin);
         smileFace.setAnimation(zoomout);
 
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
 
         msg.setText(sender_name+" has challenged you.");
 
@@ -609,9 +581,6 @@ public class ResultForReceiverActivity extends AppCompatActivity {
         img1.startAnimation(myFadeInAnimation);
         img2.startAnimation(myFadeInAnimation);
         img3.startAnimation(myFadeInAnimation);
-
-        Typeface type = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/DroidSerif-Regular.ttf");
-        msg.setTypeface(type);
 
         msg.setText("Please wait for "+ sender_name+ " to start the game.");
 

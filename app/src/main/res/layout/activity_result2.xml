@@ -24,8 +24,7 @@
             android:id="@+id/userimg"
             android:layout_marginTop="10dp"
 
-            android:background="@drawable/ic_profile"
-            >
+            android:background="@drawable/ic_profile">
 
         </ImageView>
 
@@ -210,20 +209,5 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            ads:adSize="BANNER"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp"
-            ads:adUnitId="@string/banner_ad"
-            />
-    </RelativeLayout>
 
 </LinearLayout>

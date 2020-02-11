@@ -1,29 +1,22 @@
 package com.aptitude.education.e2buddy.Question;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.aptitude.education.e2buddy.DisplayAnswer.ViewAnswerActivity;
+import com.aptitude.education.e2buddy.DisplayAnswer.View_Answer_Dialog;
 import com.aptitude.education.e2buddy.R;
-import com.aptitude.education.e2buddy.ViewData.AnswerView;
 import com.aptitude.education.e2buddy.ViewData.HistoryView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +46,7 @@ public class UserQuizHistoryAdapter extends RecyclerView.Adapter<UserQuizHistory
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = (OnItemClickListener) listener;
+        this.listener = listener;
     }
 
 
@@ -84,42 +77,27 @@ public class UserQuizHistoryAdapter extends RecyclerView.Adapter<UserQuizHistory
                 .replaceAll("-11", "-Nov")
                 .replaceAll("-12", "-Dec");
 
-        holder.textView.setText(newdate+"-2019");
+        holder.textView.setText("Date: "+newdate);
         holder.tvcoins.setText(""+historyView.getCoins());
+        holder.tvcorrectans.setText("Answers: "+historyView.getCorrect_answer()+"/10");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setClickable(false);
+        holder.btCorrecctAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                System.gc();
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                FragmentManager fm = ((AppCompatActivity)mCtx).getSupportFragmentManager();
+                                DialogFragment dialog = View_Answer_Dialog.newInstance();
 
-                databaseReference.child("daily_user_credit").child(userId).child(historyView.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        try {
-                            long count = dataSnapshot.getChildrenCount();
-                            //  Toast.makeText(getApplicationContext(), ""+ count,Toast.LENGTH_SHORT).show();
-                            if (count<3){
+                                 Bundle bundle = new Bundle();
+                                bundle.putString("quiz_date",historyView.getId());
+                                bundle.putString("curent_date",historyView.getDate());
+                                bundle.putString("userid",userId);
+                                dialog.setArguments(bundle);
+                                dialog.show(fm,"tag");
 
-                                historyViewList.clear();
-                                Intent intent = new Intent(mCtx, StartQuizActivity.class);
-                                intent.putExtra("quiz_date", historyView.getId());
-                                mCtx.startActivity(intent);
-
-                            }else {
-                                Toast.makeText(mCtx, "You have already attemped 3 times", Toast.LENGTH_LONG).show();
-                            }
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
             }
         });
@@ -137,15 +115,15 @@ public class UserQuizHistoryAdapter extends RecyclerView.Adapter<UserQuizHistory
     public class HistoryHolder extends RecyclerView.ViewHolder{
 
         TextView textView;
-        TextView tvcoins;
+        TextView tvcoins,tvcorrectans;
+        AppCompatButton btCorrecctAnswer;
         public HistoryHolder(final View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.tvhistroy);
             tvcoins = itemView.findViewById(R.id.tvcoins);
-            Typeface type = Typeface.createFromAsset(mCtx.getAssets(), "fonts/Roboto-Regular.ttf");
-            textView.setTypeface(type);
-            tvcoins.setTypeface(type);
+            tvcorrectans = itemView.findViewById(R.id.tvcorrectans);
+            btCorrecctAnswer = itemView.findViewById(R.id.btCorrecctAnswer);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -1,18 +1,19 @@
 package com.aptitude.education.e2buddy.Intro;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -40,9 +41,17 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
-                startActivity(intent);
-                finish();
+                if (FirebaseAuth.getInstance().getCurrentUser()==null){
+                    Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), HomeNevActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
 
 
             }

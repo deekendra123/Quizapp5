@@ -1,35 +1,23 @@
 package com.aptitude.education.e2buddy.DisplayAnswer;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.AnswerView;
-
-import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Matrix on 26-12-2018.
- */
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerHolder>{
 
     private Context mCtx;
     private List<AnswerView> answerViewList;
-
-    private final static int FADE_DURATION = 1000;
     public AnswerAdapter(Context mCtx, List<AnswerView> answerViewList) {
         this.mCtx = mCtx;
         this.answerViewList = answerViewList;
@@ -75,10 +63,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerHold
 
     public class AnswerHolder extends RecyclerView.ViewHolder {
 
-        TextView textView, user_ans, corr_ans,tv1,tv2;
+        TextView textView, user_ans, corr_ans;
         CardView cardView;
         ImageView img1, img2;
-        //ImageView right, wrong;
 
         public AnswerHolder(View itemView) {
             super(itemView);
@@ -89,10 +76,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerHold
             img1 = itemView.findViewById(R.id.img3);
             img2 = itemView.findViewById(R.id.img4);
 
-            Typeface type = (Typeface) Typeface.createFromAsset(mCtx.getAssets(), "fonts/Roboto-Regular.ttf");
-            textView.setTypeface(type);
-            user_ans.setTypeface(type);
-            corr_ans.setTypeface(type);
 
         }
     }

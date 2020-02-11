@@ -1,89 +1,59 @@
 package com.aptitude.education.e2buddy.DisplayAnswer;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Typeface;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.aptitude.education.e2buddy.Intro.CheckInternet;
-import com.aptitude.education.e2buddy.Intro.Quizapp;
-import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.LoaderForReceiverActivity;
+import com.aptitude.education.e2buddy.GoogleAds.InterstitialAd;
 import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.Question.QuizQuestionTimeBasedActivity;
-import com.aptitude.education.e2buddy.Question.StartQuizActivity;
 import com.aptitude.education.e2buddy.R;
 import com.aptitude.education.e2buddy.ViewData.AnswerView;
-import com.aptitude.education.e2buddy.ViewData.CreditView;
-import com.aptitude.education.e2buddy.ViewData.InsertTotalScoreData;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ResultActivity extends AppCompatActivity {
 
 
     Transformation transformation;
-    ImageView userIcon;
-    ImageView img1, img2, img3, img4;
+    ImageView img1, img2, img3, img4, userIcon;
     TextView tv1,tv2,tvscore,tvanswer, tvCorrectAnswer;
     Button leaderboard, btviewans;
     LinearLayout linearLayout;
     DatabaseReference databaseReference;
     List<AnswerView> answerViewList;
-    String userid,quizdate ,date,value,quizids,question,corr_ans,quizid;
-    int count1 = 0, scoreCount = 0,count = 0, scores = 0;
+    String userid,quizdate ,date,value,score;
     ValueEventListener valueEventListener;
+    int corr_answer ;
+    ProgressDialog progressDialog;
+    static ResultActivity resultActivity;
+
+
+    public static ResultActivity getInstance(){
+        return   resultActivity;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +75,16 @@ public class ResultActivity extends AppCompatActivity {
         tvanswer = findViewById(R.id.tvans);
 
 
+
+        progressDialog = new ProgressDialog(ResultActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Data Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setProgress(0);
+        progressDialog.setMax(100);
+        progressDialog.show();
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
         date = sdf.format(new Date());
 
@@ -116,10 +96,7 @@ public class ResultActivity extends AppCompatActivity {
 
         answerViewList = new ArrayList<>();
 
-
-        getQuestionId();
-        showLoader();
-
+        getTodayQuizScore();
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
                 .borderWidthDp(0)
@@ -130,14 +107,13 @@ public class ResultActivity extends AppCompatActivity {
 
 
         getPlayerImage();
-        getTodayQuizScore();
 
 
         btviewans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-  //              System.gc();
+                System.gc();
                 FragmentManager fm = getSupportFragmentManager();
                 DialogFragment dialog = View_Answer_Dialog.newInstance();
 
@@ -157,7 +133,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                System.gc();
+                System.gc();
                 Intent intent = new Intent(getApplicationContext(), LeaderBoardForQuizActivity.class);
                 intent.putExtra("quiz_date",quizdate);
                 intent.putExtra("curent_date", value);
@@ -167,149 +143,14 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void showLoader() {
-
-            final ProgressDialog dialog = new ProgressDialog(ResultActivity.this);
-            dialog.setTitle("Please wait...");
-            dialog.setMessage("Generating Your Result");
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();
-
-            insertTotalQuizScore();
-
-
-        long delayInMillis = 4000;
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-
-                }
-            }, delayInMillis);
-
-
-    }
-    private void getQuestionId() {
-       valueEventListener = databaseReference.child("daily_Question").child(quizdate).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-
-                   String q_id = dataSnapshot1.getKey();
-
-                    //Toast.makeText(getApplicationContext(), ""+q_id,Toast.LENGTH_SHORT).show();
-
-                    getUserAnswer(q_id);
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        loadAd();
 
     }
 
-    private void getUserAnswer(final String q_id) {
-       valueEventListener = databaseReference.child("daily_user_answer").child(userid).child(quizdate).child(value).child(q_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                //  Toast.makeText(getApplicationContext(),""+useranswer +"\n"+ timeleft,Toast.LENGTH_SHORT).show();
-                try {
-                    String useranswer = dataSnapshot.child("useranswer").getValue(String.class);
-                    int timeleft = Integer.parseInt(dataSnapshot.child("timeleft").getValue().toString());
-                    Log.d("AnswerActivity", "questionid :" + q_id);
-
-
-                    if (useranswer == null) {
-                        String.valueOf(useranswer.replace(null, "question was not given"));
-
-                    }
-
-                    getQuestion(q_id, useranswer, timeleft);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-
-        });
-
+    private void loadAd() {
+        InterstitialAd interstitialAd = new InterstitialAd(ResultActivity.this);
+        interstitialAd.loadInterstitialAd();
     }
-
-    private void getQuestion(final String questionId, final String useranswer, final int timeleft){
-        final String TAG = getClass().getSimpleName();
-
-        valueEventListener = databaseReference.child("questions").child(questionId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    Log.d(TAG, "children are: "+dataSnapshot.getKey());
-
-//                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "childs: "+dataSnapshot.getKey());
-                    question = dataSnapshot.child("Question").getValue(String.class);
-                    corr_ans = dataSnapshot.child("Answer").getValue(String.class);
-
-
-                    if (corr_ans.equals(useranswer)) {
-                        count = count+2;
-
-                        scores = scores+timeleft*2;
-                        count1 = count1+1;
-
-                    }
-
-
-
-                    insertCredit();
-
-                    //  }
-                }catch (NullPointerException | DatabaseException e){
-                    e.printStackTrace();
-                }
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
-
-    private void insertCredit(){
-
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("daily_user_credit");
-
-        final int num =1;
-
-        CreditView creditView = new CreditView(scores,quizdate,quizid,count1);
-
-        reference1.child(userid).child(quizdate).child(value).setValue(creditView);
-
-    }
-
 
     private void getTodayQuizScore(){
       valueEventListener =  databaseReference.child("daily_user_credit").child(userid).child(quizdate).child(value).addValueEventListener(new ValueEventListener() {
@@ -318,11 +159,12 @@ public class ResultActivity extends AppCompatActivity {
 
 
                 try {
-                    String score = dataSnapshot.child("credit_points").getValue().toString();
-                    int corr_answer = Integer.parseInt(dataSnapshot.child("correct_answers").getValue().toString());
+                     score = dataSnapshot.child("credit_points").getValue().toString();
+                    corr_answer = Integer.parseInt(dataSnapshot.child("correct_answers").getValue().toString());
+
                     tvscore.setText(""+score);
                     tvCorrectAnswer.setText(""+corr_answer+"/10");
-
+                    progressDialog.dismiss();
                     if (corr_answer<=4){
                         linearLayout.setVisibility(View.GONE);
                         img1.setVisibility(View.GONE);
@@ -338,7 +180,6 @@ public class ResultActivity extends AppCompatActivity {
 
                         tv1.setTextSize(21f);
                         img4.setBackgroundResource(R.drawable.goforit);
-
                         tv1.setText("Better Luck Next Time");
                     }
                     else {
@@ -369,16 +210,21 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
+                try {
 
-                Picasso.with(getApplicationContext())
-                        .load(imageUrl)
-                        .placeholder(R.drawable.userimg)
-                        .fit()
-                        .transform(transformation)
-                        .into(userIcon);
+                    String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
+
+                    Picasso.get()
+                            .load(imageUrl)
+                            .placeholder(R.drawable.userimg)
+                            .fit()
+                            .transform(transformation)
+                            .into(userIcon);
 
 
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -392,78 +238,12 @@ public class ResultActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        System.gc();
-  //      trimCache(getApplicationContext());
-
-        Intent intent = new Intent(getApplicationContext(), HomeNevActivity.class);
+        Intent intent = new Intent(ResultActivity.this, HomeNevActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
-
-
     }
 
-    private void insertTotalQuizScore(){
-
-        databaseReference.child("daily_user_credit").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                    String id = dataSnapshot1.getKey();
-
-                    getCreditScore(id);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-    }
-
-    private void getCreditScore(String date){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference reference6;
-        reference6 = FirebaseDatabase.getInstance().getReference("daily_user_total_score");
-
-        final Query lastQuery = reference.child("daily_user_credit").child(userid).child(date).orderByKey().limitToLast(1);
-
-
-        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                quizids = dataSnapshot.getKey();
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                    try {
-                        String id = dataSnapshot1.getKey();
-
-                        int quiz = (Integer.parseInt(dataSnapshot1.child("credit_points").getValue().toString()));
-
-                        scoreCount = scoreCount + quiz;
-
-                        InsertTotalScoreData insertTotalScoreData = new InsertTotalScoreData(String.valueOf(scoreCount));
-                        reference6.child(userid).setValue(insertTotalScoreData);
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
     @Override
@@ -471,6 +251,9 @@ public class ResultActivity extends AppCompatActivity {
         super.onDestroy();
         databaseReference.removeEventListener(valueEventListener);
     }
+
+
+
 }
 
 

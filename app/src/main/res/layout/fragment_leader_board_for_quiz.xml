@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/framelayouts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,21 +11,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:orientation="horizontal"
-        android:gravity="center"
+        android:orientation="vertical"
+
         android:background="@drawable/bglayout"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvoverallrank"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:layout_gravity="left"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ffffff"
+            android:drawablePadding="5dp"
+            />
+
 
 
         <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+
+        >
+
+
+    <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
 
-         >
+            >
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,6 +65,7 @@
                 android:id="@+id/money"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
+
                 app:srcCompat="@drawable/ic_moneys"
 
                 />
@@ -51,7 +76,7 @@
                 android:id="@+id/textView13"
                 android:textSize="18dp"
                 android:gravity="center"
-                android:text=""
+                android:text="0"
                 android:layout_gravity="center"
                 android:textColor="#ffffff"
                 android:layout_marginTop="2dp"
@@ -70,7 +95,7 @@
             android:text="deekedra kumar"
             android:layout_gravity="center"
             android:gravity="center"
-              android:textColor="#ffffff"/>
+            android:textColor="#ffffff"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -78,7 +103,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="30dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,11 +130,13 @@
                 android:textColor="#ffffff"
                 android:layout_gravity="center"
                 android:id="@+id/img"
-                android:text="" />
-
+                android:text="0" />
+        </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -128,69 +155,102 @@
             app:srcCompat="@drawable/ic_profile"
 
             />
+
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:id="@+id/img_info"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/ic_information"
-        android:layout_gravity="right"
-        />
 
-<android.support.v4.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="150dp">
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="185dp">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
 
         >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/qscore"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:text="Top 10 Players"
-                android:layout_gravity="center"
-                android:layout_marginTop="25dp"
-                android:textColor="#000000"
+        <TextView
+            android:id="@+id/tvQuizDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
 
-                />
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Today's Chart Leaders"
+            android:textColor="#000000"
+            android:textSize="18dp"
 
-            <android.support.v7.widget.RecyclerView
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
             android:id="@+id/leaderboard"
+
             />
 
-        <RelativeLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:id="@+id/layout"
+            android:visibility="invisible"
+
+            android:layout_marginTop="270dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvPlayQuiz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="20dp"
-                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
 
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad"
+                android:gravity="center"
+                android:text="You have not given Today Quiz"
+                android:textColor="#ACAAAA"
+                android:textSize="18dp"
+
                 />
-        </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btPlayQuiz"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+
+                android:layout_marginTop="10dp"
+
+            android:background="@drawable/bgback"
+
+            android:padding="8dp"
+            android:text="Play Quiz"
+            android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            >
+        </com.google.android.gms.ads.AdView>
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</android.support.v4.widget.NestedScrollView>
 
+
+</androidx.core.widget.NestedScrollView>
 </FrameLayout>

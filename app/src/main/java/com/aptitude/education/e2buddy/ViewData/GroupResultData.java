@@ -1,6 +1,6 @@
 package com.aptitude.education.e2buddy.ViewData;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class GroupResultData implements Comparable{
     String player_name;

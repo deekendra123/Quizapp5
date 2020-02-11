@@ -15,16 +15,18 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         android:layout_gravity="start"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+
         android:fitsSystemWindows="true"
         android:background="?android:attr/windowBackground"
-
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/navigation"
         android:theme="@style/Widget.BottomNavigationView"/>
 

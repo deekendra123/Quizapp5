@@ -1,40 +1,16 @@
 package com.aptitude.education.e2buddy.DisplayAnswer;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.aptitude.education.e2buddy.Intro.CheckInternet;
-import com.aptitude.education.e2buddy.Intro.Quizapp;
-import com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge.LoaderForReceiverActivity;
-import com.aptitude.education.e2buddy.Question.HomeNevActivity;
 import com.aptitude.education.e2buddy.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,15 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
@@ -85,35 +56,18 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         score = findViewById(R.id.textView13);
         userIcon = findViewById(R.id.e2buddy);
 
-
-
         quizdate = getIntent().getStringExtra("quiz_date");
         value  = getIntent().getStringExtra("curent_date");
         userid = getIntent().getStringExtra("userid");
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         progressDialog = new ProgressDialog(LeaderBoardForQuizActivity.this);
-        progressDialog.setCancelable(false);
         progressDialog.setMessage("Data Loading...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setProgress(0);
         progressDialog.setMax(100);
         progressDialog.show();
 
-
-
-        Runnable progressRunnable = new Runnable() {
-
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-
-            }
-        };
-
-        Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable,
-                3400);
 
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
@@ -126,11 +80,7 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-
-        leaderdata.setText(""+playername);
-
         getPlayerImage();
-        getPlayerName();
 
         list = new ArrayList<>();
         stringList = new ArrayList<>();
@@ -244,10 +194,7 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
 
 
                     recyclerView.setAdapter(leaderBoardAdapter);
-
-                    leaderBoardAdapter.notifyDataSetChanged();
-
-                    //    progressDialog.dismiss();
+                    progressDialog.dismiss();
 
 
 
@@ -275,9 +222,10 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
+                String student_name = dataSnapshot.child("student_name").getValue().toString();
+                leaderdata.setText(""+student_name);
 
-
-                Picasso.with(getApplicationContext())
+                Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.userimg)
                         .fit()
@@ -294,36 +242,16 @@ public class LeaderBoardForQuizActivity extends AppCompatActivity {
         });
     }
 
-    private void getPlayerName(){
-
-       valueEventListener = databaseReference.child("user_info").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                try {
-                    String student_name = dataSnapshot.child(userid).child("student_name").getValue().toString();
-
-
-                    leaderdata.setText(""+student_name);
-
-
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     @Override
     protected void onPause() {
         super.onPause();
         databaseReference.removeEventListener(valueEventListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 

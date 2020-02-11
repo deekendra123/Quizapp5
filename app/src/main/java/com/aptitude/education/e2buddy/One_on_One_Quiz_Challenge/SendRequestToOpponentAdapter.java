@@ -1,15 +1,14 @@
 package com.aptitude.education.e2buddy.One_on_One_Quiz_Challenge;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.R;
-import com.aptitude.education.e2buddy.ViewData.Data;
 import com.aptitude.education.e2buddy.ViewData.NotificationData;
 import com.aptitude.education.e2buddy.ViewData.OnlineStatusData;
 import com.google.firebase.database.DataSnapshot;
@@ -38,8 +36,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Matrix on 21-02-2019.
@@ -99,7 +95,7 @@ public class SendRequestToOpponentAdapter extends RecyclerView.Adapter<SendReque
 
         holder.username.setText("" + onlineStatusData.getUser_name());
 
-            Picasso.with(mCtx)
+            Picasso.get()
                     .load(onlineStatusData.getImageUrl())
                     .placeholder(R.drawable.userimg)
                     .fit()
@@ -237,11 +233,6 @@ public class SendRequestToOpponentAdapter extends RecyclerView.Adapter<SendReque
         img2.startAnimation(myFadeInAnimation);
         img3.startAnimation(myFadeInAnimation);
 
-
-        Typeface type = Typeface.createFromAsset(mCtx.getAssets(), "fonts/DroidSerif-Regular.ttf");
-        userrank.setTypeface(type);
-        msg.setTypeface(type);
-
         msg.setText("Waiting for "+username+" to join the game");
 
         final android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(mCtx, R.style.CustomDialogTheme);
@@ -337,8 +328,7 @@ public class SendRequestToOpponentAdapter extends RecyclerView.Adapter<SendReque
         zoomout = AnimationUtils.loadAnimation(mCtx, R.anim.zoomin);
         smileFace.setAnimation(zoomout);
 
-        Typeface type = Typeface.createFromAsset(mCtx.getAssets(), "fonts/montserratmedium.ttf");
-        msg.setTypeface(type);
+
 
         msg.setText(receiver_name+" has joined the game");
 

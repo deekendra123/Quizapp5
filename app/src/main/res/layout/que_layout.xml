@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView"
+        android:layout_marginTop="50dp">
+
+        <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:cardCornerRadius="15dp">
+            app:cardCornerRadius="15dp">
 
 
         <TextView
@@ -24,7 +29,6 @@
             android:textColor="#000"
 
             android:layout_marginTop="15dp"
-            
             android:id="@+id/questionnumber"
             />
 
@@ -33,25 +37,26 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:textSize="17dp"
-            android:gravity="center"
-
             android:textColor="#565555"
-
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="63dp"
             android:id="@+id/question"
+            android:gravity="center"
+
             />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="20dp">
+        android:layout_below="@+id/cardView"
+        android:layout_marginTop="30dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -128,19 +133,4 @@
 
 
 
-    <TextView
-        android:id="@+id/selectedans"
-        android:layout_width="match_parent"
-
-        android:layout_height="wrap_content"
-
-        android:layout_alignLeft="@+id/question"
-        android:layout_alignStart="@+id/question"
-        android:layout_below="@+id/question"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:textColor="#000"
-        android:textSize="15dp" />
-
-</LinearLayout>
+</RelativeLayout>

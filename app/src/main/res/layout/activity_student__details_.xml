@@ -111,7 +111,7 @@
 
 
                         android:textCursorDrawable="@null"
-                        android:hint="Enter Name"/>
+                        android:hint="Enter Student Name"/>
 
                 </LinearLayout>
 
@@ -152,8 +152,8 @@
                         android:textColorHint="#ffffff"
                         android:layout_marginLeft="10dp"
                         android:paddingTop="5dp"
-                        android:hint="Pick Date of Birth"
-                     />
+                        android:hint="Date of Birth"
+                        />
 
                 </LinearLayout>
 
@@ -202,7 +202,6 @@
                         />
 
 
-
                 </LinearLayout>
             </LinearLayout>
 
@@ -213,9 +212,8 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
-
                 android:background="@drawable/btcircle1"
-                app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
+                app:srcCompat="@drawable/ic_arrow"
                 android:textColor="#ffffff"
 
                 tools:ignore="VectorDrawableCompat" />
@@ -224,6 +222,5 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>

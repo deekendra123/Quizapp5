@@ -4,11 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.webkit.MimeTypeMap;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,11 +69,6 @@ public class Student_Details_Activity extends AppCompatActivity {
         imgadate = findViewById(R.id.imageView1);
 
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        etSchoolName.setTypeface(type);
-        etStudentName.setTypeface(type);
-        etDateofBirth.setTypeface(type);
-
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
                 .borderWidthDp(0)
@@ -101,7 +94,7 @@ public class Student_Details_Activity extends AppCompatActivity {
                     String imageUrl = dataSnapshot.child("image_Url").getValue(String.class);
                     String s_code = dataSnapshot.child("school_code").getValue().toString();
 
-                    Picasso.with(getApplicationContext())
+                    Picasso.get()
                             .load(imageUrl)
                             .placeholder(R.drawable.userimg)
                             .fit()
@@ -194,6 +187,7 @@ public class Student_Details_Activity extends AppCompatActivity {
 
                     mDatabaseRef.child("user_info").child(userid).child("student_name").setValue(etStudentName.getText().toString());
                     mDatabaseRef.child("user_info").child(userid).child("dob").setValue(etDateofBirth.getText().toString());
+                    mDatabaseRef.child("user_info").child(userid).child("school_name").setValue(etSchoolName.getText().toString());
 
 
                     if (etStudentName.getText().toString().equals("")){
@@ -266,7 +260,7 @@ public class Student_Details_Activity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
-            Picasso.with(getApplicationContext())
+            Picasso.get()
                     .load(mImageUri)
                     .placeholder(R.drawable.userimg)
                     .fit()
@@ -294,7 +288,9 @@ public class Student_Details_Activity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                progressDialog.dismiss();
+                                if (!isFinishing()) {
+                                    progressDialog.dismiss();
+                                }
                             }
                         }, 500);
 
@@ -303,6 +299,7 @@ public class Student_Details_Activity extends AppCompatActivity {
                         mDatabaseRef.child("user_info").child(userid).child("image_Url").setValue(taskSnapshot.getDownloadUrl().toString());
                         mDatabaseRef.child("user_info").child(userid).child("student_name").setValue(etStudentName.getText().toString());
                         mDatabaseRef.child("user_info").child(userid).child("dob").setValue(etDateofBirth.getText().toString());
+                        mDatabaseRef.child("user_info").child(userid).child("school_name").setValue(etSchoolName.getText().toString());
 
 
                         Toast.makeText(getApplicationContext(), "Upload successful", Toast.LENGTH_LONG).show();
