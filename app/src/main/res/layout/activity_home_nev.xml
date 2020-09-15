@@ -21,12 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="start"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+
 
         android:fitsSystemWindows="true"
         android:background="?android:attr/windowBackground"
         app:labelVisibilityMode="labeled"
+        app:itemTextColor="@drawable/item_color"
         app:menu="@menu/navigation"
         android:theme="@style/Widget.BottomNavigationView"/>
 

@@ -8,9 +8,13 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
+
+import com.aptitude.education.e2buddy.ViewData.AnswerDetails;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +23,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -65,13 +71,12 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
 
 
     ValueEventListener valueEventListener;
-    MediaPlayer player,player1;
+    private MediaPlayer player,player1;
     FirebaseAuth auth;
     String timeleft;
 
     private TextView textViewTime;
     private static final String SHOWCASE_ID = "e2buddy";
-
 
     FloatingActionButton fabMain, fabOne, fabTwo;
     Float translationY = 100f;
@@ -86,11 +91,17 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
     ProgressBar progressBar;
     int i=0;
 
+    private CountDownTimer countDownTimer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         setContentView(R.layout.activity_placement_quiz_questions);
 
         textViewTime = findViewById(R.id.textViewTime);
@@ -119,7 +130,6 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
 
         viewPager.addOnPageChangeListener(viewListener);
-        //  viewPager.beginFakeDrag();
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -131,10 +141,8 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         date = sdf.format(new Date());
 
-        player = MediaPlayer.create(getApplicationContext(), R.raw.track1);
-        player1 = MediaPlayer.create(getApplicationContext(), R.raw.track4);
-
-
+        player = MediaPlayer.create(getApplicationContext(), R.raw.audio1);
+        player1 = MediaPlayer.create(getApplicationContext(), R.raw.audio2);
 
         questionAdapter = new AdapterForPlacementQuizQuestion(questionViewList, getApplicationContext(), userid);
 
@@ -167,10 +175,24 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
                     new androidx.appcompat.app.AlertDialog.Builder(PlacementQuizQuestionsActivity.this)
                             .setTitle("Submit...")
                             .setMessage("Click Submit button to see your Result")
-                            .setCancelable(false)
+                            .setCancelable(true)
+                            .setNegativeButton("Cancel", null)
                             .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface arg0, int arg1) {
+
+                                    countDownTimer.cancel();
+
+                                    if(player.isPlaying() || player1.isPlaying()) {
+                                        player.stop();
+                                        player.reset();
+                                        player.release();
+                                        player = null;
+                                        player1.stop();
+                                        player1.reset();
+                                        player1.release();
+                                        player1 = null;
+                                    }
 
                                     showLoader();
                                }
@@ -227,8 +249,13 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
         tvBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlacementQuizQuestionsActivity.this, BookmarkQuestionActivity.class);
-                startActivity(intent);
+               /* Intent intent = new Intent(PlacementQuizQuestionsActivity.this, BookmarkQuestionActivity.class);
+                startActivity(intent);*/
+
+                BookmarkBottomDialog bookmarkBottomDialog = new BookmarkBottomDialog();
+                bookmarkBottomDialog.setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
+                bookmarkBottomDialog.show(getSupportFragmentManager(), "quizapp2");
+
             }
         });
 
@@ -236,12 +263,12 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
 
     private void startTimer(){
         progressBar.setProgress(i);
-        new CountDownTimer(120000, 1000) {
+        countDownTimer = new CountDownTimer(240000, 1000) {
 
             public void onTick(long millisUntilFinished) {
 
                 i++;
-                progressBar.setProgress(i *100/(120000/1000));
+                progressBar.setProgress(i *100/(240000/1000));
 
                 String timer = String.format(FORMAT,
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
@@ -254,15 +281,87 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
 
                 timeleft = timer;
 
+                if ((millisUntilFinished / (1000*60)) == 2){
+
+                    mediaPlayer2();
+                }
+                else if ((millisUntilFinished / (1000*60)) == 1){
+                    mediaPlayer1();
+
+                }
+
             }
 
             public void onFinish() {
                 i++;
                 progressBar.setProgress(100);
                 textViewTime.setText("00:00");
+
+                new androidx.appcompat.app.AlertDialog.Builder(PlacementQuizQuestionsActivity.this)
+                        .setTitle("Submit...")
+                        .setMessage("Click Submit button to see your Result")
+                        .setCancelable(false)
+                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                                countDownTimer.cancel();
+                                if(player.isPlaying() || player1.isPlaying()) {
+                                    player.stop();
+                                    player.reset();
+                                    player.release();
+                                    player = null;
+                                    player1.stop();
+                                    player1.reset();
+                                    player1.release();
+                                    player1 = null;
+                                }
+
+                                showLoader();
+                            }
+                        }).create().show();
+
             }
 
         }.start();
+    }
+
+    private void mediaPlayer1()
+    {
+
+
+        player.start();
+
+        Runnable progressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                player.stop();
+            }
+        };
+
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 2000);
+
+
+    }
+
+    private void mediaPlayer2()
+    {
+
+        player1.start();
+        Runnable progressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                player1.stop();
+            }
+        };
+
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 2000);
+
+
     }
 
     private void getUserAnswer(final String q_id) {
@@ -271,7 +370,6 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                //  Toast.makeText(getApplicationContext(),""+useranswer +"\n"+ timeleft,Toast.LENGTH_SHORT).show();
                 try {
                     String useranswer = dataSnapshot.child("answer").getValue(String.class);
                     Log.d("AnswerActivity", "questionid :" + q_id);
@@ -292,8 +390,6 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
-
         });
 
     }
@@ -336,8 +432,8 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
 
     private void insertCredit(){
 
-        databaseReference.child("placemenPaper_user_answer").child(userid).child("quantitativeAbility").child("quiz1").child("timeleft").setValue(timeleft);
-        databaseReference.child("placemenPaper_user_answer").child(userid).child("quantitativeAbility").child("quiz1").child("correct_answer").setValue(count1);
+        AnswerDetails answerDetails = new AnswerDetails(count1, timeleft);
+        databaseReference.child("placemenPaper_user_answer").child(userid).child("quantitativeAbility").child("quiz1").child("answerDetails").setValue(answerDetails);
 
     }
 
@@ -372,7 +468,7 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder(this)
                         .setSkipText("Skip")
-                        .setTarget(fabMain)
+                        .setTarget(tvBookmark)
                         .setDismissText("Got it")
                         .setDismissOnTouch(true)
                         .setContentText("Here you can see your Bookmarks")
@@ -518,28 +614,30 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
+        databaseReference.child("placemenPaper_user_answer").child(userid).child("quantitativeAbility").child("quiz1").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+
+                    q_id = dataSnapshot1.getKey();
+                    getUserAnswer(q_id);
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         long delayInMillis = 3000;
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
 
-                databaseReference.child("placemenPaper_user_answer").child(userid).child("quantitativeAbility").child("quiz1").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-
-                            q_id = dataSnapshot1.getKey();
-                            getUserAnswer(q_id);
-
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
                 dialog.dismiss();
 
@@ -570,6 +668,7 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
 
@@ -581,6 +680,23 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
 
+                        SharedPreferences sharedPreferences = getSharedPreferences("bookmark", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        countDownTimer.cancel();
+                        if(player.isPlaying() || player1.isPlaying()) {
+                            player.stop();
+                            player.reset();
+                            player.release();
+                            player = null;
+                            player1.stop();
+                            player1.reset();
+                            player1.release();
+                            player1 = null;
+                        }
+
+
 
                         PlacementQuizQuestionsActivity.super.onBackPressed();
 
@@ -588,6 +704,7 @@ public class PlacementQuizQuestionsActivity extends AppCompatActivity {
                 }).create().show();
 
     }
+
 
 }
 

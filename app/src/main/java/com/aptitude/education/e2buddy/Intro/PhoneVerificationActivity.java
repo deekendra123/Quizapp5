@@ -60,9 +60,9 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         CheckInternet checkInternet = new CheckInternet(getApplicationContext());
         checkInternet.checkConnection();
 
-      /*  name.setHint(name.getHint()+" "+getString(R.string.asteriskred));
-        number.setHint(number.getHint()+" "+getString(R.string.asteriskred));
-*///        email.setHint(email.getHint()+" "+getString(R.string.asteriskred));
+//        name.setHint(name.getHint()+" "+getString(R.string.asteriskred));
+//        number.setHint(number.getHint()+" "+getString(R.string.asteriskred));
+//       email.setHint(email.getHint()+" "+getString(R.string.asteriskred));
 
         icon = findViewById(R.id.logo);
 
@@ -71,8 +71,6 @@ public class PhoneVerificationActivity extends AppCompatActivity {
 
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-
 
         /*ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
@@ -104,8 +102,6 @@ public class PhoneVerificationActivity extends AppCompatActivity {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override

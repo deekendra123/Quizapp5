@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aptitude.education.e2buddy.Internship.InternshipDetailsBottemSheet;
 import com.aptitude.education.e2buddy.R;
+import com.aptitude.education.e2buddy.ViewData.AnswerView;
 import com.aptitude.education.e2buddy.ViewData.InternshipData;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -25,9 +27,24 @@ import java.util.List;
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.QuizHolder> {
 
     Context mCtx;
-    List<String> list;
+    List<AnswerView> list;
 
-    public AnswerAdapter(Context mCtx, List<String> list) {
+    OnItemClickListener listener;
+
+
+    public interface OnItemClickListener
+    {
+
+        void onItemClick(View itemView, int position);
+
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
+    public AnswerAdapter(Context mCtx, List<AnswerView> list) {
         this.mCtx = mCtx;
         this.list = list;
     }
@@ -42,68 +59,16 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.QuizHolder
 
     @Override
     public void onBindViewHolder(@NonNull QuizHolder holder, int position) {
-        String name = list.get(position);
-      //  holder.tvquestion.setText(name);
+        AnswerView answerView = list.get(position);
 
+        holder.tvquestion.setText(answerView.getQuestionid());
 
-        if (position==0){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_one);
+        if (answerView.getCorrectAnswer().equals(answerView.getUserAnswer())){
+            holder.imgNumber.setBackgroundResource(R.drawable.ic_bg3);
         }
-        else if (position ==1){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_two);
-
+        else {
+            holder.imgNumber.setBackgroundResource(R.drawable.ic_bg4);
         }
-
-        else if (position ==2){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_three);
-
-        }
-        else if (position ==3){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_four);
-
-        }
-        else if (position ==4){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_five);
-
-        }
-        else if (position ==5){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_six);
-
-        }
-        else if (position ==6){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_seven);
-
-        }
-        else if (position ==7){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_eight);
-
-        }
-        else if (position ==8){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_nine);
-
-        }
-        else if (position ==9){
-            holder.imgNumber.setBackgroundResource(R.drawable.ic_ten);
-
-        }
-
-        holder.itemView.setClickable(false);
-        holder.imgNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                v.startAnimation(AnimationUtils.loadAnimation(mCtx, R.anim.ripple));
-
-
-            /*    PlacementPaperAnswerDialog bottomSheet = new PlacementPaperAnswerDialog();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("questionid",name);
-                bottomSheet.setArguments(bundle);
-                bottomSheet.show(((FragmentActivity)mCtx).getSupportFragmentManager(), "quizapp2");
-*/
-            }
-        });
     }
 
     @Override
@@ -120,6 +85,20 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.QuizHolder
             tvquestion = itemView.findViewById(R.id.tvquestion);
 
             imgNumber = itemView.findViewById(R.id.imgNumber);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (listener!=null){
+                        int position = getAdapterPosition();
+                        if (position!= RecyclerView.NO_POSITION){
+                            listener.onItemClick(itemView,position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 }

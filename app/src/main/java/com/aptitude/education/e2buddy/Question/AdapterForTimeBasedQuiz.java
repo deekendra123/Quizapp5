@@ -73,7 +73,6 @@ public class AdapterForTimeBasedQuiz extends PagerAdapter {
 
         final QuestionView questionView = questionViewList.get(position);
 
-
         for (int i=0;i<qnum.length;i++) {
 
             quenunber.setText("Question : " + qnum[position]);

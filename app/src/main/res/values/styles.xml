@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimary</item>
+
     </style>
 
     <style name="AppTheme.WhiteAccent">
@@ -17,6 +19,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -51,7 +54,6 @@
     </style>
 
 
-
     <style name="spinner_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -83,16 +85,16 @@
         <item name="android:textSize">15dp</item>
     </style>
 
-    <style name="Widget.BottomNavigationView"
-        parent="Widget.Design.BottomNavigationView">
+    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@fonts/Roboto-Black</item>
     </style>
 
-    <style name= "AppThemeFont" parent= "AppTheme" >
-        <item name= "android:textViewStyle" > @style/RobotoTextViewStyle </item>
+    <style name="AppThemeFont" parent="AppTheme">
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
     </style>
-    <style name= "RobotoTextViewStyle" parent= "android:Widget.TextView" >
-        <item name= "android:fontFamily" >@fonts/Roboto-Regular</item>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@fonts/Roboto-Regular</item>
     </style>
 
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
@@ -102,5 +104,18 @@
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">12dp</item>
     </style>
+
+    <style name="FullscreenTheme" parent="AppThemeFont">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
 
 </resources>

@@ -23,6 +23,8 @@ import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Matrix on 31-01-2019.
  */
@@ -86,10 +88,10 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
                 .load(leaderBoardData.getImage_Url())
                 .placeholder(R.drawable.userimg)
                 .fit()
-                .transform(holder.transformation)
                 .into(holder.linearLayout);
 
 
+/*
         for (int i=0; i<list.size() ;i++){
 
             LeaderBoardData data = list.get(i);
@@ -107,6 +109,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
             }
 
         }
+*/
 
 
     }
@@ -123,9 +126,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         TextView leaderdata,rack, score;
         TextView imageView;
         LinearLayout layout;
-        ImageView linearLayout;
-        Transformation transformation;
-
+        CircleImageView linearLayout;
         public LeaderBoardHolder(final View itemView) {
             super(itemView);
             leaderdata = itemView.findViewById(R.id.tvdata);
@@ -134,12 +135,6 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
             linearLayout = itemView.findViewById(R.id.img);
             layout = itemView.findViewById(R.id.scoresss);
 
-            transformation = new RoundedTransformationBuilder()
-                    .borderColor(mCtx.getResources().getColor(R.color.gray))
-                    .borderWidthDp(0)
-                    .cornerRadiusDp(50)
-                    .oval(false)
-                    .build();
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

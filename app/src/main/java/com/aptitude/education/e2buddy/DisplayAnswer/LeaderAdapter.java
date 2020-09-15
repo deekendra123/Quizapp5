@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Matrix on 08-02-2019.
  */
@@ -59,18 +61,16 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
 
         final LeaderBoardData leaderBoardData = list.get(position);
 
-        holder.leaderdata.setText(leaderBoardData.getName());
+        holder.leaderdata.setText(leaderBoardData.getName()) ;
 
         holder.score.setText("" + leaderBoardData.getScore());
 
         holder.layout.setBackgroundResource(R.drawable.ic_medal);
 
-
         Picasso.get()
                 .load(leaderBoardData.getImage_Url())
                 .placeholder(R.drawable.userimg)
                 .fit()
-                .transform(holder.transformation)
                 .into(holder.linearLayout);
 
 
@@ -96,12 +96,12 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
         return Math.min(list.size(), 10);
     }
 
+
     public class LeaderHolder extends RecyclerView.ViewHolder {
 
         TextView leaderdata, score;
         LinearLayout layout;
-        ImageView linearLayout;
-        Transformation transformation;
+        CircleImageView linearLayout;
 
         public LeaderHolder(final View itemView) {
             super(itemView);
@@ -112,12 +112,6 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderAdapter.LeaderHold
             linearLayout = itemView.findViewById(R.id.img);
             layout = itemView.findViewById(R.id.scoresss);
 
-            transformation = new RoundedTransformationBuilder()
-                    .borderColor(mCtx.getResources().getColor(R.color.gray))
-                    .borderWidthDp(0)
-                    .cornerRadiusDp(50)
-                    .oval(false)
-                    .build();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

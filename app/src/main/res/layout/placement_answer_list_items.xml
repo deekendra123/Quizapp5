@@ -19,8 +19,7 @@
             android:id="@+id/imgNumber"
             android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:background="@drawable/ic_one"
-
+            android:background="@drawable/circle"
 
             />
 
@@ -41,7 +40,7 @@
                     android:layout_gravity="center"
 
                     android:text=""
-                    android:textColor="#000000"
+                    android:textColor="#ffffff"
                     android:textSize="15dp"
 
                     android:textStyle="bold" />

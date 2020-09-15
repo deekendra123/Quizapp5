@@ -276,12 +276,25 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="5dp"
                 android:layout_height="27dp"
-                    android:layout_marginTop="40dp"
                     android:layout_alignParentRight="true"
+
+                    android:layout_marginTop="40dp"
                 android:background="@drawable/ic_arrow_forward_black_24dp">
 
 
             </ImageView>
+                    <ImageView
+                        android:id="@+id/imgArrorL"
+                        android:layout_width="27dp"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="invisible"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="40dp"
+                        android:background="@drawable/ic_arrow_back_black_24dp">
+
+
+                    </ImageView>
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

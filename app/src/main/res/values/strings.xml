@@ -10,7 +10,7 @@
     <string name="Interstitial_ad">ca-app-pub-2855129539347004/4259084720</string>
     <string name="native_Advanced_Video_ad">ca-app-pub-3940256099942544/1044960115</string>
 
-   <!-- <string name="banner_ad">ca-app-pub-3940256099942544/6300978111</string>
+    <!-- <string name="banner_ad">ca-app-pub-3940256099942544/6300978111</string>
     <string name="Interstitial_ad">ca-app-pub-3940256099942544/1033173712</string>
     <string name="native_Advanced_Video_ad">ca-app-pub-3940256099942544/1044960115</string>
 -->
@@ -24,6 +24,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

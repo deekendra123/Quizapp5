@@ -6,7 +6,6 @@
     <color name="endColor">#011F41</color>
 
 
-
     <!-- dots inactive colors -->
     <color name="dot_inactive">#ffffff</color>
     <color name="dot_inactives">#d1cfcf</color>
@@ -44,5 +43,8 @@
     <color name="fbutton_color_silver">#bdc3c7</color>
     <color name="fbutton_color_concrete">#95a5a6</color>
     <color name="fbutton_color_asbestos">#7f8c8d</color>
+
+    <color name="black_overlay">#66000000</color>
+
 
 </resources>

@@ -9,7 +9,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.aptitude.education.e2buddy.Intro.Helper;
+import com.aptitude.education.e2buddy.Intro.
+        Helper;
 import com.aptitude.education.e2buddy.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,7 +53,6 @@ public class FirebaseMessagingSerivce extends FirebaseMessagingService {
         String notification_id = remoteMessage.getData().get("notification_id");
         String sender_id = remoteMessage.getData().get("sender_id");
 
-        Log.e("deeke", "e2buddy");
         reference = FirebaseDatabase.getInstance().getReference();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -80,6 +80,9 @@ public class FirebaseMessagingSerivce extends FirebaseMessagingService {
         final int notification_id1 = (int) System.currentTimeMillis();
 
         final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationManager notificationManager1 = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
 
         notificationManager.notify(notification_id1,builder.build());
 

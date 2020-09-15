@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="70dp"
+        android:gravity="center"
+        android:layout_height="70dp"
+        android:id="@+id/relativelayoutBookmark">
+
+
+
+
+        <TextView
+                    android:id="@+id/tvquestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>

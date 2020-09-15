@@ -19,15 +19,13 @@
         app:showAsAction="ifRoom"/>
 
 
-<!--
-    <item
+  <!--  <item
         android:id="@+id/internships"
         android:icon="@drawable/ic_portfolio"
         android:title="Internship"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
 -->
-
 
 
     <item

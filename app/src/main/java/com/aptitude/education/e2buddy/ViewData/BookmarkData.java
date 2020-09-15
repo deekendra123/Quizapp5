@@ -4,6 +4,7 @@ public class BookmarkData {
     String question_id;
     boolean bookmark;
     int position;
+    String answer;
 
     public BookmarkData(String question_id, boolean bookmark, int position) {
         this.question_id = question_id;
@@ -11,9 +12,17 @@ public class BookmarkData {
         this.position = position;
     }
 
-    public BookmarkData(boolean bookmark, int position) {
+    public BookmarkData(boolean bookmark, int position, String answer) {
         this.bookmark = bookmark;
         this.position = position;
+        this.answer = answer;
+    }
+
+    public BookmarkData(String question_id, boolean bookmark, int position, String answer) {
+        this.question_id = question_id;
+        this.bookmark = bookmark;
+        this.position = position;
+        this.answer = answer;
     }
 
 
@@ -39,5 +48,13 @@ public class BookmarkData {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

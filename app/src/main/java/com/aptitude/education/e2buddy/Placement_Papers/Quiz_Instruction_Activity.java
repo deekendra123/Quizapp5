@@ -119,7 +119,7 @@ public class Quiz_Instruction_Activity extends AppCompatActivity {
                 try {
                     questionid = dataSnapshot.getKey();
 
-                    BookmarkData bookmarkData = new BookmarkData(false, position);
+                    BookmarkData bookmarkData = new BookmarkData(false, position, "null");
                     databaseReference.child("placemenPaper_user_answer").child(playerId).child("quantitativeAbility").child("quiz1").child(questionid).setValue(bookmarkData);
 
                     position++;

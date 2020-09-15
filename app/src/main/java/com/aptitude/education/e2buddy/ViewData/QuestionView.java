@@ -1,10 +1,12 @@
 package com.aptitude.education.e2buddy.ViewData;
 
+import java.io.Serializable;
+
 /**
  * Created by Matrix on 26-11-2018.
  */
 
-public class QuestionView {
+public class QuestionView implements Serializable {
 
 
     private String questionid;

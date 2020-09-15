@@ -101,7 +101,6 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
 
 
         quizdate = getIntent().getStringExtra("quiz_date");
-
         value  = getIntent().getStringExtra("curent_date");
 
         layout = new int[9];
@@ -665,6 +664,7 @@ public class QuizQuestionTimeBasedActivity extends AppCompatActivity {
         dialog.show();
 
         long delayInMillis = 3000;
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

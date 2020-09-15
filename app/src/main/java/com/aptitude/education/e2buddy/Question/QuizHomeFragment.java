@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.aptitude.education.e2buddy.MainActivity;
 import com.aptitude.education.e2buddy.Pushdatatofirebase.CopyDbActivity;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;

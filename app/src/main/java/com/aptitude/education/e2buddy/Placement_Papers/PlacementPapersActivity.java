@@ -29,14 +29,14 @@ public class PlacementPapersActivity extends AppCompatActivity {
 
     private void loadPapers() {
         list = new ArrayList<>();
-        list.add("Placement Plaper 1");
-        list.add("Placement Plaper 2");
-        list.add("Placement Plaper 3");
-        list.add("Placement Plaper 4");
-        list.add("Placement Plaper 5");
-        list.add("Placement Plaper 6");
-        list.add("Placement Plaper 7");
-        list.add("Placement Plaper 8");
+        list.add("Placement Paper 1");
+        list.add("Placement Paper 2");
+        list.add("Placement Paper 3");
+        list.add("Placement Paper 4");
+        list.add("Placement Paper 5");
+        list.add("Placement Paper 6");
+        list.add("Placement Paper 7");
+        list.add("Placement Paper 8");
 
         PlacementPaperAdapter placementPaperAdapter = new PlacementPaperAdapter(this, list);
         recyclerViewPapers.setAdapter(placementPaperAdapter);

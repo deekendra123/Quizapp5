@@ -13,7 +13,7 @@ public class CheckInternet {
         this.mctx = mctx;
     }
 
-    protected boolean isOnline() {
+    public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager)mctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
@@ -21,6 +21,6 @@ public class CheckInternet {
 
     public void checkConnection(){
         if(isOnline()==false){
-            Toast.makeText(mctx, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mctx, "No Network. Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }}

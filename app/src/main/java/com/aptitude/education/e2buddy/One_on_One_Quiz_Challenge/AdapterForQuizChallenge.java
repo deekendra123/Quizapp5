@@ -40,16 +40,13 @@ public class AdapterForQuizChallenge extends PagerAdapter {
     SharedPreferences sharedPreferences1;
     Button btn_unfocus;
 
-
     public String[] qnum = {"1/10","2/10","3/10","4/10","5/10","6/10","7/10","8/10","9/10","10/10","10/10"};
 
     public AdapterForQuizChallenge(List<QuestionView> questionViewList, Context context, String notification_id) {
         this.questionViewList = questionViewList;
         this.context = context;
         this.notification_id = notification_id;
-
     }
-
 
     @Override
     public int getCount() {
@@ -68,10 +65,6 @@ public class AdapterForQuizChallenge extends PagerAdapter {
 
         final Button[] btn = new Button[4];
         int[] btn_id = {R.id.rdops1, R.id.rdops2, R.id.rdops3, R.id.rdops4};
-
-        final   String ans;
-
-
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = layoutInflater.inflate(R.layout.que_layout_for_one_on_one, container, false);
 

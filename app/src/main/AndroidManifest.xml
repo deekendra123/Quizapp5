@@ -26,8 +26,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeFont">
-        <activity android:name=".Placement_Papers.BookmarkQuestionActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".Placement_Papers.BookmarkQuestionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Placement_Papers.PlacementResultActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -94,7 +96,6 @@
         <receiver android:name=".Notification_Service.Word_of_the_Day_Notification" />
         <receiver android:name=".Notification_Service.Daily_Quiz_Notification" />
         <receiver android:name=".Notification_Service.Tournament_Quiz_Notification" />
-
 
         <activity
             android:name=".One_on_One_Quiz_Challenge.OneonOneStartQuiz"

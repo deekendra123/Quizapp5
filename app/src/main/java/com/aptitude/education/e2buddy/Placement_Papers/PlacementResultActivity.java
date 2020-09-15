@@ -2,8 +2,10 @@ package com.aptitude.education.e2buddy.Placement_Papers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aptitude.education.e2buddy.DisplayAnswer.View_Answer_Dialog;
 import com.aptitude.education.e2buddy.Intro.SessionManager;
 import com.aptitude.education.e2buddy.R;
+import com.aptitude.education.e2buddy.ViewData.QuestionView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +35,7 @@ public class PlacementResultActivity extends AppCompatActivity {
     ImageView imgHome;
     DatabaseReference databaseReference;
     SessionManager sessionManager;
-    String playerId, playerName, playerEmail, playerImageUrl, q_id;
+    String playerId, playerName, playerEmail, playerImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,6 @@ public class PlacementResultActivity extends AppCompatActivity {
         tvTimeTaken = findViewById(R.id.tvTimeTaken);
 
         sessionManager = new SessionManager(this );
-
         HashMap<String, String> user = sessionManager.getData();
 
         playerId = user.get(SessionManager.KEY_PLAYER_ID);
@@ -64,12 +67,6 @@ public class PlacementResultActivity extends AppCompatActivity {
                 DialogFragment dialog = View_PlacementPaper_Answer_Dialog.newInstance();
                 dialog.show(fm,"tag");
 
-//                AnswerSheet answerSheet = new AnswerSheet();
-//                answerSheet.setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
-//                answerSheet.show(getSupportFragmentManager(), "quizapp2");
-
-
-
             }
         });
 
@@ -83,22 +80,15 @@ public class PlacementResultActivity extends AppCompatActivity {
 
 
     private void getCorrectAnswer(){
-        databaseReference.child("placemenPaper_user_answer").child(playerId).child("quantitativeAbility").child("quiz1").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReference.child("placemenPaper_user_answer").child(playerId).child("quantitativeAbility").child("quiz1").child("answerDetails").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    String corr_ans = dataSnapshot.child("correct_answer").getValue().toString();
-                    String time_left = dataSnapshot.child("timeleft").getValue().toString();
 
-                    Log.e("deekeresult", corr_ans + "   "+ time_left);
-
-                    tvAnswerGiven.setText(corr_ans+"/10");
-                    tvTimeTaken.setText(""+time_left);
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
+                        String corr_ans = dataSnapshot.child("correct_answer").getValue().toString();
+                        String time_left = dataSnapshot.child("timeleft").getValue().toString();
+                        tvAnswerGiven.setText(corr_ans + "/10");
+                        tvTimeTaken.setText("" + time_left);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -107,4 +97,5 @@ public class PlacementResultActivity extends AppCompatActivity {
         });
 
     }
-}
+
+  }

@@ -168,7 +168,7 @@ public class CopyDbActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDates("2019-12-26", "2020-03-31");
+                getDates("2020-04-01", "2020-07-31");
             }
         });
         button1.setOnClickListener(new View.OnClickListener() {

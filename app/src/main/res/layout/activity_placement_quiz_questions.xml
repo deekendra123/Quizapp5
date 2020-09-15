@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
 
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -79,10 +79,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="95dp"
-                android:layout_marginEnd="2dp"
                 android:background="@drawable/circle1"
                 android:gravity="center"
-                android:text="View   Stared"
+                android:text="Review"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:textSize="11dp"

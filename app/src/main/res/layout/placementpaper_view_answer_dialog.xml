@@ -43,19 +43,6 @@
                 android:textColor="#ffffff"
                 android:textSize="20dp"/>
 
-
-            <ImageButton
-                android:id="@+id/fullscreen_dialog_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="15dp"
-                app:srcCompat="@drawable/ic_home_black_24dp"
-                tools:ignore="VectorDrawableCompat" />
-
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -77,28 +64,38 @@
             android:padding="20dp">
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/profileLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+
                 android:orientation="horizontal">
 
 
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imgBack"
+                    android:background="@drawable/correct"/>
 
 
                 <TextView
                     android:id="@+id/tvQuestionNumber"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
                     android:layout_weight="1"
                     android:text="Question 1"
                     android:textStyle="bold"
+                    android:textSize="23sp"
                     android:textColor="#000000"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <LinearLayout
@@ -115,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
 
@@ -132,10 +130,10 @@
 
 
                             <TextView
-                                android:id="@+id/number1"
+                                android:id="@+id/tvQuestion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Vincent has a paper route. Each morning, he delivers 37 newspapers to customers in his neighborhood. It takes Vincent 50 minutes to deliver all the papers. If Vincent is sick or has other plans, his friend Thomas, who lives on the same street, will sometimes deliver the papers for him."
+                                android:text=""
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
 
@@ -195,11 +193,11 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                         <TextView
-                            android:id="@+id/emailType1"
+                            android:id="@+id/tvCorrectAnswer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Vincent and Thomas live in the same neighborhood."
                             android:layout_marginTop="10dp"
+                            android:text=""
                             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 
@@ -257,11 +255,11 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                         <TextView
-                            android:id="@+id/country1"
+                            android:id="@+id/tvUserAnswer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Thomas would like to have his own paper route."
+                            android:text=""
                             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     </LinearLayout>

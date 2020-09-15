@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="@drawable/starsnot"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/layout">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/not_logo"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:id="@+id/text1"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:layout_below="@id/layout"
+
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+
+        android:text="Update of the app is available."/>
+
+
+    <TextView
+        android:id="@+id/tvJoin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Click to Update"
+        android:textStyle="bold"
+        android:background="#C2185B"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff"
+        android:textSize="17.5dp"/>
+
+</LinearLayout>

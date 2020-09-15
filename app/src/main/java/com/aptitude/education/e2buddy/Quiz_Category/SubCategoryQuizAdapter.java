@@ -261,7 +261,6 @@ public class SubCategoryQuizAdapter extends RecyclerView.Adapter<SubCategoryQuiz
 
 
 
-
         AlertDialog.Builder alert = new AlertDialog.Builder(mCtx, R.style.CustomDialogTheme);
 
         alert.setView(alertLayout);

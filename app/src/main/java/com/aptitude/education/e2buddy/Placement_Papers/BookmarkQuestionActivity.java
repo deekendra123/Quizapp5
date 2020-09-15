@@ -45,7 +45,6 @@ public class BookmarkQuestionActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(BookmarkQuestionActivity.this, RecyclerView.VERTICAL, false);
         recyclerViewBookmarks.setLayoutManager(layoutManager);
 
-
         sessionManager = new SessionManager(BookmarkQuestionActivity.this);
         HashMap<String, String> user = sessionManager.getData();
         playerId = user.get(SessionManager.KEY_PLAYER_ID);
@@ -84,7 +83,6 @@ public class BookmarkQuestionActivity extends AppCompatActivity {
                 recyclerViewBookmarks.setAdapter(bookmarksAdapter);
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -98,7 +96,6 @@ public class BookmarkQuestionActivity extends AppCompatActivity {
 
                 onBackPressed();
 
-
                 BookmarkData leaderBoardData = list.get(position);
                 SharedPreferences sp = getSharedPreferences("bookmark", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
@@ -106,7 +103,6 @@ public class BookmarkQuestionActivity extends AppCompatActivity {
                 editor.putInt("position", leaderBoardData.getPosition());
 
                 editor.commit();
-
             }
         });
 
@@ -120,7 +116,6 @@ public class BookmarkQuestionActivity extends AppCompatActivity {
         editor.clear();
         editor.commit();
         Log.e("clear", String.valueOf(editor.clear()));
-
         BookmarkQuestionActivity.super.onBackPressed();
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -66,7 +67,7 @@ public class DailyDietFragment extends Fragment {
 
     SessionManager sessionManager;
     private RecyclerView recyclerViewWord;
-    ImageView imgArrowRight;
+    ImageView imgArrowRight,imgArrorL;
 
     String[] tournamentDates = {
 
@@ -135,6 +136,7 @@ public class DailyDietFragment extends Fragment {
         quizHistory = view.findViewById(R.id.quizhistory);
         recyclerViewWord = view.findViewById(R.id.recyclerViewWord);
          imgArrowRight = view.findViewById(R.id.imgArrorR);
+        imgArrorL = view.findViewById(R.id.imgArrorL);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         recyclerViewWord.setLayoutManager(layoutManager);
@@ -182,8 +184,6 @@ public class DailyDietFragment extends Fragment {
             startActivity(intent);
             getActivity().finish();
         }
-
-
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
         date = sdf.format(new Date());
@@ -246,16 +246,53 @@ public class DailyDietFragment extends Fragment {
             }
         });
 
+        recyclerViewWord.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                imgArrorL.setVisibility(View.VISIBLE);
+                imgArrowRight.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
 
         imgArrowRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                imgArrorL.setVisibility(View.VISIBLE);
                 v.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.ripple));
 
                 recyclerViewWord.smoothScrollToPosition(layoutManager.findLastVisibleItemPosition() + 1);
+
+                if (layoutManager.findLastVisibleItemPosition()==3){
+                    imgArrowRight.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
+
+
+            imgArrorL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imgArrowRight.setVisibility(View.VISIBLE);
+
+                    v.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.ripple));
+
+                    if (layoutManager.findFirstVisibleItemPosition() > 1) {
+                        recyclerViewWord.smoothScrollToPosition(layoutManager.findFirstVisibleItemPosition() - 1);
+                    } else {
+                        imgArrorL.setVisibility(View.INVISIBLE);
+                        recyclerViewWord.smoothScrollToPosition(0);
+                    }
+
+                }
+            });
+
+
+
        return view;
 
     }

@@ -49,7 +49,6 @@ public class StartCategoryQuizActivity extends AppCompatActivity {
 
         tv7.setText("Time Allotted : 15 sec/question");
 
-
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

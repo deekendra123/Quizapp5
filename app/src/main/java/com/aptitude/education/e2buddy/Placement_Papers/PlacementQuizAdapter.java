@@ -45,11 +45,9 @@ public class PlacementQuizAdapter extends RecyclerView.Adapter<PlacementQuizAdap
             @Override
             public void onClick(View v) {
 
-
                 PlacementQuizSheet placementQuizSheet = new PlacementQuizSheet();
                 placementQuizSheet.setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
                 placementQuizSheet.show(((FragmentActivity)mCtx).getSupportFragmentManager(), "quizapp2");
-
 
             }
         });

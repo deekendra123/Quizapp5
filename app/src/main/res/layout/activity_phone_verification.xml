@@ -102,7 +102,6 @@
             android:cursorVisible="true"
             android:inputType="text"
 
-
             android:textCursorDrawable="@null"
             android:hint="Enter Name"/>
 

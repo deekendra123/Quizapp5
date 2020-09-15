@@ -72,8 +72,6 @@ public class PlacementQuizSheet extends BottomSheetDialogFragment {
 
         recyclerView.setAdapter(answerAdapter);
 
-
-
         return view;
     }
 

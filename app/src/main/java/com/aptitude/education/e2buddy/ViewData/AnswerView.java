@@ -10,12 +10,21 @@ public class AnswerView {
     String question;
     String correctAnswer;
     String userAnswer;
+    String description;
 
     public AnswerView(String questionid, String question, String correctAnswer, String userAnswer) {
         this.questionid = questionid;
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.userAnswer = userAnswer;
+    }
+
+    public AnswerView(String questionid, String question, String correctAnswer, String userAnswer, String description) {
+        this.questionid = questionid;
+        this.question = question;
+        this.correctAnswer = correctAnswer;
+        this.userAnswer = userAnswer;
+        this.description = description;
     }
 
     public String getQuestionid() {

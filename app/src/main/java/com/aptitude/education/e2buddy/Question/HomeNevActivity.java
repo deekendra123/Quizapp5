@@ -65,11 +65,14 @@ public class HomeNevActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
 
-       navigation.getMenu().getItem(2).setChecked(true);
 
         navigation.setItemIconTintList(null);
+      //  navigation.checkItem(R.id.navigation_home);
+
 
         reference = FirebaseDatabase.getInstance().getReference();
+
+        navigation.getMenu().getItem(2).setChecked(true);
 
 
         interstitialAd= new InterstitialAd(this);
@@ -102,6 +105,8 @@ public class HomeNevActivity extends AppCompatActivity {
 
                             case R.id.navigation_home:
 
+                                item.setChecked(true);
+
                                 if (!(currentFragment instanceof QuizHomeFragment)) {
                                     QuizHomeFragment fragment = new QuizHomeFragment();
                                     loadFragment(fragment);
@@ -111,6 +116,10 @@ public class HomeNevActivity extends AppCompatActivity {
 
 
                             case R.id.navigation_rewards:
+                                item.setChecked(true);
+
+                               /// navigation.getMenu().findItem(R.id.navigation_rewards).setChecked(true);
+
 
                                 if (!(currentFragment instanceof RewardFragment)) {
                                     RewardFragment rewardFragment = new RewardFragment();
@@ -119,6 +128,7 @@ public class HomeNevActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.navigation_leaderboard:
+                                item.setChecked(true);
 
                                 if (!(currentFragment instanceof LeaderBoardForQuizFragment)) {
                                     LeaderBoardForQuizFragment leaderBoardForQuizFragment = new LeaderBoardForQuizFragment();
@@ -137,7 +147,8 @@ public class HomeNevActivity extends AppCompatActivity {
                                 }
                                 break;
 
-                         /*   case R.id.internships:
+                           /* case R.id.internships:
+                                item.setChecked(true);
 
                                 if (!(currentFragment instanceof PlacementQuizFragment)) {
                                     InternshipFragment internshipFragment = new InternshipFragment();
@@ -147,9 +158,9 @@ public class HomeNevActivity extends AppCompatActivity {
                                 break;*/
 
 
-
                             case R.id.navigation_menu:
 
+                                item.setChecked(true);
                                     MenuSheetDialog menuSheetDialog = new MenuSheetDialog();
                                     menuSheetDialog.setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
                                     menuSheetDialog.show(getSupportFragmentManager(), "quizapp2");

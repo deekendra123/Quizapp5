@@ -127,8 +127,6 @@ public class LeaderBoardForQuizFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         quizdate = sdf.format(new Date());
 
-
-
         BannerAd bannerAd = new BannerAd(getActivity(), view);
         bannerAd.loadFragmentBannerAd();
 
@@ -139,7 +137,6 @@ public class LeaderBoardForQuizFragment extends Fragment {
         progressDialog.setProgress(0);
         progressDialog.setMax(100);
         progressDialog.show();
-
 
         transformation = new RoundedTransformationBuilder()
                 .borderColor(getResources().getColor(R.color.white))
@@ -158,51 +155,56 @@ public class LeaderBoardForQuizFragment extends Fragment {
         stringList = new ArrayList<>();
         leaderBoardAdapter = new LeaderBoardAdapter(getActivity(), list, userid,textViewRank);
 
-
-
-
-        databaseReference.child("daily_user_credit").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+        Runnable runnable = new Runnable() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(quizdate)){
-                    databaseReference.child("daily_user_credit").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+            public void run() {
+                databaseReference.child("daily_user_credit").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(quizdate)){
+                            databaseReference.child("daily_user_credit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                userids = data.getKey();
+                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                        userids = data.getKey();
+                                        getQuiz(userids);
+                                    }
+                                }
 
-                                getQuiz(userids);
-                            }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
+                        else {
 
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
+                            progressDialog.dismiss();
+                            linearLayout.setVisibility(View.VISIBLE);
+                            btPlayQuiz.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), StartQuizActivity.class);
+                                    intent.putExtra("quiz_date", quizdate);
+                                    getActivity().startActivity(intent);
+                                }
+                            });
                         }
-                    });
+                    }
 
-                }
-                else {
-                    progressDialog.dismiss();
-                    linearLayout.setVisibility(View.VISIBLE);
-                    btPlayQuiz.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), StartQuizActivity.class);
-                            intent.putExtra("quiz_date", quizdate);
-                            getActivity().startActivity(intent);
-                        }
-                    });
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
+        };
+        new Thread(runnable).start();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+
 
 
         Query lastQuery = databaseReference.child("daily_user_credit").child(userid).child(quizdate).orderByKey().limitToLast(1);
@@ -246,51 +248,6 @@ public class LeaderBoardForQuizFragment extends Fragment {
         return view;
     }
 
-    private void getLeaderBoard(){
-        databaseReference.child("daily_user_credit").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(quizdate)){
-                    databaseReference.child("daily_user_credit").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                userids = data.getKey();
-
-                                getQuiz(userids);
-                            }
-                        }
-
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-                else {
-                    progressDialog.dismiss();
-                    linearLayout.setVisibility(View.VISIBLE);
-                    btPlayQuiz.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), StartQuizActivity.class);
-                            intent.putExtra("quiz_date", quizdate);
-                            getActivity().startActivity(intent);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     private void getQuiz(final String id){
 
@@ -373,8 +330,6 @@ public class LeaderBoardForQuizFragment extends Fragment {
         });
 
     }
-
-
 
     private void getPlayerImage(){
 

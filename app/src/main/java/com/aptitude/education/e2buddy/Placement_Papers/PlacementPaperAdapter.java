@@ -50,6 +50,7 @@ public class PlacementPaperAdapter extends RecyclerView.Adapter<PlacementPaperAd
 
                 Intent intent = new Intent(mCtx, Quiz_Instruction_Activity.class);
                 mCtx.startActivity(intent);
+
             }
         });
     }
